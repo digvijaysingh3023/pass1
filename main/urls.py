@@ -6,6 +6,7 @@ from django.conf.urls.static import static
 
 urlpatterns = [
   path('',views.home,name="home"),
+  path('order-summary/', views.order_summary, name='order_summary'),
 ]
 
 if settings.DEBUG:
