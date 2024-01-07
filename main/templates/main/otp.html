@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration | Alcheringa</title>
+    <link rel="stylesheet" href="{% static 'css/otp.css' %}">
+</head>
+<body>
+<!-- Navbar code starts -->
+
+<!-- Navbar code ends -->
+
+<div id="passPortalContent">
+    <div class="heading">
+        <h1>ALCHERINGA</h1>
+        <h3>Welcome to Alcheringa!! To start with your journey, We need to verify you.</h3>
+    </div>
+    
+    <div id="verifyContainer">
+        <div id="pass">
+            <h2>VERIFY YOUR EMAIL ID</h2>
+            <h4>Please enter your e-mail ID. A one-time-passcode will be sent on the same to verify your E-Mail ID.</h4>
+        </div>
+        <div id="emailVerifyBox">
+            <div id="emailInput">
+                <input type="email" class="vinput" name="email">
+                <button id="otpSend" class="button">SENT OTP</button>
+            </div>
+            <div id="otpInput">
+                <h2>OTP</h2>
+                <div id="otpVerify">
+                    <input type="number" class="dash" min="0" max="9"  required>
+                    <input type="number" class="dash" min="0" max="9" required>
+                    <input type="number" class="dash" min="0" max="9" required>
+                    <input type="number" class="dash" min="0" max="9" required>
+                    <input type="number" class="dash" min="0" max="9" required>
+                    <input type="number" class="dash" min="0" max="9" required>
+                </div>
+                <button id="submitOtp" class="button">PROCEED</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- footer code starts -->
+
+<!-- footer code ends -->
+    
+</body>
+</html>

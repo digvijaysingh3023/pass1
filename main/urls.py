@@ -1,13 +1,9 @@
-from django.contrib import admin
-from django.urls import path,include
+from django.urls import path
 from . import views
-from django.conf import settings
-from django.conf.urls.static import static
 
 urlpatterns = [
-  path('',views.home,name="home"),
+  path('',views.home, name="home"),
+  path('otp/', views.otp , name="otp"),
+  path('submit/', views.sendOtp, name='send_otp'),
   path('order-summary/', views.order_summary, name='order_summary'),
 ]
-
-if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

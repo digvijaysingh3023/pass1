@@ -1,9 +1,14 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
+from django.http import JsonResponse
 from . models import Pass
 from django.core.mail import EmailMessage
 from django.core.mail import send_mail
+from django.views.decorators.csrf import csrf_exempt
+from django.conf import settings
 import random
+import json
 import pyrebase
+
 
 config = {
    'apiKey': "AIzaSyCYBAFlRDVF_niUuOzk-dc4lo8v5XOg2cs",
@@ -25,7 +30,29 @@ database=firebase.database()
 def home(request):
     passes=Pass.objects.all()
     name = database.child('Data').child('Name').get().val()
-    return render(request,"home.html",{'passes':passes, 'name': name})
+    return render(request, 'main/home.html',{'passes':passes, 'name': name})
+
+def otp(request):
+    context = {
+        'message': "Please Enter E-mail First",
+    }
+    return render(request, "main/otp.html", context)
+
+@csrf_exempt
+def sendOtp(request):
+    otp = random.randint(100000, 999999)
+    subject = 'Your email verification'
+    message = 'Your otp for verifiction of your email is ' + str(otp)
+    from_email = settings.EMAIL_HOST_USER
+    send_mail(subject, message, from_email, ["shauryajain215@gmail.com"])
+    # try:
+    #     email = json.loads(request.body)['email']
+    #     request.session['LeaderEmail'] = email
+        
+
+    # except Exception as e:
+    #     print(e)
+    return redirect('/')
 
 def order_summary(request):
     # Fetch transaction data from Firebase
@@ -43,4 +70,4 @@ def order_summary(request):
 
         transactions.append(transaction_dict)
 
-    return render(request, 'order_summary.html', {'transactions': transactions})
+    return render(request, 'main/order_summary.html', {'transactions': transactions})
