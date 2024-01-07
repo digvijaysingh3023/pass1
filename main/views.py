@@ -40,19 +40,31 @@ def otp(request):
 
 @csrf_exempt
 def sendOtp(request):
-    otp = random.randint(100000, 999999)
-    subject = 'Your email verification'
-    message = 'Your otp for verifiction of your email is ' + str(otp)
-    from_email = settings.EMAIL_HOST_USER
-    send_mail(subject, message, from_email, ["shauryajain215@gmail.com"])
-    # try:
-    #     email = json.loads(request.body)['email']
-    #     request.session['LeaderEmail'] = email
-        
+    try:
+        email = json.loads(request.body)['email']
+        request.session['LeaderEmail'] = email
+        otp = random.randint(100000, 999999)
+        subject = 'Your email verification'
+        message = 'Your otp for verifiction of your email is ' + str(otp)
+        from_email = settings.EMAIL_HOST_USER
+        send_mail(subject, message, from_email, [email])
 
-    # except Exception as e:
-    #     print(e)
-    return redirect('/')
+        doc_ref = database.collection('all_otps').document()
+
+        doc_ref.set({
+            'email': email,
+            'otp': otp,
+        })
+        
+        
+    except Exception as e:
+        print(e)
+    return JsonResponse({"otp": "otp"})
+
+
+def verify_otp(request):
+    otp = request.POST.get('otp')
+    
 
 def order_summary(request):
     # Fetch transaction data from Firebase
