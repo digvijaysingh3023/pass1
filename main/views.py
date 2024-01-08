@@ -5,6 +5,9 @@ from django.core.mail import EmailMessage
 from django.core.mail import send_mail
 from django.views.decorators.csrf import csrf_exempt
 from django.conf import settings
+from django.utils import timezone
+import random
+import string
 import random
 import json
 import pyrebase
@@ -68,7 +71,7 @@ def verify_otp(request):
 
 def order_summary(request):
     # Fetch transaction data from Firebase
-    transactions_ref = db.collection('transactions').stream()
+    transactions_ref = database.collection('transactions').stream()
 
     transactions = []
     for transaction in transactions_ref:
@@ -76,10 +79,87 @@ def order_summary(request):
         transaction_dict['id'] = transaction.id
 
         # Fetch user data from 'verified_users' collection
-        user_ref = db.collection('verified_users').document(transaction_dict['user']).get()
+        user_ref = database.collection('verified_users').document(transaction_dict['user']).get()
         user_dict = user_ref.to_dict()
         transaction_dict['user'] = user_dict
 
         transactions.append(transaction_dict)
 
     return render(request, 'main/order_summary.html', {'transactions': transactions})
+def unique_id(length):
+    while True:
+        random_string = ''.join(random.choices(string.ascii_letters + string.digits, k=length))
+        if random_string not in used_strings:
+            used_strings.add(random_string)
+            return random_string
+used_strings = set()
+def savedata(request):
+    if request.method == 'POST':
+        id = unique_id(5)
+        amount = 750
+        status="Pending"
+        err_des={
+            'error':0,
+            'pass':1,
+        }
+        # fee_id = "M1006"
+        # paases_type = {
+        #     'general': 0,
+        #     'premium': 0,
+        #     'exclusive': 0,
+        #     'id': id,
+        #     'amount': 0,
+        # }
+        time=timezone.now()
+        LeaderName = request.POST.get('LeaderName')
+        Lpasstype = request.POST.get('Lpasstype')
+        LeaderContact_no = request.POST.get('LeaderContact_no')
+        LeaderEmail = request.POST.get('LeaderEmail')
+        LeaderIDType = request.POST.get('LeaderIDtype')
+        LeaderIDNumber = request.POST.get('LeaderIDnumber')
+        LeaderAge = request.POST.get('LeaderAge')
+        LeaderGender = request.POST.get('LeaderGender')
+        membernames = request.POST.getlist('name')
+        member_contacts = request.POST.getlist('contact_no')
+        member_passtype = request.POST.getlist('pass_type')
+        member_idtype = request.POST.getlist('IDtype')
+        member_idnumber = request.POST.getlist('IDnumber')
+        member_age = request.POST.getlist('age')
+        member_gender = request.POST.getlist('gender')
+        member_email = request.POST.getlist('email')
+        Tdata = {
+            "Email": LeaderEmail,
+            "time":time,
+            "amount":amount,
+            "err_des":err_des,
+            "status":status,
+            
+        }
+        Ldata={
+            "Email": LeaderEmail,
+            "LName": LeaderName,
+            "LContact": LeaderContact_no,
+            "LIDType": LeaderIDType,
+            "LIDNumber": LeaderIDNumber,
+            'Lpasstype':Lpasstype,
+            "LAge": LeaderAge,
+            "LGender": LeaderGender,
+        }
+        doc_ref = database.collection('transaction').document(id)
+        doc_ref.set(Tdata)
+        doc_ref.collection('users').document().set(Ldata)
+        members = []
+        for fname,contact, pass_type, idtype, idnumber, gender, age, email, in zip(membernames, member_contacts, member_passtype, member_idtype, member_idnumber, member_gender, member_age, member_email):
+            member = {
+                "name": fname,
+                "contact": contact,
+                "pass_type": pass_type,
+                "id_type": idtype,
+                "id_number": idnumber,
+                "age": age,
+                "gender": gender,
+                'email': email,
+            }
+            doc_ref.collection('users').document().set(member)
+            members.append(member)
+    return render(request, 'main/confirm_payment.html',{'leader':Ldata,'Member':members})
