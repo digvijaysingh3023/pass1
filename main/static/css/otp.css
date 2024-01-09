@@ -123,13 +123,14 @@ body{
 #otpInput h2{
     font-family: 'Uncut-Sans';
     font-size: 3vh;
-    margin-bottom: 3vh;
+    margin-bottom: 1vh;
 }
 
 #otpVerify{
     width: 20vw;
     display: flex;
     flex-wrap: wrap;
+    margin-top: 2.5vh;
     margin-bottom: 3vh;
     justify-content: space-between;
 }
@@ -152,4 +153,18 @@ body{
 
 .dash:valid{
     border-color: #2DA38F;
+}
+
+#alt_otpSend{
+    color: #be1919;
+    font-family: 'Uncut-Sans';
+    font-size: 2vh;
+}
+#alt_wrongOtp{
+    display: flex;
+    align-items: center;
+    color: #d90404;
+    font-family: 'Uncut-Sans';
+    font-weight: bold;
+    font-size: 2vh;
 }

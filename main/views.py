@@ -66,16 +66,11 @@ def home(request):
 
     }
     
-    name = db.child('Data').child('Name').get().val()
-    
-    return render(request,"home.html",{'context':context, 'name': name})
+    return render(request,"home.html",{'context':context})
     
 
 def otp(request):
-    context = {
-        'message': "Please Enter E-mail First",
-    }
-    return render(request, "main/otp.html", context)
+    return render(request, "main/otp.html")
 
 @csrf_exempt
 def sendOtp(request):
