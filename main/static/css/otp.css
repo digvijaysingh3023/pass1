@@ -1,0 +1,155 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    color: #F4F4F4;
+}
+@font-face {
+    font-family: 'fsp-demo-freigeist-con-black-5';
+    src: url(./Fontspring-DEMO-freigeist-conblack.otf);
+  }
+@font-face {
+    font-family: 'Uncut-Sans';
+    src: url(./Uncut-Sans-Regular.otf);
+  }
+body{
+    background-color: #181818;
+}
+
+#passPortalContent{
+    padding: 5vw;
+}
+
+.heading{
+    margin: 5vh 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.heading h1{
+    font-family: 'fsp-demo-freigeist-con-black-5', sans-serif;
+    font-size: 9vh;
+}
+.heading h3{
+    font-family: 'Uncut-Sans';
+    font-size: 2.5vh;
+}
+
+#pass h2{
+    font-family: 'fsp-demo-freigeist-con-black-5', sans-serif;
+    font-size: 6vh;
+}
+#pass h4{
+    font-family: 'Uncut-Sans';
+    font-size: 2.5vh;
+    margin-bottom: 3vh;
+}
+
+#emailInput{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+.einput{
+    position: relative;
+}
+.einput img{
+    display: none;
+    position: absolute;
+    top: 5px;
+    right: 0;
+    height: 20px;
+}
+#bc{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 50vw;
+}
+.timer{
+    margin-bottom: 1.6vh;
+    display: none;
+}
+.timer span{
+    font-family: 'Uncut-Sans';
+    font-size: 2.5vh;
+}
+.timer button{ 
+    background-color: transparent;
+    outline: none;
+    border: none;
+    text-decoration: underline;
+    cursor: pointer; 
+    font-size: 2.5vh;
+}
+.timer button:disabled{
+    cursor:auto;
+    color: #f4f4f488;
+}
+.time{
+    color: #39A279;
+}
+#emailInput input{
+    outline: none;
+    border: none;
+    width: 30vw;
+    font-size: 20px;
+    padding-bottom: 6px;
+    background: transparent;
+    border-bottom: 2px solid #F4F4F4;
+    margin-bottom: 3vh;
+}
+
+.button{
+    outline: none;
+    border: none;
+    font-family: 'fsp-demo-freigeist-con-black-5', sans-serif;
+    padding: 5px 25px;
+    font-size: 2.5vh;
+    background-color: #F6D317;
+    border-radius: 3px;
+    color: #181818;
+    margin-bottom: 4vh;
+    cursor: pointer;
+}
+
+#otpSend:disabled{
+    cursor: auto;
+}
+
+#otpInput h2{
+    font-family: 'Uncut-Sans';
+    font-size: 3vh;
+    margin-bottom: 3vh;
+}
+
+#otpVerify{
+    width: 20vw;
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 3vh;
+    justify-content: space-between;
+}
+
+.dash{
+    outline: none;
+    border: none;
+    width: 3vw;
+    font-size: 20px;
+    padding-bottom: 8px;
+    background: transparent;
+    border-bottom: 2px solid #F4F4F4;
+    text-align: center;
+}
+
+.dash::-webkit-outer-spin-button, 
+.dash::-webkit-inner-spin-button{
+    -webkit-appearance: none;
+}
+
+.dash:valid{
+    border-color: #2DA38F;
+}
