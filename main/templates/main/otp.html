@@ -26,18 +26,27 @@
         </div>
         <div id="emailVerifyBox">
             <div id="emailInput">
-                <input type="email" class="vinput" name="email">
+                <div id="bc">
+                    <div class="einput">
+                        <input type="email" class="vinput" name="email" autofocus required>
+                        <img src="{% static 'img/Vector.png' %}" alt="">
+                    </div>
+                    <div class="timer">
+                        <button id="resend">Resend OTP </button>
+                        <span>in <span class="time"></span> ...</span>
+                    </div>
+                </div>
                 <button id="otpSend" class="button">SENT OTP</button>
             </div>
             <div id="otpInput">
                 <h2>OTP</h2>
                 <div id="otpVerify">
-                    <input type="number" class="dash" min="0" max="9"  required>
-                    <input type="number" class="dash" min="0" max="9" required>
-                    <input type="number" class="dash" min="0" max="9" required>
-                    <input type="number" class="dash" min="0" max="9" required>
-                    <input type="number" class="dash" min="0" max="9" required>
-                    <input type="number" class="dash" min="0" max="9" required>
+                    <input type="number" class="dash" min="0" max="9" maxlength="1" required>
+                    <input type="number" class="dash" min="0" max="9" maxlength="1" required>
+                    <input type="number" class="dash" min="0" max="9" maxlength="1" required>
+                    <input type="number" class="dash" min="0" max="9" maxlength="1" required>
+                    <input type="number" class="dash" min="0" max="9" maxlength="1" required>
+                    <input type="number" class="dash" min="0" max="9" maxlength="1" required>
                 </div>
                 <button id="submitOtp" class="button">PROCEED</button>
             </div>
@@ -50,6 +59,98 @@
 <!-- footer code starts -->
 
 <!-- footer code ends -->
-    
+ <script>
+
+
+    function timer(n){
+        document.getElementById("resend").disabled = true;
+        const interval = setInterval(()=>{
+            if(n==0){
+                clearInterval(interval)
+                document.getElementById("resend").disabled = false;
+            }
+            document.querySelector(".time").innerHTML = `${n} seconds`;
+            n--;
+        }, 1000)
+    }
+    document.getElementById("resend").onclick = ()=>{
+        timer(60);
+    }
+    const codes = document.querySelectorAll('.dash');
+    // codes[0].focus()
+    codes.forEach((code, idx)=>{
+        code.addEventListener('keydown', (e)=>{
+            if(e.key >=0 && e.key<=9){
+                console.log(codes[idx].value);
+                codes[idx].value = ''
+                console.log(codes[idx].value);
+                setTimeout(()=> codes[idx+1].focus(), 10)
+            }else if(e.key === 'Backspace'){
+                setTimeout(()=> codes[idx-1].focus(), 10)
+            }
+        })
+    })
+
+    let email = document.querySelector('.vinput');
+    let otp_send = false;
+    function ResendOTP(){
+        otp_send = false;
+        const resend = document.getElementById('resendOTP');
+        resend.classList.add('active');
+    }
+    document.querySelector('.vinput').addEventListener("input", ()=>{
+        console.log('hello');
+        const emailReg = /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,4})$/;
+        const input = document.querySelector('#emailInput input');
+        const vector = document.querySelector(".einput img");
+        if((email.value).match(emailReg)){
+            input.style.borderBottom = "2px solid #39A279";
+            input.style.color = "#39A279";
+            vector.style.display = "inline";
+        }
+        else{
+            input.style.borderBottom = "2px solid #F4F4F4";
+            input.style.color = "#F4F4F4";
+            vector.style.display = "none"
+        }
+    })
+
+    document.getElementById('otpSend').addEventListener('click', emailSubmitted);
+    function emailSubmitted(){
+        function validation(){
+            const emailReg = /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,4})$/;
+
+            if(!(email.value).match(emailReg)){
+                alert("Invalid Email");
+                return false;
+            } else{
+                otp_send = true;
+                document.querySelector('.timer').style.display = 'block';
+                timer(60);
+                setTimeout(ResendOTP, 60000);
+                return true;
+            }
+        }
+        
+        if(validation()){
+            fetch("{% url 'send_otp' %}",{
+                method: "POST", 
+                body: JSON.stringify({
+                    email: email.value
+                }),
+                headers: {
+                    "Content-type": "application/json; charset=UTF-8"
+                }
+            })
+            const sendBtn = document.getElementById('otpSend');
+            sendBtn.disabled = true;
+            if(sendBtn.disabled){
+                sendBtn.style.backgroundColor = "#585858";
+            }
+        }
+
+    }
+
+ </script>   
 </body>
 </html>
