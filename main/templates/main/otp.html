@@ -28,6 +28,7 @@
             <div id="emailInput">
                 <div id="bc">
                     <div class="einput">
+                        <div id="email" style="display: none;">{{email}}</div>
                         <input type="email" class="vinput" name="email" autofocus required>
                         <img src="{% static 'img/Vector.png' %}" alt="">
                     </div>
@@ -38,18 +39,22 @@
                 </div>
                 <button id="otpSend" class="button">SENT OTP</button>
             </div>
-            <div id="otpInput">
-                <h2>OTP</h2>
-                <div id="otpVerify">
-                    <input type="number" class="dash" min="0" max="9" maxlength="1" required>
-                    <input type="number" class="dash" min="0" max="9" maxlength="1" required>
-                    <input type="number" class="dash" min="0" max="9" maxlength="1" required>
-                    <input type="number" class="dash" min="0" max="9" maxlength="1" required>
-                    <input type="number" class="dash" min="0" max="9" maxlength="1" required>
-                    <input type="number" class="dash" min="0" max="9" maxlength="1" required>
+            <form action="{% url 'verify_otp' %}" method="POST" class="otpform">
+                {% csrf_token %}
+                <div id="otpInput">
+                    <h2>OTP</h2>
+                    <div id="otpVerify">
+                        <input type="number" class="dash" min="0" max="9" maxlength="1" required name = "otp">
+                        <input type="number" class="dash" min="0" max="9" maxlength="1" required name = "otp">
+                        <input type="number" class="dash" min="0" max="9" maxlength="1" required name = "otp">
+                        <input type="number" class="dash" min="0" max="9" maxlength="1" required name = "otp">
+                        <input type="number" class="dash" min="0" max="9" maxlength="1" required name = "otp">
+                        <input type="number" class="dash" min="0" max="9" maxlength="1" required name = "otp">
+                    </div>
+                    <button type="submit" id="submitOtp" class="button" disabled>PROCEED</button>
                 </div>
-                <button id="submitOtp" class="button">PROCEED</button>
-            </div>
+            </form>
+            
         </div>
     </div>
 </div>
@@ -61,6 +66,7 @@
 <!-- footer code ends -->
  <script>
 
+   
 
     function timer(n){
         document.getElementById("resend").disabled = true;
@@ -76,7 +82,7 @@
         document.querySelector('.timer span').style.opacity = '100';
     }
     document.getElementById("resend").onclick = ()=>{
-        timer(6);
+        timer(60);
         emailSubmitted();
     }
     const codes = document.querySelectorAll('.dash');
@@ -96,6 +102,11 @@
 
     let email = document.querySelector('.vinput');
     let otp_send = false;
+
+    document.addEventListener('DOMContentLoaded', function (){
+        const emailv = document.querySelector('#email').innerHTML;
+        email.value = emailv
+    })
     function ResendOTP(){
         otp_send = false;
         const resend = document.getElementById('resendOTP');
@@ -129,7 +140,7 @@
             } else{
                 otp_send = true;
                 document.querySelector('.timer').style.display = 'block';
-                timer(6);
+                timer(60);
                 setTimeout(ResendOTP, 60000);
                 return true;
             }
@@ -146,6 +157,8 @@
                 }
             })
             const sendBtn = document.getElementById('otpSend');
+            const proceed = document.querySelector('#submitOtp');
+            proceed.disabled = false;
             sendBtn.disabled = true;
             if(sendBtn.disabled){
                 sendBtn.style.backgroundColor = "#585858";

@@ -4,6 +4,8 @@ from . import views
 urlpatterns = [
   path('',views.home, name="home"),
   path('otp/', views.otp , name="otp"),
-  path('submit/', views.sendOtp, name='send_otp'),
+  path('verify/', views.sendOtp, name='send_otp'),
+  path('submit/', views.verify_otp, name='verify_otp'),
+  path('register/', views.register, name='register'),
   path('order-summary/', views.order_summary, name='order_summary'),
 ]

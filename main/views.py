@@ -102,8 +102,39 @@ def sendOtp(request):
 
 
 def verify_otp(request):
-    otp = request.POST.get('otp')
+    # Get the list of OTP values from the POST data
+    otp_values = request.POST.getlist('otp')
+    # Combine the OTP values into a single string
+    otp = ''.join(otp_values)
+
+    otpID = request.session.get('OTPId')
+    snapshots = db.collection('all_otps').where('id', '==', otpID).stream() #
+    users = []
+    otp1 = 0
+    for user in snapshots:
+        formattedData = user.to_dict()
+        print(formattedData)
+        otp1 = formattedData['otp']
+        users.append(user.reference)
+
+    OTP = int(otp)
+    print(OTP, otp1)
+    if OTP == otp1:
+        return redirect('register')
     
+    email = request.session.get('LeaderEmail')
+    context = {
+        'message': "Incorrect OTP",
+        'email': email
+    }
+    return render(request, 'main/otp.html', context)
+
+
+def register(request):
+    email = request.session.get('LeaderEmail')
+    return render(request, 'main/register.html', {'email': email})
+
+
 
 def order_summary(request):
     # Fetch transaction data from Firebase

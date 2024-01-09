@@ -116,7 +116,7 @@ body{
     cursor: pointer;
 }
 
-#otpSend:disabled{
+.button:disabled{
     cursor: auto;
 }
 
