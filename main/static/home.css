@@ -1,0 +1,35 @@
+body{
+    padding:5vw;
+    font-family: 'Uncut Sans';
+}
+.topdiv{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.topdiv h1{
+    font-size: 4vw;
+    margin-bottom: 0.5vw;
+}
+.passdiv h1{
+    font-size: 3vw;
+}
+.passdiv h2{
+    font-size: 2vw;
+}
+.seasonpass{
+    display: flex;
+    gap:5vw;
+}
+.btndiv{
+    display: flex;
+    justify-content: flex-end;
+}
+.btn{
+    background-color: #F6D317;
+    margin-top: 1vw;
+    border-radius: 1vw;
+    padding-left: 1vw;
+    padding-right:1vw;
+}

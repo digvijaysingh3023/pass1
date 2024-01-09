@@ -21,11 +21,42 @@ database=firebase.database()
 
 
 
+
 # Create your views here.
 def home(request):
-    passes=Pass.objects.all()
+    context={
+        'EarlyBird':{
+        'date':database.child('Data').child('Date').child('Early-Bird').get().val(),
+        'price':database.child('Data').child('Price').child('Early-Bird').get().val(),
+        'img':database.child('Data').child('Image').child('Early-Bird').get().val()
+        },
+        'Normal':{
+        'date':database.child('Data').child('Date').child('Normal').get().val(),
+        'price':database.child('Data').child('Price').child('Normal').get().val(),
+        'img':database.child('Data').child('Image').child('Normal').get().val()
+        },
+        'Day1':{
+        'date':database.child('Data').child('Date').child('Day 1').get().val(),
+        'price':database.child('Data').child('Price').child('Day').get().val(),
+        'img':database.child('Data').child('Image').child('Day 1').get().val()
+        },
+        'Day2':{
+        'date':database.child('Data').child('Date').child('Day 2').get().val(),
+        'price':database.child('Data').child('Price').child('Day').get().val(),
+        'img':database.child('Data').child('Image').child('Day 2').get().val()
+        },
+        'Day3':{
+        'date':database.child('Data').child('Date').child('Day 3').get().val(),
+        'price':database.child('Data').child('Price').child('Normal').get().val(),
+        'img':database.child('Data').child('Image').child('Normal').get().val()
+        },
+            
+
+    }
+    
     name = database.child('Data').child('Name').get().val()
-    return render(request,"home.html",{'passes':passes, 'name': name})
+    
+    return render(request,"home.html",{'context':context, 'name': name})
 
 def order_summary(request):
     # Fetch transaction data from Firebase
