@@ -6,6 +6,9 @@ from django.core.mail import send_mail
 from django.views.decorators.csrf import csrf_exempt
 from django.conf import settings
 from django.utils import timezone
+import firebase_admin
+from firebase_admin import credentials
+from firebase_admin import firestore
 import random
 import string
 import random
@@ -23,17 +26,17 @@ config = {
   'appId': "1:28735319650:web:5e1095ba7fdb52f4182b3b",
 }
 
-firebase=pyrebase.initialize_app(config)
-authe = firebase.auth()
-database=firebase.database()
-
-
+# firebase=pyrebase.initialize_app(config)
+# authe = firebase.auth()
+# database=firebase.database()
+cred = credentials.Certificate('main/serviceAccountCredentials.json')
+firebase_admin.initialize_app(cred)
+db = firestore.client()
 
 # Create your views here.
 def home(request):
     passes=Pass.objects.all()
-    name = database.child('Data').child('Name').get().val()
-    return render(request, 'main/home.html',{'passes':passes, 'name': name})
+    return render(request, 'main/home.html',{'passes':passes})
 
 def otp(request):
     context = {
@@ -51,14 +54,14 @@ def sendOtp(request):
         message = 'Your otp for verifiction of your email is ' + str(otp)
         from_email = settings.EMAIL_HOST_USER
         send_mail(subject, message, from_email, [email])
-
-        doc_ref = database.collection('all_otps').document()
+        doc_ref = db.collection('all_otps').document()
 
         doc_ref.set({
+            'id': doc_ref.id,
             'email': email,
             'otp': otp,
         })
-        
+        request.session['OTPId'] = doc_ref.id
         
     except Exception as e:
         print(e)

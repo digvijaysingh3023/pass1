@@ -33,7 +33,7 @@
                     </div>
                     <div class="timer">
                         <button id="resend">Resend OTP </button>
-                        <span>in <span class="time"></span> ...</span>
+                        <span>in <span class="time">60 seconds</span> ...</span>
                     </div>
                 </div>
                 <button id="otpSend" class="button">SENT OTP</button>
@@ -67,14 +67,17 @@
         const interval = setInterval(()=>{
             if(n==0){
                 clearInterval(interval)
+                document.querySelector('.timer span').style.opacity = '0';
                 document.getElementById("resend").disabled = false;
             }
             document.querySelector(".time").innerHTML = `${n} seconds`;
             n--;
         }, 1000)
+        document.querySelector('.timer span').style.opacity = '100';
     }
     document.getElementById("resend").onclick = ()=>{
-        timer(60);
+        timer(6);
+        emailSubmitted();
     }
     const codes = document.querySelectorAll('.dash');
     // codes[0].focus()
@@ -126,7 +129,7 @@
             } else{
                 otp_send = true;
                 document.querySelector('.timer').style.display = 'block';
-                timer(60);
+                timer(6);
                 setTimeout(ResendOTP, 60000);
                 return true;
             }

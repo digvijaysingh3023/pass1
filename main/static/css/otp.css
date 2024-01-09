@@ -90,7 +90,7 @@ body{
     color: #f4f4f488;
 }
 .time{
-    color: green;
+    color: #39A279;
 }
 #emailInput input{
     outline: none;
@@ -114,6 +114,10 @@ body{
     color: #181818;
     margin-bottom: 4vh;
     cursor: pointer;
+}
+
+#otpSend:disabled{
+    cursor: auto;
 }
 
 #otpInput h2{
