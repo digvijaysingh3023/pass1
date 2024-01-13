@@ -1,12 +1,314 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registration | Alcheringa</title>
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static "register/register.css" %}">
 </head>
+
 <body>
-    <h1>Email verfication is done ...</h1>
+    <div class="navbar">
+        <img id="alcherlogo1" src="{% static "images/alcherlogo1.svg" %}" alt="alcherlogo">
+        <h1>ALCHERINGA</h1>
+        <button id="buypasses"> BUY YOUR PASSES HERE </button>
+    </div>
+    <div class="intro">
+        <h2 id="heading2">ALCHERINGA</h2>
+        <p id="introtext">Welcome to Alcheringa!! Please enter each of your attendee's names <br>and select the kind of
+            pass for each of it.</p>
+    </div>
+    <div class="Attendeedetails">
+    <form method="POST" name="reg" novalidate>
+        {% csrf_token %}
+        <h id="attendee">ATTENDEE DETAILS</h>
+        <div class="primary">
+            <h3>PRIMARY ATTENDEE</h3>
+            <select class="passtype" name="Lpasstype">
+                <option class="passoption" value="" disabled selected>SELECT PASS TYPE</option>
+                <option class="passoption" value="NORMAL">NORMAL</option>
+                <option class="passoption" value="VIP">VIP</option>
+                <option class="passoption" value="SUPER VIP">SUPER VIP</option>
+            </select>
+            <div class="info"> &#9432</div>
+        </div>
+
+            <div class="details">
+                <div class="div1">
+                        <input type="text" placeholder="Full Name" id="name" class="detailbox" required minlength="2" name="LeaderName">
+
+                    <select id="gender" class="detailbox" name="LeaderGender">
+                        <option class="genderoption" value="" disabled selected>Gender</option>
+                        <option class="genderoption" value="Male">Male</option>
+                        <option class="genderoption" value="Female">Female</option>
+                        <option class="genderoption" value="Other">Other</option>
+                    </select>
+                    <input type="number" placeholder="Age" id="age" class="detailbox age" required min="1" name="LeaderAge">
+                </div>
+                <div class="div2">
+                    {% comment %} <div class="einput">
+                        <input type="email" class="vinput" name="LeaderEmail" autofocus required>
+                        <img src="{% static 'img/Vector.png' %}" alt="">
+                    </div> {% endcomment %}
+                        <input type="email" placeholder="Email-ID" id="email" class="detailbox vinput" required minlength="2" name="LeaderEmail">
+                        {% comment %} <img src="{% static 'img/Vector.png' %}" alt=""> {% endcomment %}
+                    <input type="tel" placeholder="Contact Number" class="detailbox" id="number"
+                        pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}" minlength="2" name="LeaderContact_no">
+                </div>
+                <div class="div3">
+                    <select id="idtype" class="detailbox" name="LeaderIDtype">
+                        <option class="idoption" value="" disabled selected>Select your ID type</option>
+                        <option class="idoption" value="College ID">College ID</option>
+                        <option class="idoption" value="Adhaar ID">Adhaar ID</option>
+                        <option class="idoption" value="Driver's License">Driver's License</option>
+                        <option class="idoption" value="Voter's ID">Voter's ID</option>
+                        <option class="idoption" value="Other">Other</option>
+
+                    </select>
+                    <input type="number" placeholder="ID Number" id="idnum" class="detailbox" required minlength="1" name="LeaderIDnumber">
+                </div>
+            </div>
+            <div class="primary">
+                <h3>PRIMARY ATTENDEE</h3>
+                <select class="passtype" name="pass_type">
+                    <option class="passoption" value="" disabled selected>SELECT PASS TYPE</option>
+                    <option class="passoption" value="NORMAL">NORMAL</option>
+                    <option class="passoption" value="VIP">VIP</option>
+                    <option class="passoption" value="SUPER VIP">SUPER VIP</option>
+                </select>
+                <div class="info"> &#9432</div>
+            </div>    
+            <div class="details">
+                <div class="div1">
+                    <input type="text" placeholder="Full Name" id="name" class="detailbox" required minlength="2" name="name">
+                    <select  id="select" class="detailbox" name="gender">
+                        <option disabled selected value="">Gender</option>
+                        <option value="Male">Male</option>
+                        <option value="Femal">Female</option>
+                        <option value="others">Others</option>
+                    </select>
+
+                    <input type="number" placeholder="Age" id="age" class="detailbox age" required min="1" name="age">
+                </div>
+                <div class="div2">
+                    <input type="email" placeholder="Email-ID" id="email" class="detailbox" required minlength="2" name="email">
+                    <input type="tel" placeholder="Contact Number" class="detailbox" id="number"
+                        pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}" minlength="2" name="contact_no">
+                </div>
+                <div class="div3"><select id="idtype" class="detailbox" required minlength="1" name="IDtype">
+
+                        <option class="idoption" value="" disabled selected>Select your ID type</option>
+                        <option class="idoption" value="College ID">College ID</option>
+                        <option class="idoption" value="Adhaar ID">Adhaar ID</option>
+                        <option class="idoption" value="Driver's License">Driver's License</option>
+                        <option class="idoption" value="Voter's ID">Voter's ID</option>
+                        <option class="idoption" value="Other">Other</option>
+
+                    </select>
+                    <input type="number" placeholder="ID Number" id="idnum" class="detailbox" required minlength="1" name="IDnumber" >
+                </div>
+            </div>
+
+            <div class="addandremove">
+                <button onclick="addMember()" class="add">+ ADD ATTENDEE</button>
+                <button onclick=" removeMember()" class="remove">- REMOVE</button>
+            </div>
+            <div>
+                <button type="submit" class="submitbtn">SUBMIT AND PAY</button>
+            </div>
+    </form>
+        <div class="welcometxt">
+            Team Alcheringa Welcomes you to the 28th edition of
+        </div>
+        <div class="footer">
+            <div class="ribbon-case">
+                <div class="footer-iit">IIT GUWAHATI'S</div>
+                <div class="footer-alcher">ALCHERINGA</div>
+            </div>
+            <div class="contact">
+                <div class="contact-info">
+                    <span class="name">Siddant Singh</span>
+                    <span class="phone">+91 9310859978</span>
+                    <span class="email">siddant.s@alcheringa.in</span>
+                </div>
+                <div class="contact-info">
+                    <span class="name">Siddant Singh</span>
+                    <span class="phone">+91 9310859978</span>
+                    <span class="email">siddant.s@alcheringa.in</span>
+                </div>
+                <div class="following">
+                    <span style="margin-bottom: 1.5vh;font-size:1.12vw;">Follow us on</span>
+                    <div id="footer-icons">
+                        <a href="/" target="_blank"><i class="bi bi-instagram"
+                                style=" color:white;font-size:1.5vw;"></i></a>
+                        <a href="" target="_blank"><i class="bi bi-facebook"
+                                style="margin-left: 1.5vw; color:white;font-size:1.5vw;"></i></a>
+                        <a href="https://twitter.com/alcheringaiitg" target="_blank"><i class="bi bi-twitter"
+                                style="margin-left: 1.5vw; color:white;font-size:1.5vw;"></i></a>
+                        <a href="https://www.youtube.com/c/AlcheringaIITG" target="_blank"><i class="bi bi-youtube"
+                                style="margin-left: 1.5vw; color:white;font-size:1.5vw;"></i></a>
+                    </div>
+
+
+                </div>
+
+            </div>
+            <div class="creator-info">
+                <div style="display: inline;">Designed and Developed by <p
+                        style="display: inline;border-bottom:1px solid white;">Alcher Creatives</p> & <p
+                        style="display: inline;;border-bottom:1px solid white"> Alcher Web Operations</p>
+                </div>
+                <div class="business-contact">
+                    <p style="margin-bottom:0.5vh;">For Business Enquiries</p>
+                    <p style="margin-top:0.5vh;margin-bottom:0vh;">publicrelations24@alcheringa.in</p>
+                </div>
+            </div>
+        </div>
+        <div class="mobile-footer">
+            <div class="ribbon-case">
+                <div class="footer-iit">IIT GUWAHATI'S</div>
+                <div class="footer-alcher">ALCHERINGA</div>
+            </div>
+
+            <div class="contact-footer">
+                <div class="people-contact">
+                    <div style="margin-bottom:4vh" class="contact-info">
+                        <span class="name">Siddant Singh</span>
+                        <span class="phone">+91 9310859978</span>
+                        <span class="email">siddant.s@alcheringa.in</span>
+                    </div>
+                    <div class="contact-info">
+                        <span class="name">Siddant Singh</span>
+                        <span class="phone">+91 9310859978</span>
+                        <span class="email">siddant.s@alcheringa.in</span>
+                    </div>
+                </div>
+                <div class="following-footer">
+                    <p style="margin-bottom:0px;margin-top:0px;font-size:2.2vw">Follow us</p>
+                    <p style="margin-top:0px;font-size:2.2vw">on</p>
+                    <a href="/" target="_blank"><i class="bi bi-instagram" style=" color:white;font-size:3vw;"></i></a>
+                    <a href="" target="_blank"><i class="bi bi-facebook" style=" color:white;font-size:3vw;"></i></a>
+                    <a href="https://twitter.com/alcheringaiitg" target="_blank"><i class="bi bi-twitter"
+                            style=" color:white;font-size:3vw;"></i></a>
+                    <a href="https://www.youtube.com/c/AlcheringaIITG" target="_blank"><i class="bi bi-youtube"
+                            style=" color:white;font-size:3vw;"></i></a>
+                </div>
+            </div>
+            <div style="display: inline;font-size:2.2vw;width:100%;margin-left:10%;margin-bottom:2vh">Designed and
+                Developed by <p style="display: inline;border-bottom:1px solid white;">Alcher Creatives</p> & <p
+                    style="display: inline;;border-bottom:1px solid white"> Alcher Web Operations</p>
+            </div>
+
+        </div>
+
+
+        `
+        <div class="bottombar">
+            <div class="price">
+                <p>Total Amount : &#8377 299</p>
+            </div>
+        </div>
+
+    <script>
+        document.forms['reg'].onsubmit= function(event){
+            // (C1) INIT
+            var valid = true, error = "", field = "";
+          
+            // (C2) NAME
+            field = document.getElementById("name");
+            
+            if (!field.checkValidity()) {
+              valid = false;
+              field.classList.add("err");
+              field.classList.remove("valid");
+            
+            } else {
+              field.classList.remove("err");
+              field.classList.add("valid");
+             
+            }
+            
+          
+            // (C3) NUMBER
+            field = document.getElementById("number");
+          
+            if (!field.checkValidity()) {
+              valid = false;
+              field.classList.add("err");
+              field.classList.remove("valid");
+              
+            } else {
+              field.classList.remove("err");
+              field.classList.add("valid");
+             
+            }
+          //c4
+          field=document.getElementById("age");
+          if (!field.checkValidity()) {
+            valid = false;
+            field.classList.add("err");
+            field.classList.remove("valid");
+            
+          } else {
+            field.classList.remove("err");
+            field.classList.add("valid");
+           
+          }
+          //c5
+          field=document.getElementById("email");
+          if (!field.checkValidity()) {
+            valid = false;
+            field.classList.add("err");
+            field.classList.remove("valid");
+            
+          } else {
+            field.classList.remove("err");
+            field.classList.add("valid");
+           
+          }
+          //c6
+          field=document.getElementById("number");
+          if (!field.checkValidity()) {
+            valid = false;
+            field.classList.add("err");
+            field.classList.remove("valid");
+            
+          } else {
+            field.classList.remove("err");
+            field.classList.add("valid");
+           
+          }
+          //c7
+          field=document.getElementById("idtype");
+          if (!field.checkValidity()) {
+            valid = false;
+            field.classList.add("err");
+            field.classList.remove("valid");
+        
+          } else {
+            field.classList.remove("err");
+            field.classList.add("valid");
+           
+          }
+          //c8
+          field=document.getElementById("idnum");
+          if (!field.checkValidity()) {
+            valid = false;
+            field.classList.add("err");
+            field.classList.remove("valid");
+            
+          } else {
+            field.classList.remove("err");
+            field.classList.add("valid");
+           
+          }
+            event.preventDefault();
+            return valid;
+          }
+        
+    </script>
 </body>
+
 </html>

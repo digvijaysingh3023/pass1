@@ -1,0 +1,500 @@
+body{
+    background-color: #1e1e1e;
+    padding:0;
+    margin: 0;
+   
+}
+@font-face {
+    font-family: 'fsp-demo-freigeist-con-black-5';
+    src: url(../Fontspring-DEMO-freigeist-conblack.otf);
+  }
+@font-face {
+    font-family: 'Uncut-Sans';
+    src: url(../Uncut-Sans-Regular.otf);
+  }
+.navbar{
+width:100%;
+height: 10vh;
+background:rgba(100,100,100,0.2);
+color: #f4f4f4;
+display: flex;
+font-size: 1.7vh;
+
+}
+#buypasses{
+background-color: #f6d317;
+border-radius: .7rem;
+height:5vh ;
+width:20vw;
+margin-left: 55vw;
+margin-top: 2vh;
+border: none;
+}
+#alcherlogo1{
+    height: 7vh;
+    width: max-content;
+    margin-left: 3vw;
+    margin-top: 2vh;
+  
+}
+h1{
+    margin-left: 1vw;
+    margin-top: 4vh;
+
+}
+.intro{
+    text-align: center;
+    color: #f4f4f4;
+    margin-bottom: 7vh;
+}
+#heading2{
+    font-size: 7vh;
+    padding-bottom: 0;
+    margin-bottom: 2vh;
+}
+#introtext{
+    font-size: 3vh;
+    margin-top: 0;
+
+}
+.Attendeedetails{
+    color: #f4f4f4;
+    
+    
+}
+#attendee{
+   
+    font-size: 4.5vh;
+    margin-left: 5vw;
+
+}
+h3{
+    font-size: 3vh;
+    margin-left: 5vw;
+   
+}
+.primary{
+    display: flex;
+    margin-top: 2vh;
+}
+.passtype{
+    color: #1e1e1e;
+    background-color: #677de0;
+    height: 3.5vh;
+    border-radius: .2rem;
+    margin-top: 3vh;
+    margin-left: 2vw;
+    border:none;
+
+}
+.info{
+    margin-top: 3vh;
+    margin-left: 1vw;
+}
+.details{
+    margin-top: 2vh;
+}
+.detailbox{
+    background-color: #1e1e1e;
+    border: none;
+    border-bottom: .3vh  solid #f4f4f4;
+    color: #f4f4f4;
+    
+    
+}
+#name{
+    margin-left: 5vw;
+width:23vw;
+}
+#gender{
+    width:10vw;
+    color: rgba(244,244,244,.5);
+    margin-left: 1vw;
+}
+#age{
+    width:5vw;
+    margin-left: 1vw;
+}
+#email{
+    margin-left: 5vw;
+    margin-top: 4vh;
+    width:23vw;
+}
+#number{
+    margin-left: 1vw;
+    width: 18vw;
+    margin-top: 4vh;
+}
+#idtype{
+    color: rgba(244,244,244,.5);
+    margin-left:5vw;
+    margin-top: 4vh;
+    width: 23vw;
+}
+#idnum{
+    margin-left: 1vw;
+    width: 19vw;
+    margin-top: 4vh;
+}
+.submitbtn{
+    margin-left: 5vw;
+    background-color: #2DA38F;
+    color: #1e1e1e;
+    border: none;
+    border-radius: .2rem;
+    margin-top: 5vh;
+    
+}
+.addandremove{
+    display:flex;
+ margin-top: 7vh;
+    margin-left: 5vw;
+    
+}
+.add{
+    background-color: #F6D317;
+    border: none;
+    border-radius:.2rem ;
+}
+.remove{
+    border: none;
+    border-radius:.2rem ;
+    background-color: #DB5356;
+    margin-left: 1vw;
+}
+.idoption{
+    background-color: #f4f4f4;
+    color: #1e1e1e;
+}
+.genderoption{
+    background-color: #f4f4f4;
+    color: #1e1e1e;
+}
+.passoption{
+    background-color: #f4f4f4;
+    color: #1e1e1e;
+}
+.arrow {
+    border: solid black;
+    border-width: 0 3px 3px 0;
+    display: inline-block;
+    padding: 3px;
+  }
+  
+  .right {
+    transform: rotate(-45deg);
+    -webkit-transform: rotate(-45deg);
+  }
+ 
+  .footer{
+    background-image: url("../images/footer-background.svg");
+    height:50vw;
+    background-size: cover;
+    background-color: #1e1e1e;
+    background-repeat: no-repeat;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #F1F1F1;
+    width: 100%;
+    height: auto;
+    
+    
+}
+
+.footer-iit{
+    margin-top: 7%;
+    font-size:2vw;
+    text-align: center;
+
+}
+
+.footer-alcher{
+    font-size: 12vh;
+    font-weight: 1000;
+    width:100%;
+    height: 20vh;
+    text-align: center;
+    margin-bottom: 1.5%;
+
+}
+.ribbon-case{
+    width: 100%;
+    background-image: url("../images/ribbon-b.svg"),url("../images/ribbon.svg") ,url("../images/Star.svg"),url("../images/Star.svg");
+    background-size: 70vh,70vh,4vh,8vh,6vh;
+
+    background-repeat: no-repeat,no-repeat,no-repeat,no-repeat;
+    background-position: left ,right,12%,75% 86%;
+}
+.following{
+   display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    width:70%;
+
+}
+.contact{
+    width: 90%;
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    margin: auto;
+    margin-bottom: 1.5%;
+
+}
+.contact-info{
+    display: flex;
+    flex-direction: column;
+    margin-right: 2vw;
+}
+
+.name{
+    font-weight: 600;
+    margin-bottom: 10%;
+    font-size:1.121vw;
+}
+
+.phone{
+    font-size:1.12vw;
+
+}
+
+.email{
+    font-size:1.12vw;
+}
+.creator-info{
+    width:100%;
+    margin-left:10%;
+    display: flex;
+    flex-direction: row;
+    font-size: 1.12vw;
+    margin-bottom: 2%;
+    align-items: flex-end;
+
+    
+    
+}
+.business-contact{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    margin-left: 38vw;
+}
+.welcometxt{
+    background-color: #1e1e1e;
+    color: #f4f4f4;
+    text-align: center;
+    margin-top: 7vh;
+   height: 10vh;
+    font-size: 3vh;
+    background-image: url("../images/Star.svg");
+    background-repeat: no-repeat;
+    background-size: 6vh;;
+    background-position: 70% 0%;
+}
+
+.bottombar{
+    height: 5vh;
+    background:rgba(100,100,100,0.2);
+    position: sticky;
+}
+.price{
+    color: #f4f4f4;
+    margin-left: 5vw;
+
+}
+.err {  border-bottom: 1px solid #b1395f;
+    background-color: #1e1e1e;
+background-image: url("../images/Vector2.svg");
+background-repeat: no-repeat;
+background-size: 3vh; 
+background-position: right;}
+.valid{
+    border-bottom: 1px solid #39A279;
+    background-color: #1e1e1e;
+    background-image: url("..images/Vector.svg");
+background-repeat: no-repeat;
+background-size: 3vh; 
+background-position: right;}
+@media(min-width:650px){
+    .mobile-footer{
+        display: none;
+    }
+
+}
+@media( max-width:850px){
+   
+   
+    .ribbon-case{
+        background-size: 45vh,45vh,4vh,4vh;
+    }
+   .footer-alcher{
+    font-size: 7vh;
+   }
+   .welcometxt{
+    background-size: 3vh;
+    background-position: 82% 4%;
+   }
+   #buypasses{
+    font-size: 1.2vh;
+   }
+}
+
+@media (max-width:650px){
+    
+    .footer{
+        display: none;
+    }
+
+}
+@media (max-width:650px){ 
+    .footer-iit{
+       
+    margin-top: 7%;
+    font-weight: 600;
+    font-size: 2.2vw;
+}
+.footer-alcher{
+    font-size: 5vw;
+    padding-bottom: 3vh;
+}
+.name{
+    font-size: 2vw;
+    margin-bottom: 1.5vh;
+}
+.phone{
+    font-size: 2vw;
+}
+.email{
+    font-size: 2vw;
+}
+.mobile-footer{
+background-image: url("../images/footer-background.svg");
+height:auto;
+background-size: cover;
+background-color: #1e1e1e;
+background-repeat: no-repeat;
+}
+.ribbon-case{
+    
+    background-repeat: no-repeat;
+    background-size: 35vh,35vh,3vh,4vh;
+    background-position: left top , right top, 19% 59% , 70% 32%;
+
+}
+.welcometxt{
+    font-size: 2vh;
+    margin-bottom: 0;
+    background-size: 3vh;
+background-position: 70% ;
+}
+.details{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    gap: 3vh;
+}
+
+
+#buypasses{
+    margin-left: 33vw;
+    font-size: 1.2vh;
+
+}
+.div1{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    gap: 3vh;
+}
+.div2{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+  
+}
+.div3{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    
+}
+.detailbox{
+    margin-left: 3vw;
+}
+#name{
+    width: 50vw;
+margin-left: 3vw;
+}
+#gender{
+    width: 40vw;
+    margin-left: 3vw;
+}
+#age{
+    margin-left: 3vw;
+    width: 30vw;
+}
+#email{
+    margin-left: 3vw;
+    width: 50vw;
+    height: 5vh;
+    margin-top: 0;
+}
+#number{
+    margin-left: 3vw;
+    width: 50vw;
+    height: 5vh;
+    margin-top: 0;
+}
+#idtype{
+    margin-left: 3vw;
+    width: 50vw;
+    height: 5vh;
+    margin-top: 0;
+}
+#idnum{
+    margin-left: 3vw;
+    width: 50vw;
+    height: 5vh;
+    margin-top: 0;
+}
+#attendee{
+    font-size: 3vh;
+}
+h3{
+    font-size: 2vh;
+}
+.passtype{
+    margin-top: 2vh;
+    font-size: 1vh;
+    height: 2vh;
+}
+.einput{
+    position: relative;
+}
+.einput img{
+    display: none;
+    position: absolute;
+    top: 5px;
+    right: 0;
+    height: 20px;
+}
+.info{
+    margin-top: 2vh;
+}
+#heading2{
+    font-size: 5vh;
+}
+#introtext{
+    font-size: 2vh;
+}
+.navbar{
+    font-size: 1vh;
+}
+#alcherlogo1{
+    height: 5vh;
+}
+}
+
+
+

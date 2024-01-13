@@ -188,6 +188,7 @@ def savedata(request):
         member_idnumber = request.POST.getlist('IDnumber')
         member_age = request.POST.getlist('age')
         member_gender = request.POST.getlist('gender')
+        print(member_gender)
         member_email = request.POST.getlist('email')
         Tdata = {
             "Email": LeaderEmail,
@@ -210,18 +211,18 @@ def savedata(request):
         doc_ref = db.collection('transaction').document(id)
         doc_ref.set(Tdata)
         doc_ref.collection('users').document().set(Ldata)
-        members = []
-        for fname,contact, pass_type, idtype, idnumber, gender, age, email, in zip(membernames, member_contacts, member_passtype, member_idtype, member_idnumber, member_gender, member_age, member_email):
+        print(len(membernames))
+        for i in range(len(membernames)):
             member = {
-                "name": fname,
-                "contact": contact,
-                "pass_type": pass_type,
-                "id_type": idtype,
-                "id_number": idnumber,
-                "age": age,
-                "gender": gender,
-                'email': email,
+                "name": membernames[i],
+                "contact": member_contacts[i],
+                "gender": member_gender[i],
+                "pass_type": member_passtype[i],
+                "id_type": member_idtype[i],
+                "id_number": member_idnumber[i],
+                "age": member_age[i],
+                'email': member_email[i],
             }
             doc_ref.collection('users').document().set(member)
-            members.append(member)
-    return render(request, 'main/confirm_payment.html',{'leader':Ldata,'Member':members})
+            # members.append(member)
+    return render(request, 'main/register.html')
