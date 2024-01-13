@@ -157,6 +157,7 @@ width:23vw;
     border-radius:.2rem ;
 }
 .remove{
+    display: none;
     border: none;
     border-radius:.2rem ;
     background-color: #DB5356;

@@ -21,23 +21,23 @@
             pass for each of it.</p>
     </div>
     <div class="Attendeedetails">
-    <form method="POST" name="reg" novalidate>
-        {% csrf_token %}
-        <h id="attendee">ATTENDEE DETAILS</h>
-        <div class="primary">
-            <h3>PRIMARY ATTENDEE</h3>
-            <select class="passtype" name="Lpasstype">
-                <option class="passoption" value="" disabled selected>SELECT PASS TYPE</option>
-                <option class="passoption" value="NORMAL">NORMAL</option>
-                <option class="passoption" value="VIP">VIP</option>
-                <option class="passoption" value="SUPER VIP">SUPER VIP</option>
-            </select>
-            <div class="info"> &#9432</div>
-        </div>
+        <form method="POST" name="reg" novalidate>
+            {% csrf_token %}
+            <h id="attendee">ATTENDEE DETAILS</h>
+            <div class="primary">
+                <h3>PRIMARY ATTENDEE</h3>
+                <select class="passtype" name="Lpasstype">
+                    <option class="passoption" value="" disabled selected>SELECT PASS TYPE</option>
+                    <option class="passoption" value="NORMAL">NORMAL</option>
+                    <option class="passoption" value="VIP">VIP</option>
+                    <option class="passoption" value="SUPER VIP">SUPER VIP</option>
+                </select>
+                <div class="info"> &#9432</div>
+            </div>
 
             <div class="details">
                 <div class="div1">
-                        <input type="text" placeholder="Full Name" id="name" class="detailbox" required minlength="2" name="LeaderName">
+                    <input type="text" placeholder="Full Name" id="name" class="detailbox" required minlength="2" name="LeaderName">
 
                     <select id="gender" class="detailbox" name="LeaderGender">
                         <option class="genderoption" value="" disabled selected>Gender</option>
@@ -45,15 +45,17 @@
                         <option class="genderoption" value="Female">Female</option>
                         <option class="genderoption" value="Other">Other</option>
                     </select>
-                    <input type="number" placeholder="Age" id="age" class="detailbox age" required min="1" name="LeaderAge">
+                    <input type="number" placeholder="Age" id="age" class="detailbox age" required min="1"
+                        name="LeaderAge">
                 </div>
                 <div class="div2">
                     {% comment %} <div class="einput">
                         <input type="email" class="vinput" name="LeaderEmail" autofocus required>
                         <img src="{% static 'img/Vector.png' %}" alt="">
                     </div> {% endcomment %}
-                        <input type="email" placeholder="Email-ID" id="email" class="detailbox vinput" required minlength="2" name="LeaderEmail">
-                        {% comment %} <img src="{% static 'img/Vector.png' %}" alt=""> {% endcomment %}
+                    <input type="email" placeholder="Email-ID" id="email" class="detailbox vinput" required
+                        minlength="2" name="LeaderEmail">
+                    {% comment %} <img src="{% static 'img/Vector.png' %}" alt=""> {% endcomment %}
                     <input type="tel" placeholder="Contact Number" class="detailbox" id="number"
                         pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}" minlength="2" name="LeaderContact_no">
                 </div>
@@ -67,58 +69,19 @@
                         <option class="idoption" value="Other">Other</option>
 
                     </select>
-                    <input type="number" placeholder="ID Number" id="idnum" class="detailbox" required minlength="1" name="LeaderIDnumber">
+                    <input type="number" placeholder="ID Number" id="idnum" class="detailbox" required minlength="1"
+                        name="LeaderIDnumber">
                 </div>
             </div>
-            <div class="primary">
-                <h3>PRIMARY ATTENDEE</h3>
-                <select class="passtype" name="pass_type">
-                    <option class="passoption" value="" disabled selected>SELECT PASS TYPE</option>
-                    <option class="passoption" value="NORMAL">NORMAL</option>
-                    <option class="passoption" value="VIP">VIP</option>
-                    <option class="passoption" value="SUPER VIP">SUPER VIP</option>
-                </select>
-                <div class="info"> &#9432</div>
-            </div>    
-            <div class="details">
-                <div class="div1">
-                    <input type="text" placeholder="Full Name" id="name" class="detailbox" required minlength="2" name="name">
-                    <select  id="select" class="detailbox" name="gender">
-                        <option disabled selected value="">Gender</option>
-                        <option value="Male">Male</option>
-                        <option value="Femal">Female</option>
-                        <option value="others">Others</option>
-                    </select>
-
-                    <input type="number" placeholder="Age" id="age" class="detailbox age" required min="1" name="age">
-                </div>
-                <div class="div2">
-                    <input type="email" placeholder="Email-ID" id="email" class="detailbox" required minlength="2" name="email">
-                    <input type="tel" placeholder="Contact Number" class="detailbox" id="number"
-                        pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}" minlength="2" name="contact_no">
-                </div>
-                <div class="div3"><select id="idtype" class="detailbox" required minlength="1" name="IDtype">
-
-                        <option class="idoption" value="" disabled selected>Select your ID type</option>
-                        <option class="idoption" value="College ID">College ID</option>
-                        <option class="idoption" value="Adhaar ID">Adhaar ID</option>
-                        <option class="idoption" value="Driver's License">Driver's License</option>
-                        <option class="idoption" value="Voter's ID">Voter's ID</option>
-                        <option class="idoption" value="Other">Other</option>
-
-                    </select>
-                    <input type="number" placeholder="ID Number" id="idnum" class="detailbox" required minlength="1" name="IDnumber" >
-                </div>
-            </div>
-
+            <div id="add-container_2"></div>
             <div class="addandremove">
-                <button onclick="addMember()" class="add">+ ADD ATTENDEE</button>
-                <button onclick=" removeMember()" class="remove">- REMOVE</button>
+                <button type="button" class="add" id="press-1">+ ADD ATTENDEE</button>
+                <button type="button" class="remove" id="press-2" style="display: none;">- REMOVE</button>
             </div>
             <div>
                 <button type="submit" class="submitbtn">SUBMIT AND PAY</button>
             </div>
-    </form>
+        </form>
         <div class="welcometxt">
             Team Alcheringa Welcomes you to the 28th edition of
         </div>
@@ -211,104 +174,171 @@
             </div>
         </div>
 
-    <script>
-        document.forms['reg'].onsubmit= function(event){
-            // (C1) INIT
-            var valid = true, error = "", field = "";
-          
-            // (C2) NAME
-            field = document.getElementById("name");
-            
-            if (!field.checkValidity()) {
-              valid = false;
-              field.classList.add("err");
-              field.classList.remove("valid");
-            
-            } else {
-              field.classList.remove("err");
-              field.classList.add("valid");
-             
+        <script>
+            document.getElementById('press-1').addEventListener("click", addPage);
+            document.getElementById('press-2').addEventListener("click", deletePage);
+            const container = document.getElementById('add-container_2');
+            let removeBtn = document.getElementById('press-2');
+            var count = 1;
+
+            function addPage() {
+                count++;
+                var code = `<div class="primary">
+            <h3>ATTENDEE</h3>
+            <select class="passtype" name="Lpasstype">
+                <option class="passoption" value="" disabled selected>SELECT PASS TYPE</option>
+                <option class="passoption" value="NORMAL">NORMAL</option>
+                <option class="passoption" value="VIP">VIP</option>
+                <option class="passoption" value="SUPER VIP">SUPER VIP</option>
+            </select>
+            <div class="info"> &#9432</div>
+        </div>
+
+            <div class="details">
+                <div class="div1">
+                        <input type="text" placeholder="Full Name" id="name" class="detailbox" required minlength="2" name="LeaderName">
+
+                    <select id="gender" class="detailbox" name="LeaderGender">
+                        <option class="genderoption" value="" disabled selected>Gender</option>
+                        <option class="genderoption" value="Male">Male</option>
+                        <option class="genderoption" value="Female">Female</option>
+                        <option class="genderoption" value="Other">Other</option>
+                    </select>
+                    <input type="number" placeholder="Age" id="age" class="detailbox age" required min="1" name="LeaderAge">
+                </div>
+                <div class="div2">
+                        <input type="email" placeholder="Email-ID" id="email" class="detailbox vinput" required minlength="2" name="LeaderEmail">
+                    <input type="tel" placeholder="Contact Number" class="detailbox" id="number"
+                        pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}" minlength="2" name="LeaderContact_no">
+                </div>
+                <div class="div3">
+                    <select id="idtype" class="detailbox" name="LeaderIDtype">
+                        <option class="idoption" value="" disabled selected>Select your ID type</option>
+                        <option class="idoption" value="College ID">College ID</option>
+                        <option class="idoption" value="Adhaar ID">Adhaar ID</option>
+                        <option class="idoption" value="Driver's License">Driver's License</option>
+                        <option class="idoption" value="Voter's ID">Voter's ID</option>
+                        <option class="idoption" value="Other">Other</option>
+
+                    </select>
+                    <input type="number" placeholder="ID Number" id="idnum" class="detailbox" required minlength="1" name="LeaderIDnumber">
+                </div>
+            </div>`;
+                container.insertAdjacentHTML("beforeend", code);
+
+                if (count == 2) {
+                    removeBtn.style.display = "inline-block";
+                }
             }
-            
-          
-            // (C3) NUMBER
-            field = document.getElementById("number");
-          
-            if (!field.checkValidity()) {
-              valid = false;
-              field.classList.add("err");
-              field.classList.remove("valid");
-              
-            } else {
-              field.classList.remove("err");
-              field.classList.add("valid");
-             
+
+            function deletePage() {
+                count--;
+                let elm = container.lastElementChild;
+                let elm2 = container.lastElementChild.previousElementSibling;
+                container.removeChild(elm);
+                container.removeChild(elm2);
+
+                if (count == 1) {
+                    removeBtn.style.display = "none";
+                }
             }
-          //c4
-          field=document.getElementById("age");
-          if (!field.checkValidity()) {
-            valid = false;
-            field.classList.add("err");
-            field.classList.remove("valid");
-            
-          } else {
-            field.classList.remove("err");
-            field.classList.add("valid");
-           
-          }
-          //c5
-          field=document.getElementById("email");
-          if (!field.checkValidity()) {
-            valid = false;
-            field.classList.add("err");
-            field.classList.remove("valid");
-            
-          } else {
-            field.classList.remove("err");
-            field.classList.add("valid");
-           
-          }
-          //c6
-          field=document.getElementById("number");
-          if (!field.checkValidity()) {
-            valid = false;
-            field.classList.add("err");
-            field.classList.remove("valid");
-            
-          } else {
-            field.classList.remove("err");
-            field.classList.add("valid");
-           
-          }
-          //c7
-          field=document.getElementById("idtype");
-          if (!field.checkValidity()) {
-            valid = false;
-            field.classList.add("err");
-            field.classList.remove("valid");
-        
-          } else {
-            field.classList.remove("err");
-            field.classList.add("valid");
-           
-          }
-          //c8
-          field=document.getElementById("idnum");
-          if (!field.checkValidity()) {
-            valid = false;
-            field.classList.add("err");
-            field.classList.remove("valid");
-            
-          } else {
-            field.classList.remove("err");
-            field.classList.add("valid");
-           
-          }
-            event.preventDefault();
-            return valid;
-          }
-        
-    </script>
+            document.forms['reg'].onsubmit = function (event) {
+                // (C1) INIT
+                var valid = true, error = "", field = "";
+
+                // (C2) NAME
+                field = document.getElementById("name");
+
+                if (!field.checkValidity()) {
+                    valid = false;
+                    field.classList.add("err");
+                    field.classList.remove("valid");
+
+                } else {
+                    field.classList.remove("err");
+                    field.classList.add("valid");
+
+                }
+
+
+                // (C3) NUMBER
+                field = document.getElementById("number");
+
+                if (!field.checkValidity()) {
+                    valid = false;
+                    field.classList.add("err");
+                    field.classList.remove("valid");
+
+                } else {
+                    field.classList.remove("err");
+                    field.classList.add("valid");
+
+                }
+                //c4
+                field = document.getElementById("age");
+                if (!field.checkValidity()) {
+                    valid = false;
+                    field.classList.add("err");
+                    field.classList.remove("valid");
+
+                } else {
+                    field.classList.remove("err");
+                    field.classList.add("valid");
+
+                }
+                //c5
+                field = document.getElementById("email");
+                if (!field.checkValidity()) {
+                    valid = false;
+                    field.classList.add("err");
+                    field.classList.remove("valid");
+
+                } else {
+                    field.classList.remove("err");
+                    field.classList.add("valid");
+
+                }
+                //c6
+                field = document.getElementById("number");
+                if (!field.checkValidity()) {
+                    valid = false;
+                    field.classList.add("err");
+                    field.classList.remove("valid");
+
+                } else {
+                    field.classList.remove("err");
+                    field.classList.add("valid");
+
+                }
+                //c7
+                field = document.getElementById("idtype");
+                if (!field.checkValidity()) {
+                    valid = false;
+                    field.classList.add("err");
+                    field.classList.remove("valid");
+
+                } else {
+                    field.classList.remove("err");
+                    field.classList.add("valid");
+
+                }
+                //c8
+                field = document.getElementById("idnum");
+                if (!field.checkValidity()) {
+                    valid = false;
+                    field.classList.add("err");
+                    field.classList.remove("valid");
+
+                } else {
+                    field.classList.remove("err");
+                    field.classList.add("valid");
+
+                }
+                event.preventDefault();
+                return valid;
+            }
+
+        </script>
 </body>
 
 </html>
