@@ -1,7 +1,9 @@
+
 body{
     background-color: #1e1e1e;
     padding:0;
     margin: 0;
+     font-family: 'fsp-demo-freigeist-con-black-5';
    
 }
 @font-face {
@@ -46,6 +48,7 @@ h1{
     text-align: center;
     color: #f4f4f4;
     margin-bottom: 7vh;
+    font-family: 'Uncut-Sans';
 }
 #heading2{
     font-size: 7vh;
@@ -188,6 +191,7 @@ width:23vw;
   }
  
   .footer{
+  font-family: 'Uncut-Sans';
     background-image: url("../images/footer-background.svg");
     height:50vw;
     background-size: cover;
@@ -211,6 +215,7 @@ width:23vw;
 }
 
 .footer-alcher{
+ font-family: 'fsp-demo-freigeist-con-black-5';
     font-size: 12vh;
     font-weight: 1000;
     width:100%;
@@ -282,6 +287,7 @@ width:23vw;
     margin-left: 38vw;
 }
 .welcometxt{
+font-family: 'Uncut-Sans';
     background-color: #1e1e1e;
     color: #f4f4f4;
     text-align: center;
@@ -370,6 +376,7 @@ background-position: right;}
     font-size: 2vw;
 }
 .mobile-footer{
+font-family: 'Uncut-Sans';
 background-image: url("../images/footer-background.svg");
 height:auto;
 background-size: cover;

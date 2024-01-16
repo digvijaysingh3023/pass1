@@ -93,3 +93,20 @@ document.forms['reg-form'].onsubmit = function (event) {
     field.classList.add("valid");
   }
 }
+ const field=document.getElementById("email");
+
+
+
+ field.addEventListener("input",()=>{
+  var valid = true;
+  if(!field.checkValidity()) {
+    valid = false;
+    field.classList.remove("err");
+    field.classList.remove("valid");
+
+  } else {
+    field.classList.remove("err");
+    field.classList.add("valid");
+
+  }
+ })
