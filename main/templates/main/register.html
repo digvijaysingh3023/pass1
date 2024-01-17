@@ -27,50 +27,44 @@
             <div class="primary">
                 <h3>PRIMARY ATTENDEE</h3>
                 <select class="passtype" name="Lpasstype">
-                    <option class="passoption" value="" disabled selected>SELECT PASS TYPE</option>
-                    <option class="passoption" value="NORMAL">NORMAL</option>
-                    <option class="passoption" value="VIP">VIP</option>
-                    <option class="passoption" value="SUPER VIP">SUPER VIP</option>
+                    <option class="passoption" value="" disabled {% if form_data.Lpasstype|default:'' == '' %}selected{% endif %}>SELECT PASS TYPE</option>
+                    <option class="passoption" value="NORMAL" {% if form_data.Lpasstype|default:'' == 'NORMAL' %}selected{% endif %}>NORMAL</option>
+                    <option class="passoption" value="VIP" {% if form_data.Lpasstype|default:'' == 'VIP' %}selected{% endif %}>VIP</option>
+                    <option class="passoption" value="SUPER VIP" {% if form_data.Lpasstype|default:'' == 'SUPER VIP' %}selected{% endif %}>SUPER VIP</option>
                 </select>
-                <div class="info"> &#9432</div>
+                <div class="info"> ⓘ</div>
             </div>
-
+        
             <div class="details">
                 <div class="div1">
-                    <input type="text" placeholder="Full Name" id="name" class="detailbox" required minlength="2" name="LeaderName">
-
+                    <input type="text" placeholder="Full Name" id="name" class="detailbox" required minlength="2" name="LeaderName" value="{{ form_data.LeaderName|default:'' }}">
+        
                     <select id="gender" class="detailbox" name="LeaderGender">
-                        <option class="genderoption" value="" disabled selected>Gender</option>
-                        <option class="genderoption" value="Male">Male</option>
-                        <option class="genderoption" value="Female">Female</option>
-                        <option class="genderoption" value="Other">Other</option>
+                        <option class="genderoption" value="" disabled {% if form_data.LeaderGender|default:'' == '' %}selected{% endif %}>Gender</option>
+                        <option class="genderoption" value="Male" {% if form_data.LeaderGender|default:'' == 'Male' %}selected{% endif %}>Male</option>
+                        <option class="genderoption" value="Female" {% if form_data.LeaderGender|default:'' == 'Female' %}selected{% endif %}>Female</option>
+                        <option class="genderoption" value="Other" {% if form_data.LeaderGender|default:'' == 'Other' %}selected{% endif %}>Other</option>
                     </select>
                     <input type="number" placeholder="Age" id="age" class="detailbox age" required min="1"
-                        name="LeaderAge">
+                        name="LeaderAge" value="{{ form_data.LeaderAge|default:'' }}">
                 </div>
                 <div class="div2">
-                    {% comment %} <div class="einput">
-                        <input type="email" class="vinput" name="LeaderEmail" autofocus required>
-                        <img src="{% static 'img/Vector.png' %}" alt="">
-                    </div> {% endcomment %}
                     <input type="email" placeholder="Email-ID" id="email" class="detailbox vinput" required
-                        minlength="2" name="LeaderEmail">
-                    {% comment %} <img src="{% static 'img/Vector.png' %}" alt=""> {% endcomment %}
+                        minlength="2" name="LeaderEmail" value="{{ form_data.LeaderEmail|default:'' }}">
                     <input type="tel" placeholder="Contact Number" class="detailbox" id="number"
-                        pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}" minlength="2" name="LeaderContact_no">
+                        pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}" minlength="2" name="LeaderContact_no" value="{{ form_data.LeaderContact_no|default:'' }}">
                 </div>
                 <div class="div3">
                     <select id="idtype" class="detailbox" name="LeaderIDtype">
-                        <option class="idoption" value="" disabled selected>Select your ID type</option>
-                        <option class="idoption" value="College ID">College ID</option>
-                        <option class="idoption" value="Adhaar ID">Adhaar ID</option>
-                        <option class="idoption" value="Driver's License">Driver's License</option>
-                        <option class="idoption" value="Voter's ID">Voter's ID</option>
-                        <option class="idoption" value="Other">Other</option>
-
+                        <option class="idoption" value="" disabled {% if form_data.LeaderIDtype|default:'' == '' %}selected{% endif %}>Select your ID type</option>
+                        <option class="idoption" value="College ID" {% if form_data.LeaderIDtype|default:'' == 'College ID' %}selected{% endif %}>College ID</option>
+                        <option class="idoption" value="Adhaar ID" {% if form_data.LeaderIDtype|default:'' == 'Adhaar ID' %}selected{% endif %}>Adhaar ID</option>
+                        <option class="idoption" value="Driver's License" {% if form_data.LeaderIDtype|default:'' == 'Driver\'s License' %}selected{% endif %}>Driver's License</option>
+                        <option class="idoption" value="Voter's ID" {% if form_data.LeaderIDtype|default:'' == 'Voter\'s ID' %}selected{% endif %}>Voter's ID</option>
+                        <option class="idoption" value="Other" {% if form_data.LeaderIDtype|default:'' == 'Other' %}selected{% endif %}>Other</option>
                     </select>
                     <input type="number" placeholder="ID Number" id="idnum" class="detailbox" required minlength="1"
-                        name="LeaderIDnumber">
+                        name="LeaderIDnumber" value="{{ form_data.LeaderIDnumber|default:'' }}">
                 </div>
             </div>
             <div id="add-container_2"></div>
@@ -261,7 +255,7 @@
                 }
 
 
-                // (C3) NUMBER
+                //(C3) NUMBER
                 field = document.getElementById("number");
 
                 if (!field.checkValidity()) {
@@ -299,14 +293,14 @@
 
                 }
                 //c6
-                field = document.getElementById("number");
-                if (!field.checkValidity()) {
-                    valid = false;
-                    field.classList.add("err");
+               field = document.getElementById("number");
+               if (!field.checkValidity()) {
+                   valid = false;
+                   field.classList.add("err");
                     field.classList.remove("valid");
 
                 } else {
-                    field.classList.remove("err");
+                   field.classList.remove("err");
                     field.classList.add("valid");
 
                 }

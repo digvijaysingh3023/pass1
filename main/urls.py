@@ -7,5 +7,5 @@ urlpatterns = [
   path('verify/', views.sendOtp, name='send_otp'),
   path('submit/', views.verify_otp, name='verify_otp'),
   path('register/', views.savedata, name='register'),
-  path('order-summary/', views.order_summary, name='order_summary'),
+  path('Order_Summary/', views.Order_Summary, name='Order_Summary'),
 ]

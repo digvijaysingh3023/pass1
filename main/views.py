@@ -131,23 +131,10 @@ def register(request):
 
 
 
-def order_summary(request):
-    # Fetch transaction data from Firebase
-    transactions_ref = db.collection('transactions').stream()
+def Order_Summary(request):
+    Todata = request.session.get('Todata', {})
+    return render(request, 'main/Order_Summary.html',Todata)
 
-    transactions = []
-    for transaction in transactions_ref:
-        transaction_dict = transaction.to_dict()
-        transaction_dict['id'] = transaction.id
-
-        # Fetch user data from 'verified_users' collection
-        user_ref = db.collection('verified_users').document(transaction_dict['user']).get()
-        user_dict = user_ref.to_dict()
-        transaction_dict['user'] = user_dict
-
-        transactions.append(transaction_dict)
-
-    return render(request, 'main/order_summary.html', {'transactions': transactions})
 def unique_id(length):
     while True:
         random_string = ''.join(random.choices(string.ascii_letters + string.digits, k=length))
@@ -198,6 +185,14 @@ def savedata(request):
             "status":status,
             
         }
+        Todata = {
+            "Email": LeaderEmail,
+            # "time":time,
+            "amount":amount,
+            "err_des":err_des,
+            "status":status,
+            
+        }
         Ldata={
             "Email": LeaderEmail,
             "LName": LeaderName,
@@ -225,4 +220,9 @@ def savedata(request):
             }
             doc_ref.collection('users').document().set(member)
             # members.append(member)
-    return render(request, 'main/register.html')
+        request.session.flush()
+        request.session['Todata'] = Todata
+        request.session['form_data'] = request.POST
+        return redirect(Order_Summary)
+    form_data = request.session.get('form_data', {})
+    return render(request, 'main/register.html', {'form_data': form_data})
