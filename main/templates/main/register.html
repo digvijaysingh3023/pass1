@@ -1,6 +1,6 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
 
 <head>
     <meta charset="UTF-8">
@@ -8,7 +8,6 @@
     <title>Document</title>
     <link rel="stylesheet" href="{% static "register/register.css" %}">
 </head>
-
 <body>
     <div class="navbar">
         <img id="alcherlogo1" src="{% static "images/alcherlogo1.svg" %}" alt="alcherlogo">
@@ -16,7 +15,7 @@
         <button id="buypasses"> BUY YOUR PASSES HERE </button>
     </div>
     <div class="intro">
-        <h2 id="heading2">ALCHERINGA</h2>
+        <h1 id="heading2">ALCHERINGA</h1>
         <p id="introtext">Welcome to Alcheringa!! Please enter each of your attendee's names <br>and select the kind of
             pass for each of it.</p>
     </div>
@@ -26,7 +25,7 @@
             <h id="attendee">ATTENDEE DETAILS</h>
             <div class="primary">
                 <h3>PRIMARY ATTENDEE</h3>
-                <select class="passtype" name="Lpasstype">
+                <select class="passtype" name="Lpasstype" id="passt-1">
                     <option class="passoption" value="" disabled {% if form_data.Lpasstype|default:'' == '' %}selected{% endif %}>SELECT PASS TYPE</option>
                     <option class="passoption" value="NORMAL" {% if form_data.Lpasstype|default:'' == 'NORMAL' %}selected{% endif %}>NORMAL</option>
                     <option class="passoption" value="VIP" {% if form_data.Lpasstype|default:'' == 'VIP' %}selected{% endif %}>VIP</option>
@@ -37,43 +36,48 @@
         
             <div class="details">
                 <div class="div1">
-                    <input type="text" placeholder="Full Name" id="name" class="detailbox" required minlength="2" name="LeaderName" value="{{ form_data.LeaderName|default:'' }}">
-        
-                    <select id="gender" class="detailbox" name="LeaderGender">
+                    <input type="text" placeholder="Full Name" id="name-1" class="detailbox name" required minlength="2" name="LeaderName" value="{{ form_data.LeaderName|default:'' }}">
+
+                    <select id="gender-1" class="detailbox gender" name="LeaderGender" required>
                         <option class="genderoption" value="" disabled {% if form_data.LeaderGender|default:'' == '' %}selected{% endif %}>Gender</option>
                         <option class="genderoption" value="Male" {% if form_data.LeaderGender|default:'' == 'Male' %}selected{% endif %}>Male</option>
                         <option class="genderoption" value="Female" {% if form_data.LeaderGender|default:'' == 'Female' %}selected{% endif %}>Female</option>
                         <option class="genderoption" value="Other" {% if form_data.LeaderGender|default:'' == 'Other' %}selected{% endif %}>Other</option>
                     </select>
-                    <input type="number" placeholder="Age" id="age" class="detailbox age" required min="1"
+                    <input type="number" placeholder="Age" id="age-1" class="detailbox age" required min="1"
                         name="LeaderAge" value="{{ form_data.LeaderAge|default:'' }}">
                 </div>
                 <div class="div2">
-                    <input type="email" placeholder="Email-ID" id="email" class="detailbox vinput" required
+                    {% comment %} <div class="einput">
+                        <input type="email" class="vinput" name="LeaderEmail" autofocus required>
+                        <img src="{% static 'img/Vector.png' %}" alt="">
+                    </div> {% endcomment %}
+                    <input type="email" placeholder="Email-ID" id="email-1" class="detailbox email em" required
                         minlength="2" name="LeaderEmail" value="{{ form_data.LeaderEmail|default:'' }}">
-                    <input type="tel" placeholder="Contact Number" class="detailbox" id="number"
-                        pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}" minlength="2" name="LeaderContact_no" value="{{ form_data.LeaderContact_no|default:'' }}">
+                    {% comment %} <img src="{% static 'img/Vector.png' %}" alt=""> {% endcomment %}
+                    <input type="tel" placeholder="Contact Number" id="number-1" class="detailbox number" required pattern="[0-9]{10}" name="LeaderContact_no" value="{{ form_data.LeaderEmail|default:'' }}">
                 </div>
                 <div class="div3">
-                    <select id="idtype" class="detailbox" name="LeaderIDtype">
+                    <select id="idtype-1" class="detailbox idtype" name="LeaderIDtype" required>
                         <option class="idoption" value="" disabled {% if form_data.LeaderIDtype|default:'' == '' %}selected{% endif %}>Select your ID type</option>
                         <option class="idoption" value="College ID" {% if form_data.LeaderIDtype|default:'' == 'College ID' %}selected{% endif %}>College ID</option>
                         <option class="idoption" value="Adhaar ID" {% if form_data.LeaderIDtype|default:'' == 'Adhaar ID' %}selected{% endif %}>Adhaar ID</option>
                         <option class="idoption" value="Driver's License" {% if form_data.LeaderIDtype|default:'' == 'Driver\'s License' %}selected{% endif %}>Driver's License</option>
                         <option class="idoption" value="Voter's ID" {% if form_data.LeaderIDtype|default:'' == 'Voter\'s ID' %}selected{% endif %}>Voter's ID</option>
                         <option class="idoption" value="Other" {% if form_data.LeaderIDtype|default:'' == 'Other' %}selected{% endif %}>Other</option>
+
                     </select>
-                    <input type="number" placeholder="ID Number" id="idnum" class="detailbox" required minlength="1"
+                    <input type="number" placeholder="ID Number" id="idnum-1" class="detailbox idnum" required minlength="1"
                         name="LeaderIDnumber" value="{{ form_data.LeaderIDnumber|default:'' }}">
                 </div>
             </div>
             <div id="add-container_2"></div>
             <div class="addandremove">
-                <button type="button" class="add" id="press-1">+ ADD ATTENDEE</button>
-                <button type="button" class="remove" id="press-2" style="display: none;">- REMOVE</button>
+                <button type="button" class="add bigf" id="press-1"> + ADD ATTENDEE</button>
+                <button type="button" class="remove bigf" id="press-2" style="display: none;">- REMOVE</button>
             </div>
             <div>
-                <button type="submit" class="submitbtn">SUBMIT AND PAY</button>
+                <button type="submit" class="submitbtn bigf">SUBMIT AND PAY</button>
             </div>
         </form>
         <div class="welcometxt">
@@ -86,14 +90,14 @@
             </div>
             <div class="contact">
                 <div class="contact-info">
-                    <span class="name">Siddant Singh</span>
+                    <span class="namee">Siddant Singh</span>
                     <span class="phone">+91 9310859978</span>
-                    <span class="email">siddant.s@alcheringa.in</span>
+                    <span class="emaile">siddant.s@alcheringa.in</span>
                 </div>
                 <div class="contact-info">
-                    <span class="name">Siddant Singh</span>
+                    <span class="namee">Siddant Singh</span>
                     <span class="phone">+91 9310859978</span>
-                    <span class="email">siddant.s@alcheringa.in</span>
+                    <span class="emaile">siddant.s@alcheringa.in</span>
                 </div>
                 <div class="following">
                     <span style="margin-bottom: 1.5vh;font-size:1.12vw;">Follow us on</span>
@@ -134,12 +138,12 @@
                     <div style="margin-bottom:4vh" class="contact-info">
                         <span class="name">Siddant Singh</span>
                         <span class="phone">+91 9310859978</span>
-                        <span class="email">siddant.s@alcheringa.in</span>
+                        <span class="emaile">siddant.s@alcheringa.in</span>
                     </div>
                     <div class="contact-info">
                         <span class="name">Siddant Singh</span>
                         <span class="phone">+91 9310859978</span>
-                        <span class="email">siddant.s@alcheringa.in</span>
+                        <span class="emaile">siddant.s@alcheringa.in</span>
                     </div>
                 </div>
                 <div class="following-footer">
@@ -159,9 +163,6 @@
             </div>
 
         </div>
-
-
-        `
         <div class="bottombar">
             <div class="price">
                 <p>Total Amount : &#8377 299</p>
@@ -169,17 +170,20 @@
         </div>
 
         <script>
-            document.getElementById('press-1').addEventListener("click", addPage);
-            document.getElementById('press-2').addEventListener("click", deletePage);
-            const container = document.getElementById('add-container_2');
-            let removeBtn = document.getElementById('press-2');
-            var count = 1;
-
+            const form = document.querySelector('form[name="reg"]');
+            const container = document.querySelector('#add-container_2');
+            const removeBtn = document.querySelector('#press-2');
+            let count = 1;
+            
+            form.addEventListener('submit', handleFormSubmit);
+            document.querySelector('#press-1').addEventListener('click', addPage);
+            removeBtn.addEventListener('click', deletePage);
+            
             function addPage() {
                 count++;
                 var code = `<div class="primary">
             <h3>ATTENDEE</h3>
-            <select class="passtype" name="Lpasstype">
+            <select class="passtype" name="pass_type" id="passt-${count}">
                 <option class="passoption" value="" disabled selected>SELECT PASS TYPE</option>
                 <option class="passoption" value="NORMAL">NORMAL</option>
                 <option class="passoption" value="VIP">VIP</option>
@@ -190,23 +194,22 @@
 
             <div class="details">
                 <div class="div1">
-                        <input type="text" placeholder="Full Name" id="name" class="detailbox" required minlength="2" name="LeaderName">
+                        <input type="text" placeholder="Full Name" id="name-${count}" class="detailbox name" required minlength="2" name="name">
 
-                    <select id="gender" class="detailbox" name="LeaderGender">
+                    <select id="gender-${count}" class="detailbox gender" name="gender" required>
                         <option class="genderoption" value="" disabled selected>Gender</option>
                         <option class="genderoption" value="Male">Male</option>
                         <option class="genderoption" value="Female">Female</option>
                         <option class="genderoption" value="Other">Other</option>
                     </select>
-                    <input type="number" placeholder="Age" id="age" class="detailbox age" required min="1" name="LeaderAge">
+                    <input type="number" placeholder="Age" id="age-${count}" class="detailbox age" required min="1" name="age">
                 </div>
                 <div class="div2">
-                        <input type="email" placeholder="Email-ID" id="email" class="detailbox vinput" required minlength="2" name="LeaderEmail">
-                    <input type="tel" placeholder="Contact Number" class="detailbox" id="number"
-                        pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}" minlength="2" name="LeaderContact_no">
+                        <input type="email" placeholder="Email-ID" id="email-${count}" class="detailbox vinput email em" required minlength="2" name="email">
+                    <input type="tel" placeholder="Contact Number" class="detailbox number" id="number-${count}" required pattern="[0-9]{10}" minlength="2" name="contact_no">
                 </div>
                 <div class="div3">
-                    <select id="idtype" class="detailbox" name="LeaderIDtype">
+                    <select id="idtype-${count}" class="detailbox idtype" name="IDtype" required>
                         <option class="idoption" value="" disabled selected>Select your ID type</option>
                         <option class="idoption" value="College ID">College ID</option>
                         <option class="idoption" value="Adhaar ID">Adhaar ID</option>
@@ -215,7 +218,7 @@
                         <option class="idoption" value="Other">Other</option>
 
                     </select>
-                    <input type="number" placeholder="ID Number" id="idnum" class="detailbox" required minlength="1" name="LeaderIDnumber">
+                    <input type="number" placeholder="ID Number" id="idnum-${count}" class="detailbox idnum" required minlength="1" name="IDnumber">
                 </div>
             </div>`;
                 container.insertAdjacentHTML("beforeend", code);
@@ -224,7 +227,26 @@
                     removeBtn.style.display = "inline-block";
                 }
             }
-
+              document.addEventListener('input',function(){
+                const emaili=document.getElementsByClassName('em');
+                const emailReg = /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,4})$/;
+                for (const email of emaili) {
+                if((email.value).match(emailReg)){
+                    email.classList.add('valid')
+                }
+                else{
+                    email.classList.remove('valid')
+                }
+            }
+              })
+              document.addEventListener('change',function(){
+                const passes = document.getElementsByClassName('passtype');
+                for (const pass of passes) {
+                  if(pass.value){
+                    pass.classList.add('passselected');
+                  }
+                }
+              });
             function deletePage() {
                 count--;
                 let elm = container.lastElementChild;
@@ -236,101 +258,42 @@
                     removeBtn.style.display = "none";
                 }
             }
-            document.forms['reg'].onsubmit = function (event) {
-                // (C1) INIT
-                var valid = true, error = "", field = "";
-
-                // (C2) NAME
-                field = document.getElementById("name");
-
-                if (!field.checkValidity()) {
-                    valid = false;
-                    field.classList.add("err");
-                    field.classList.remove("valid");
-
-                } else {
-                    field.classList.remove("err");
-                    field.classList.add("valid");
-
-                }
-
-
-                //(C3) NUMBER
-                field = document.getElementById("number");
-
-                if (!field.checkValidity()) {
-                    valid = false;
-                    field.classList.add("err");
-                    field.classList.remove("valid");
-
-                } else {
-                    field.classList.remove("err");
-                    field.classList.add("valid");
-
-                }
-                //c4
-                field = document.getElementById("age");
-                if (!field.checkValidity()) {
-                    valid = false;
-                    field.classList.add("err");
-                    field.classList.remove("valid");
-
-                } else {
-                    field.classList.remove("err");
-                    field.classList.add("valid");
-
-                }
-                //c5
-                field = document.getElementById("email");
-                if (!field.checkValidity()) {
-                    valid = false;
-                    field.classList.add("err");
-                    field.classList.remove("valid");
-
-                } else {
-                    field.classList.remove("err");
-                    field.classList.add("valid");
-
-                }
-                //c6
-               field = document.getElementById("number");
-               if (!field.checkValidity()) {
-                   valid = false;
-                   field.classList.add("err");
-                    field.classList.remove("valid");
-
-                } else {
-                   field.classList.remove("err");
-                    field.classList.add("valid");
-
-                }
-                //c7
-                field = document.getElementById("idtype");
-                if (!field.checkValidity()) {
-                    valid = false;
-                    field.classList.add("err");
-                    field.classList.remove("valid");
-
-                } else {
-                    field.classList.remove("err");
-                    field.classList.add("valid");
-
-                }
-                //c8
-                field = document.getElementById("idnum");
-                if (!field.checkValidity()) {
-                    valid = false;
-                    field.classList.add("err");
-                    field.classList.remove("valid");
-
-                } else {
-                    field.classList.remove("err");
-                    field.classList.add("valid");
-
-                }
+            function handleFormSubmit(event) {
                 event.preventDefault();
-                return valid;
-            }
+                let valid = true;
+                const fields = [];
+                for (let i = 1; i <= count; i++) {
+                  fields.push(`name-${i}`);
+                  fields.push(`number-${i}`);
+                  fields.push(`gender-${i}`);
+                  fields.push(`age-${i}`);
+                  fields.push(`email-${i}`);
+                  fields.push(`idtype-${i}`);
+                  fields.push(`idnum-${i}`);
+                }
+                fields.forEach(fieldName => {
+                  const field = document.querySelector(`#${fieldName}`);
+                  if (!field.checkValidity()) {
+                    valid = false;
+                    field.classList.add('err');
+                    field.classList.remove('valid');
+                  } else {
+                    field.classList.remove('err');
+                    field.classList.add('valid');
+                  }
+                });
+             //   let pass=document.getElementByClassName('passt')
+           //     pass.forEach(i=>{
+         //           if(!i.value){
+       //                 i.classList.add('err');
+               //         i.classList.add('valid');
+               //     }
+             //       else
+                //})
+                if (valid) {
+                  form.submit();
+                }
+              }
 
         </script>
 </body>

@@ -1,11 +1,14 @@
 from django.shortcuts import render,redirect
 from django.http import JsonResponse
-from . models import Pass
+from .models import Pass
 from django.core.mail import EmailMessage
 from django.core.mail import send_mail
 from django.views.decorators.csrf import csrf_exempt
 from django.conf import settings
 from django.utils import timezone
+from rest_framework import status
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
 import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import firestore
@@ -13,9 +16,55 @@ import random
 import string
 import random
 import json
-import pyrebase
+import pyrebase 
+from Crypto.Cipher import AES
+from Crypto.Random import get_random_bytes
 
+@api_view(['GET'])
+def user_data(request):
+    try:
+        email = request.GET.get('email')
+        if not email:
+            return Response({'error': 'Email is required'}, status=status.HTTP_400_BAD_REQUEST)
 
+        user_ref = db.collection('transaction').where('email', '==', email).stream()
+        users = []
+        for user in user_ref:
+            user_dict = user_ref.to_dict()
+            # user_dict['id'] = user.id
+            users.append(user_dict)
+
+        if not users:
+            return Response({'error': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
+
+        user = users[0]
+        has_passes = bool(user.get('passes', []))
+
+        if has_passes:
+            # Encrypt user data as needed
+            encrypted_data = encrypt_user_data(user)
+            return Response({'data': encrypted_data})
+        else:
+            return Response({'error': 'User has no passes'}, status=status.HTTP_404_NOT_FOUND)
+
+    except Exception as e:
+        print(e)
+        return Response({'error': 'An error occurred'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+def encrypt_user_data(user):
+    # Implement your encryption logic here
+    # For example, using the PyCryptoDome library
+ 
+
+    key = get_random_bytes(32)
+    cipher = AES.new(key, AES.MODE_EAX)
+    ciphertext, tag = cipher.encrypt_and_digest(json.dumps(user).encode())
+    nonce = cipher.nonce
+
+    # Combine nonce, tag, and ciphertext into a single string
+    encrypted_data = nonce + tag + ciphertext
+
+    return encrypted_data
 config = {
    'apiKey': "AIzaSyCYBAFlRDVF_niUuOzk-dc4lo8v5XOg2cs",
   'authDomain': "passportal-68a8a.firebaseapp.com",
@@ -35,6 +84,7 @@ db = firestore.client()
 
 
 # Create your views here.
+
 def home(request):
     context={
         'EarlyBird':{
@@ -128,6 +178,8 @@ def verify_otp(request):
 def register(request):
     email = request.session.get('LeaderEmail')
     return render(request, 'main/register.html', {'email': email})
+
+
 
 
 
