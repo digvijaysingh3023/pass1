@@ -204,13 +204,12 @@ def savedata(request):
             'pass':1,
         }
         # fee_id = "M1006"
-        # paases_type = {
-        #     'general': 0,
-        #     'premium': 0,
-        #     'exclusive': 0,
-        #     'id': id,
-        #     'amount': 0,
-        # }
+        paases_type = {
+            'NORMAL': 0,
+            'VIP': 0,
+            'SUPER VIP': 0,
+            'amount': 0,
+        }
         time=timezone.now()
         LeaderName = request.POST.get('LeaderName')
         Lpasstype = request.POST.get('Lpasstype')
@@ -227,19 +226,16 @@ def savedata(request):
         member_idnumber = request.POST.getlist('IDnumber')
         member_age = request.POST.getlist('age')
         member_gender = request.POST.getlist('gender')
-        print(member_gender)
+        if (Lpasstype == 'NORMAL'):
+            paases_type['NORMAL'] = paases_type['NORMAL']+1
+        elif (Lpasstype == 'VIP'):
+            paases_type['VIP'] = paases_type['VIP']+1
+        elif (Lpasstype == 'SUPER VIP'):
+            paases_type['SUPER VIP'] = paases_type['SUPER VIP']+1
         member_email = request.POST.getlist('email')
         Tdata = {
             "Email": LeaderEmail,
             "time":time,
-            "amount":amount,
-            "err_des":err_des,
-            "status":status,
-            
-        }
-        Todata = {
-            "Email": LeaderEmail,
-            # "time":time,
             "amount":amount,
             "err_des":err_des,
             "status":status,
@@ -270,8 +266,23 @@ def savedata(request):
                 "age": member_age[i],
                 'email': member_email[i],
             }
+            if (member_passtype[i] == 'NORMAL'):
+                paases_type['NORMAL'] = paases_type['NORMAL']+1
+            elif (member_passtype[i] == 'VIP'):
+                paases_type['VIP'] = paases_type['VIP']+1
+            elif (member_passtype[i] == 'SUPER VIP'):
+                paases_type['SUPER VIP'] = paases_type['SUPER VIP']+1
             doc_ref.collection('users').document().set(member)
             # members.append(member)
+        amount = paases_type['NORMAL']*500 + (paases_type['VIP']*750)+(paases_type['SUPER VIP'])*850
+        Todata = {
+            "Email": LeaderEmail,
+            # "time":time,
+            "amount":amount,
+            "err_des":err_des,
+            "status":status,
+            
+        }
         request.session.flush()
         request.session['Todata'] = Todata
         request.session['form_data'] = request.POST
