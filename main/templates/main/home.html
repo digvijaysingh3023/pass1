@@ -5,7 +5,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Passportal</title>
-    <link rel="stylesheet" href="{% static 'home.css' %}"
+    <link rel="stylesheet" href="{% static 'css/home.css' %}"
   </head>
   <body>
     <div class="topdiv">
@@ -23,7 +23,7 @@
     <div class="seasonpass">
       <div class="earlybird">
         <div>
-    <h2>Early Bird</h2>
+    <h2>EARLY BIRD SEASON PASS</h2>
     <p>Date: {{ context.EarlyBird.date }}</p>
     <p>Price: {{ context.EarlyBird.price }}</p>
     <img src="{{ context.EarlyBird.img }}" alt="Early Bird Image"/>
@@ -33,7 +33,7 @@
 
     <div class="normal">
       <div>
-    <h2>Normal</h2>
+    <h2>NORMAL SEASON PASS</h2>
     <p>Date: {{ context.Normal.date }}</p>
     <p>Price: {{ context.Normal.price }}</p>
     <img src="{{ context.Normal.img }}" alt="Normal pass Image"/>
@@ -47,7 +47,7 @@
     <h2>DAY WISE PASSES</h2>
     <p>These passes includes single-day pass as mentioned on it.</p>
     <div class="seasonpass">
-      <div>
+      <div class="day1">
         <div>
     <h2>Day 1</h2>
     <p>Date: {{ context.Day1.date }}</p>
@@ -57,7 +57,7 @@
     <div class="btndiv"><button class="btn"><a href="#" style="text-decoration: none;">Register &rarr;</a></button></div>
     </div>
 
-    <div>
+    <div class="day2">
       <div>
     <h2>Day 2</h2>
     <p>Date: {{ context.Day2.date }}</p>
@@ -67,7 +67,7 @@
     <div class="btndiv"><button class="btn"><a href="#" style="text-decoration: none;">Register &rarr;</a></button></div>
 </div>
 
-<div>
+<div class="day3">
   <div>
     <h2>Day 3</h2>
     <p>Date: {{ context.Day3.date }}</p>

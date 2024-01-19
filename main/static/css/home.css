@@ -22,6 +22,35 @@ body{
     display: flex;
     gap:5vw;
 }
+.earlybird{
+    background: #677DE0;
+    border-radius:3vw;
+    color:white;
+}
+.normal
+{
+    background: #F28E15;
+    border-radius:3vw;
+    color:white;  
+}
+.day1
+{
+    background: #04A0CB;
+    border-radius:3vw;
+    color:white;    
+}
+.day2
+{
+    background: #EA5B2B;
+    border-radius:3vw;
+    color:white;    
+}
+.day3
+{
+    background: #00A158;
+    border-radius:3vw;
+    color:white;    
+}
 .btndiv{
     display: flex;
     justify-content: flex-end;

@@ -86,37 +86,36 @@ db = firestore.client()
 # Create your views here.
 
 def home(request):
-    context={
-        'EarlyBird':{
-        'date':db.child('Data').child('Date').child('Early-Bird').get().val(),
-        'price':db.child('Data').child('Price').child('Early-Bird').get().val(),
-        'img':db.child('Data').child('Image').child('Early-Bird').get().val()
+    context = {
+        'Day1': {
+            'date': db.collection('Data').document('Day-1').get().get('Date'),
+            'price': db.collection('Data').document('Day-1').get().get('Price'),
+            'img': db.collection('Data').document('Day-1').get().get('Image'),
         },
-        'Normal':{
-        'date':db.child('Data').child('Date').child('Normal').get().val(),
-        'price':db.child('Data').child('Price').child('Normal').get().val(),
-        'img':db.child('Data').child('Image').child('Normal').get().val()
+        'Day2': {
+            'date': db.collection('Data').document('Day-2').get().get('Date'),
+            'price': db.collection('Data').document('Day-2').get().get('Price'),
+            'img': db.collection('Data').document('Day-2').get().get('Image'),
         },
-        'Day1':{
-        'date':db.child('Data').child('Date').child('Day 1').get().val(),
-        'price':db.child('Data').child('Price').child('Day').get().val(),
-        'img':db.child('Data').child('Image').child('Day 1').get().val()
+        'Day3': {
+            'date': db.collection('Data').document('Day-3').get().get('Date'),
+            'price': db.collection('Data').document('Day-3').get().get('Price'),
+            'img': db.collection('Data').document('Day-3').get().get('Image'),
         },
-        'Day2':{
-        'date':db.child('Data').child('Date').child('Day 2').get().val(),
-        'price':db.child('Data').child('Price').child('Day').get().val(),
-        'img':db.child('Data').child('Image').child('Day 2').get().val()
+        'EarlyBird': {
+            'date': db.collection('Data').document('Early-Bird').get().get('Date'),
+            'price': db.collection('Data').document('Early-Bird').get().get('Price'),
+            'img': db.collection('Data').document('Early-Bird').get().get('Image'),
         },
-        'Day3':{
-        'date':db.child('Data').child('Date').child('Day 3').get().val(),
-        'price':db.child('Data').child('Price').child('Normal').get().val(),
-        'img':db.child('Data').child('Image').child('Normal').get().val()
+        'Normal': {
+            'date': db.collection('Data').document('Normal-Pass').get().get('Date'),
+            'price': db.collection('Data').document('Normal-Pass').get().get('Price'),
+            'img': db.collection('Data').document('Normal-Pass').get().get('Image'),
         },
-            
-
     }
-    
-    return render(request,"home.html",{'context':context})
+    return render(request, "main/home.html", {'context': context})
+
+
     
 
 def otp(request):
