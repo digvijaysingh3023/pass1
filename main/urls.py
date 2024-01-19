@@ -6,6 +6,7 @@ urlpatterns = [
   path('otp/', views.otp , name="otp"),
   path('verify/', views.sendOtp, name='send_otp'),
   path('submit/', views.verify_otp, name='verify_otp'),
-  path('register/', views.register, name='register'),
-  path('order-summary/', views.order_summary, name='order_summary'),
+  path('register/', views.savedata, name='register'),
+  path('Order_Summary/', views.Order_Summary, name='Order_Summary'),
+  path('api/',views.user_data,name='api'),
 ]

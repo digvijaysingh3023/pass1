@@ -1,11 +1,14 @@
 from django.shortcuts import render,redirect
 from django.http import JsonResponse
-from . models import Pass
+from .models import Pass
 from django.core.mail import EmailMessage
 from django.core.mail import send_mail
 from django.views.decorators.csrf import csrf_exempt
 from django.conf import settings
 from django.utils import timezone
+from rest_framework import status
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
 import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import firestore
@@ -13,9 +16,55 @@ import random
 import string
 import random
 import json
-import pyrebase
+import pyrebase 
+from Crypto.Cipher import AES
+from Crypto.Random import get_random_bytes
 
+@api_view(['GET'])
+def user_data(request):
+    try:
+        email = request.GET.get('email')
+        if not email:
+            return Response({'error': 'Email is required'}, status=status.HTTP_400_BAD_REQUEST)
 
+        user_ref = db.collection('transaction').where('email', '==', email).stream()
+        users = []
+        for user in user_ref:
+            user_dict = user_ref.to_dict()
+            # user_dict['id'] = user.id
+            users.append(user_dict)
+
+        if not users:
+            return Response({'error': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
+
+        user = users[0]
+        has_passes = bool(user.get('passes', []))
+
+        if has_passes:
+            # Encrypt user data as needed
+            encrypted_data = encrypt_user_data(user)
+            return Response({'data': encrypted_data})
+        else:
+            return Response({'error': 'User has no passes'}, status=status.HTTP_404_NOT_FOUND)
+
+    except Exception as e:
+        print(e)
+        return Response({'error': 'An error occurred'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+def encrypt_user_data(user):
+    # Implement your encryption logic here
+    # For example, using the PyCryptoDome library
+ 
+
+    key = get_random_bytes(32)
+    cipher = AES.new(key, AES.MODE_EAX)
+    ciphertext, tag = cipher.encrypt_and_digest(json.dumps(user).encode())
+    nonce = cipher.nonce
+
+    # Combine nonce, tag, and ciphertext into a single string
+    encrypted_data = nonce + tag + ciphertext
+
+    return encrypted_data
 config = {
    'apiKey': "AIzaSyCYBAFlRDVF_niUuOzk-dc4lo8v5XOg2cs",
   'authDomain': "passportal-68a8a.firebaseapp.com",
@@ -35,6 +84,7 @@ db = firestore.client()
 
 
 # Create your views here.
+
 def home(request):
     context={
         'EarlyBird':{
@@ -131,23 +181,12 @@ def register(request):
 
 
 
-def order_summary(request):
-    # Fetch transaction data from Firebase
-    transactions_ref = db.collection('transactions').stream()
 
-    transactions = []
-    for transaction in transactions_ref:
-        transaction_dict = transaction.to_dict()
-        transaction_dict['id'] = transaction.id
 
-        # Fetch user data from 'verified_users' collection
-        user_ref = db.collection('verified_users').document(transaction_dict['user']).get()
-        user_dict = user_ref.to_dict()
-        transaction_dict['user'] = user_dict
+def Order_Summary(request):
+    Todata = request.session.get('Todata', {})
+    return render(request, 'main/Order_Summary.html',Todata)
 
-        transactions.append(transaction_dict)
-
-    return render(request, 'main/order_summary.html', {'transactions': transactions})
 def unique_id(length):
     while True:
         random_string = ''.join(random.choices(string.ascii_letters + string.digits, k=length))
@@ -165,13 +204,12 @@ def savedata(request):
             'pass':1,
         }
         # fee_id = "M1006"
-        # paases_type = {
-        #     'general': 0,
-        #     'premium': 0,
-        #     'exclusive': 0,
-        #     'id': id,
-        #     'amount': 0,
-        # }
+        paases_type = {
+            'NORMAL': 0,
+            'VIP': 0,
+            'SUPER VIP': 0,
+            'amount': 0,
+        }
         time=timezone.now()
         LeaderName = request.POST.get('LeaderName')
         Lpasstype = request.POST.get('Lpasstype')
@@ -188,6 +226,12 @@ def savedata(request):
         member_idnumber = request.POST.getlist('IDnumber')
         member_age = request.POST.getlist('age')
         member_gender = request.POST.getlist('gender')
+        if (Lpasstype == 'NORMAL'):
+            paases_type['NORMAL'] = paases_type['NORMAL']+1
+        elif (Lpasstype == 'VIP'):
+            paases_type['VIP'] = paases_type['VIP']+1
+        elif (Lpasstype == 'SUPER VIP'):
+            paases_type['SUPER VIP'] = paases_type['SUPER VIP']+1
         member_email = request.POST.getlist('email')
         Tdata = {
             "Email": LeaderEmail,
@@ -210,18 +254,38 @@ def savedata(request):
         doc_ref = db.collection('transaction').document(id)
         doc_ref.set(Tdata)
         doc_ref.collection('users').document().set(Ldata)
-        members = []
-        for fname,contact, pass_type, idtype, idnumber, gender, age, email, in zip(membernames, member_contacts, member_passtype, member_idtype, member_idnumber, member_gender, member_age, member_email):
+        print(len(membernames))
+        for i in range(len(membernames)):
             member = {
-                "name": fname,
-                "contact": contact,
-                "pass_type": pass_type,
-                "id_type": idtype,
-                "id_number": idnumber,
-                "age": age,
-                "gender": gender,
-                'email': email,
+                "name": membernames[i],
+                "contact": member_contacts[i],
+                "gender": member_gender[i],
+                "pass_type": member_passtype[i],
+                "id_type": member_idtype[i],
+                "id_number": member_idnumber[i],
+                "age": member_age[i],
+                'email': member_email[i],
             }
+            if (member_passtype[i] == 'NORMAL'):
+                paases_type['NORMAL'] = paases_type['NORMAL']+1
+            elif (member_passtype[i] == 'VIP'):
+                paases_type['VIP'] = paases_type['VIP']+1
+            elif (member_passtype[i] == 'SUPER VIP'):
+                paases_type['SUPER VIP'] = paases_type['SUPER VIP']+1
             doc_ref.collection('users').document().set(member)
-            members.append(member)
-    return render(request, 'main/confirm_payment.html',{'leader':Ldata,'Member':members})
+            # members.append(member)
+        amount = paases_type['NORMAL']*500 + (paases_type['VIP']*750)+(paases_type['SUPER VIP'])*850
+        Todata = {
+            "Email": LeaderEmail,
+            # "time":time,
+            "amount":amount,
+            "err_des":err_des,
+            "status":status,
+            
+        }
+        request.session.flush()
+        request.session['Todata'] = Todata
+        request.session['form_data'] = request.POST
+        return redirect(Order_Summary)
+    form_data = request.session.get('form_data', {})
+    return render(request, 'main/register.html', {'form_data': form_data})

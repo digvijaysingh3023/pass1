@@ -6,11 +6,11 @@
 }
 @font-face {
     font-family: 'fsp-demo-freigeist-con-black-5';
-    src: url(./Fontspring-DEMO-freigeist-conblack.otf);
+    src: url(../Fontspring-DEMO-freigeist-conblack.otf);
   }
 @font-face {
     font-family: 'Uncut-Sans';
-    src: url(./Uncut-Sans-Regular.otf);
+    src: url(../Uncut-Sans-Regular.otf);
   }
 body{
     background-color: #181818;
