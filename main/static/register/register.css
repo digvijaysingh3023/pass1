@@ -26,54 +26,53 @@ body{
     background-blend-mode: multiply;
 } */
 .navbar{
-width:100%;
-height: 10vh;
-background:rgba(100,100,100,0.2);
-color: #f4f4f4;
-display: flex;
-font-size: 1.7vh;
+    background: rgba(100,100,100,0.2);
+    color: #f4f4f4;
+    display: flex;
+    padding: 0rem 2rem;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.9vw;
+}
+.left{
+    display:flex;
+    align-items:center;
 }
 .navbar button{
     font-family: 'fsp-demo-freigeist-con-black-5',sans-serif;
     font-size: 1.2rem;
 }
 #buypasses{
-background-color: #f6d317;
-border-radius: .7rem;
-height:5vh ;
-width:20vw;
-margin-left: 55vw;
-margin-top: 2vh;
-border: none;
+    background-color: #f6d317;
+    border-radius: 0.7rem;
+    padding: 0.2rem 1.5rem;
+    border: none;
 }
 #alcherlogo1{
-    height: 7vh;
+    height: 2.3rem;
     width: max-content;
-    margin-left: 3vw;
-    margin-top: 2vh;
   
 }
 h1{
     margin-left: 1vw;
-    margin-top: 4vh;
-
 }
 .intro{
     text-align: center;
     color: #f4f4f4;
-    margin-bottom: 7vh;
+    margin-bottom: 4vw;
     font-family: 'Uncut-Sans';
 }
 .intro h1{
     font-family: 'fsp-demo-freigeist-con-black-5',sans-serif;
 }
 #heading2{
-    font-size: 7vh;
+    font-size: 4.5vw;
     padding-bottom: 0;
-    margin-bottom: 2vh;
+    margin-top: 5vw;
+    margin-bottom: 0.8vw;
 }
 #introtext{
-    font-size: 3vh;
+    font-size: 1.2rem;
     margin-top: 0;
 
 }
@@ -84,18 +83,19 @@ h1{
 }
 #attendee{
    
-    font-size: 4.5vh;
+    font-size: 2.1vw;
     margin-left: 5vw;
 
 }
 h3{
-    font-size: 3vh;
+    font-size: 1.6vw;
     margin-left: 5vw;
    
 }
 .primary{
     display: flex;
     margin-top: 2vh;
+    align-items: center;
 }
 .bigf{
     font-family: 'fsp-demo-freigeist-con-black-5',sans-serif;
@@ -104,10 +104,9 @@ h3{
 .passtype{
     color: #1e1e1e;
     background-color: #677de0;
-    height: 3.5vh;
-    padding: 0 2rem 0 0;
+    
+    padding: 0.2rem 2rem 0.2rem 0.5rem;
     border-radius: .2rem;
-    margin-top: 3vh;
     margin-left: 2vw;
     border:none;
     font-family: 'fsp-demo-freigeist-con-black-5',sans-serif;
@@ -361,6 +360,9 @@ background-position: right;}
     height: 20px;
     left: 10px;
     top: 50%;
+}
+.red{
+    background: red;
 }
 @media(min-width:650px){
     .mobile-footer{
