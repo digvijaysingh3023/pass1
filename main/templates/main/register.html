@@ -167,7 +167,7 @@
         </div>
         <div class="bottombar">
             <div class="price">
-                <p>Total Amount : &#8377 299</p>
+                <p id="total">Total Amount : &#8377 299</p>
             </div>
         </div>
 
@@ -241,15 +241,40 @@
                 }
             }
               })
-              const Amount=0;
-              document.addEventListener('change',function(){
+              const peeps=[];
+              document.addEventListener('change', function() {
                 const passes = document.getElementsByClassName('passtype');
+                const peeps = [];
+                let count = 0;
                 for (const pass of passes) {
-                  if(pass.value){
+                  count++;
+                  if (peeps.length < count) {
+                    if (pass.value === "NORMAL") {
+                      peeps.push(550);
+                    } else if (pass.value === "VIP") {
+                      peeps.push(750);
+                    } else if (pass.value === "SUPER VIP") {
+                      peeps.push(850);
+                    }
+                  } else {
+                    if (pass.value === "NORMAL") {
+                      peeps[count - 1] = 550;
+                    } else if (pass.value === "VIP") {
+                      peeps[count - 1] = 750;
+                    } else if (pass.value === "SUPER VIP") {
+                      peeps[count - 1] = 850;
+                    }
+                  }
+                  if (pass.value) {
                     pass.classList.add('passselected');
                     pass.classList.remove('red');
                   }
                 }
+                let Amount = 0;
+                for (const i of peeps) {
+                  Amount += i;
+                }
+                document.getElementById("total").innerHTML = "Total Amount : &#8377 " + Amount;
               });
 
             function deletePage() {
