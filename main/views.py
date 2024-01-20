@@ -194,6 +194,11 @@ def unique_id(length):
             return random_string
 used_strings = set()
 def savedata(request):
+    price={
+        'NORMAL': 500,
+        'VIP': 750,
+        'SUPER_VIP': 850,
+    }
     if request.method == 'POST':
         id = unique_id(5)
         amount = 750
@@ -253,7 +258,8 @@ def savedata(request):
         doc_ref = db.collection('transaction').document(id)
         doc_ref.set(Tdata)
         doc_ref.collection('users').document().set(Ldata)
-        print(len(membernames))
+        length = {len(membernames)}
+        members=[]
         for i in range(len(membernames)):
             member = {
                 "name": membernames[i],
@@ -272,7 +278,7 @@ def savedata(request):
             elif (member_passtype[i] == 'SUPER VIP'):
                 paases_type['SUPER VIP'] = paases_type['SUPER VIP']+1
             doc_ref.collection('users').document().set(member)
-            # members.append(member)
+            members.append(member)
         amount = paases_type['NORMAL']*500 + (paases_type['VIP']*750)+(paases_type['SUPER VIP'])*850
         Todata = {
             "Email": LeaderEmail,
@@ -283,8 +289,11 @@ def savedata(request):
             
         }
         request.session.flush()
+        request.session['members']=members
         request.session['Todata'] = Todata
         request.session['form_data'] = request.POST
         return redirect(Order_Summary)
     form_data = request.session.get('form_data', {})
-    return render(request, 'main/register.html', {'form_data': form_data})
+    members = request.session.get('members', {})
+    Todata = request.session.get('Todata', {})
+    return render(request, 'main/register.html', {'form_data': form_data,'members':members,"tdata":Todata,"price":price})

@@ -57,26 +57,70 @@
                     <input type="email" placeholder="Email-ID" id="email-1" class="detailbox email em" required
                         minlength="2" name="LeaderEmail" value="{{ form_data.LeaderEmail|default:'' }}">
                     {% comment %} <img src="{% static 'img/Vector.png' %}" alt=""> {% endcomment %}
-                    <input type="tel" placeholder="Contact Number" id="number-1" class="detailbox number" required pattern="[0-9]{10}" name="LeaderContact_no" value="{{ form_data.LeaderEmail|default:'' }}">
+                    <input type="tel" placeholder="Contact Number" id="number-1" class="detailbox number" required pattern="[0-9]{10}" name="LeaderContact_no" value="{{ form_data.LeaderContact_no|default:'' }}">
                 </div>
                 <div class="div3">
                     <select id="idtype-1" class="detailbox idtype" name="LeaderIDtype" required>
                         <option class="idoption" value="" disabled {% if form_data.LeaderIDtype|default:'' == '' %}selected{% endif %}>Select your ID type</option>
                         <option class="idoption" value="College ID" {% if form_data.LeaderIDtype|default:'' == 'College ID' %}selected{% endif %}>College ID</option>
                         <option class="idoption" value="Adhaar ID" {% if form_data.LeaderIDtype|default:'' == 'Adhaar ID' %}selected{% endif %}>Adhaar ID</option>
-                        <option class="idoption" value="Driver's License" {% if form_data.LeaderIDtype|default:'' == 'Driver\'s License' %}selected{% endif %}>Driver's License</option>
-                        <option class="idoption" value="Voter's ID" {% if form_data.LeaderIDtype|default:'' == 'Voter\'s ID' %}selected{% endif %}>Voter's ID</option>
+                        <option class="idoption" value="Driver's License" {% if form_data.LeaderIDtype|default:'' == "Driver's License" %}selected{% endif %}>Driver's License</option>
+                        <option class="idoption" value="Voter's ID" {% if form_data.LeaderIDtype|default:'' == "Voter's ID" %}selected{% endif %}>Voter's ID</option>
                         <option class="idoption" value="Other" {% if form_data.LeaderIDtype|default:'' == 'Other' %}selected{% endif %}>Other</option>
-
+                        
                     </select>
                     <input type="number" placeholder="ID Number" id="idnum-1" class="detailbox idnum" required minlength="1"
                         name="LeaderIDnumber" value="{{ form_data.LeaderIDnumber|default:'' }}">
                 </div>
             </div>
-            <div id="add-container_2"></div>
+            <div id="add-container_2">
+                {% for member in members%}
+                    <div class="primary">
+                        <h3>ATTENDEE</h3>
+                        <select class="passtype" name="pass_type" id="passt-{{ forloop.counter|add:'1' }}" required>
+                            <option class="passoption" value="" disabled {% if member.pass_type|default:'' == '' %}selected{% endif %}>SELECT PASS TYPE</option>
+                            <option class="passoption" value="NORMAL" {% if member.pass_type|default:'' == 'NORMAL' %}selected{% endif %}>NORMAL</option>
+                            <option class="passoption" value="VIP" {% if member.pass_type|default:'' == 'VIP' %}selected{% endif %}>VIP</option>
+                            <option class="passoption" value="SUPER VIP"{% if member.pass_type|default:'' == 'SUPER VIP' %}selected{% endif %}>SUPER VIP</option>
+                        </select>
+                        <div class="info"> &#9432</div>
+                    </div>
+            
+                        <div class="details">
+                            <div class="div1">
+                                    <input type="text" placeholder="Full Name" id="name-{{ forloop.counter|add:'1' }}" class="detailbox name" required minlength="2" name="name" value="{{ member.name|default:'' }}">
+            
+                                <select id="gender-{{ forloop.counter|add:'1' }}" class="detailbox gender" name="gender" required>
+                                    <option class="genderoption" value="" disabled {% if member.gender|default:'' == '' %}selected{% endif %}>Gender</option>
+                                    <option class="genderoption" value="Male" {% if member.gender|default:'' == 'Male' %}selected{% endif %}>Male</option>
+                                    <option class="genderoption" value="Female" {% if member.gender|default:'' == 'Female' %}selected{% endif %}>Female</option>
+                                    <option class="genderoption" value="Other" {% if member.gender|default:'' == 'Other' %}selected{% endif %}>Other</option>
+                                </select>
+                                <input type="number" placeholder="Age" id="age-{{ forloop.counter|add:'1' }}" class="detailbox age" required min="1" name="age" value="{{ member.age|default:'' }}">
+                            </div>
+                            <div class="div2">
+                                    <input type="email" placeholder="Email-ID" id="email-{{ forloop.counter|add:'1' }}" class="detailbox vinput email em" required minlength="2" name="email" value="{{ member.email|default:'' }}">
+                                <input type="tel" placeholder="Contact Number" class="detailbox number" id="number-{{ forloop.counter|add:'1' }}" required pattern="[0-9]{10}" minlength="2" name="contact_no" value="{{ member.contact|default:'' }}">
+                            </div>
+                            <div class="div3">
+                                <select id="idtype-{{ forloop.counter|add:'1' }}" class="detailbox idtype" name="IDtype" required>
+                                    <option class="idoption" value="" disabled {% if member.id_type|default:'' == '' %}selected{% endif %}>Select your ID type</option>
+                                    <option class="idoption" value="College ID" {% if member.id_type|default:'' == 'College ID' %}selected{% endif %}>College ID</option>
+                                    <option class="idoption" value="Adhaar ID" {% if member.id_type|default:'' == 'Adhaar ID' %}selected{% endif %}>Adhaar ID</option>
+                                    <option class="idoption" value="Driver's License" {% if member.id_type|default:'' == "Driver's ID" %}selected{% endif %}>Driver's License</option>
+                                    <option class="idoption" value="Voter's ID" {% if member.id_type|default:'' == "Voter's ID" %}selected{% endif %}>Voter's ID</option>
+                                    <option class="idoption" value="Other" {% if member.id_type|default:'' == 'Other' %}selected{% endif %}>Other</option>
+            
+                                </select>
+                                <input type="number" placeholder="ID Number" id="idnum-{{ forloop.counter|add:'1' }}" class="detailbox idnum" required minlength="1" name="IDnumber" value="{{ member.id_number|default:'' }}">
+                            </div>
+                        </div>
+                    {% endfor%}
+                
+            </div>
             <div class="addandremove">
                 <button type="button" class="add bigf" id="press-1"> &#43; ADD ATTENDEE</button>
-                <button type="button" class="remove bigf" id="press-2" style="display: none;"> &#45; REMOVE</button>
+                <button type="button" class="remove bigf" id="press-2" {%if members %} style="display: block;"{%else%} style="display: none;" {%endif%} > &#45; REMOVE</button>
             </div>
             <div>
                 <button type="submit" class="submitbtn bigf">SUBMIT AND PAY</button>
@@ -167,7 +211,10 @@
         </div>
         <div class="bottombar">
             <div class="price">
-                <p id="total">Total Amount : &#8377 0</p>
+                <p id="total">Total Amount : &#8377 {% if tdata.amount %} {{tdata.amount}}
+                    {%else%}
+                        0
+                    {%endif%}</p>
             </div>
         </div>
 
@@ -176,13 +223,18 @@
             const container = document.querySelector('#add-container_2');
             const removeBtn = document.querySelector('#press-2');
             let count = 1;
-            
+            {% if members %}
+            count={{members|length}}
+            count++;
+            {% endif %}
+            console.log(count);
             form.addEventListener('submit', handleFormSubmit);
             document.querySelector('#press-1').addEventListener('click', addPage);
             removeBtn.addEventListener('click', deletePage);
             
             function addPage() {
                 count++;
+                console.log(count)
                 var code = `<div class="primary">
             <h3>ATTENDEE</h3>
             <select class="passtype" name="pass_type" id="passt-${count}" required>
@@ -245,25 +297,25 @@
               document.addEventListener('change', function() {
                 const passes = document.getElementsByClassName('passtype');
                 const peeps = [];
-                let count = 0;
+                let coun = 0;
                 for (const pass of passes) {
-                  count++;
-                  if (peeps.length < count) {
+                  coun++;
+                  if (peeps.length < coun) {
                     if (pass.value === "NORMAL") {
-                      peeps.push(550);
-                    } else if (pass.value === "VIP") {
-                      peeps.push(750);
-                    } else if (pass.value === "SUPER VIP") {
-                      peeps.push(850);
-                    }
+                        peeps.push({{price.NORMAL}});
+                      } else if (pass.value === "VIP") {
+                        peeps.push({{price.VIP}});
+                      } else if (pass.value === "SUPER VIP") {
+                        peeps.push({{price.SUPER_VIP}});
+                      }
                   } else {
                     if (pass.value === "NORMAL") {
-                      peeps[count - 1] = 500;
-                    } else if (pass.value === "VIP") {
-                      peeps[count - 1] = 750;
-                    } else if (pass.value === "SUPER VIP") {
-                      peeps[count - 1] = 850;
-                    }
+                        peeps[coun - 1] = {{price.NORMAL}};
+                      } else if (pass.value === "VIP") {
+                        peeps[coun - 1] = {{price.VIP}};
+                      } else if (pass.value === "SUPER VIP") {
+                        peeps[coun - 1] = {{price.SUPER_VIP}};
+                      }
                   }
                   if (pass.value) {
                     pass.classList.add('passselected');
@@ -276,14 +328,43 @@
                 }
                 document.getElementById("total").innerHTML = "Total Amount : &#8377 " + Amount;
               });
-
+            function changeamount(){
+                const passes = document.getElementsByClassName('passtype');
+                const peeps = [];
+                let coun = 0;
+                for (const pass of passes) {
+                  coun++;
+                  if (peeps.length < coun) {
+                    if (pass.value === "NORMAL") {
+                      peeps.push({{price.NORMAL}});
+                    } else if (pass.value === "VIP") {
+                      peeps.push({{price.VIP}});
+                    } else if (pass.value === "SUPER VIP") {
+                      peeps.push({{price.SUPER_VIP}});
+                    }
+                  } else {
+                    if (pass.value === "NORMAL") {
+                      peeps[coun - 1] = {{price.NORMAL}};
+                    } else if (pass.value === "VIP") {
+                      peeps[coun - 1] = {{price.VIP}};
+                    } else if (pass.value === "SUPER VIP") {
+                      peeps[coun - 1] = {{price.SUPER_VIP}};
+                    }
+                  }
+                }
+                let Amount = 0;
+                for (const i of peeps) {
+                  Amount += i;
+                }
+                document.getElementById("total").innerHTML = "Total Amount : &#8377 " + Amount;
+            }
             function deletePage() {
                 count--;
                 let elm = container.lastElementChild;
                 let elm2 = container.lastElementChild.previousElementSibling;
                 container.removeChild(elm);
                 container.removeChild(elm2);
-
+                changeamount()
                 if (count == 1) {
                     removeBtn.style.display = "none";
                 }

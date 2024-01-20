@@ -193,7 +193,6 @@ button{
 }
 .remove{
     font-size: 1rem;
-    display: none;
     border: none;
     padding: 0.2vw 1.2vw;
     border-radius:.2rem ;
@@ -349,14 +348,14 @@ font-family: 'Uncut-Sans';
     background-color: #1e1e1e;
 background-image: url("../images/Vector2.svg");
 background-repeat: no-repeat;
-background-size: 3vh; 
+background-size: 1.2rem; 
 background-position: right;}
 .valid{
     border-bottom: 1px solid #39A279;
     background-color: #1e1e1e;
     background-image: url("../images/Vector.svg");
 background-repeat: no-repeat;
-background-size: 3vh; 
+background-size: 1.2rem; 
 background-position: right;}
 .passselected{
     background: #2DA38F;
