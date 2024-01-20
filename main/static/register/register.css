@@ -332,9 +332,13 @@ font-family: 'Uncut-Sans';
     padding: 1vw;
     margin: 0;
 }
+
 .bottombar{
-    background:rgba(100,100,100,0.2);
+    background:rgba(0, 0, 0, 0.9);
     position: sticky;
+    position: sticky;
+    width: 100%;
+    bottom: 0;
 }
 .price{
     color: #f4f4f4;
