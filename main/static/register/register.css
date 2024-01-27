@@ -132,6 +132,12 @@ h3{
     padding: 3px 0px;
     
 }
+.detailbox2{
+    background-color: #1e1e1e;
+    border: none;
+    color: #f4f4f4;
+    padding: 3px 0px;
+}
 .name{
     margin-left: 5vw;
 width:23.5vw;

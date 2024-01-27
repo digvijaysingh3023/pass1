@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -9,5 +9,226 @@
     <h1>Order Summary</h1>
     <p>Amount: {{ amount }}</p>
     <a href="{% url 'register' %}">Go Back</a>
+</body>
+</html> -->
+{% load static %}
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static "register/register.css" %}">
+</head>
+<body>
+    <div class="navbar">
+        <div class="left">
+        <img id="alcherlogo1" src="{% static "images/alcherlogo1.svg" %}" alt="alcherlogo">
+        <h1>ALCHERINGA</h1>
+        </div>
+    </div>
+    <div class="intro">
+        <h1 id="heading2">ORDER SUMMARY</h1>
+        <p id="introtext" >Your order summary here for the Alcheringa 2024 passes.</p>
+
+    </div>
+    <div class="Attendeedetails">
+        <form method="POST" name="reg" novalidate>
+            {% csrf_token %}
+            <div style="display: flex;justify-content: space-between;">
+            <div>
+            <h id="attendee">ATTENDEES</h>
+            <p id="introtext" style="font-family: 'Uncut-Sans';margin-left: 5vw;">Pass-holders and their type of passes</p>
+            </div>
+            <div><a href="{% url 'register' %}" class="submitbtn bigf" style="margin-right: 5vw;text-decoration: none;">EDIT</a></div>
+            </div>
+            <div class="primary">
+                <h3>PRIMARY ATTENDEE</h3>
+                <span class="passtype" name="Lpasstype" id="passt-1" style="background-color:  #2DA38F;display: inline-block; width: 10vw;">
+                    <span class="passoption" style="background-color:  #2DA38F">{{form_data.Lpasstype|default:''}}</span>
+                </span>
+            </div>
+        
+            <div class="details">
+                <div class="div1">
+                    <!-- <input type="text" placeholder="Full Name" id="name-1" class="detailbox name" required minlength="2" name="LeaderName" value="{{ form_data.LeaderName|default:'' }}"> -->
+                    <span class="detailbox2 name" id="name-1" style="display: inline-block; width: 25vw;font-family: 'Uncut-Sans';">{{ form_data.LeaderName|default:'' }}</span>
+                    <span class="detailbox2 gender" style="display: inline-block; width: 10vw;font-family: 'Uncut-Sans';color: white;">{{ form_data.LeaderGender|default:'' }}</span>
+                    <!-- <select id="gender-1" class="detailbox gender" name="LeaderGender" required>
+                        <option class="genderoption" value="" disabled {% if form_data.LeaderGender|default:'' == '' %}selected{% endif %}>Gender</option>
+                        <option class="genderoption" value="Male" {% if form_data.LeaderGender|default:'' == 'Male' %}selected{% endif %}>Male</option>
+                        <option class="genderoption" value="Female" {% if form_data.LeaderGender|default:'' == 'Female' %}selected{% endif %}>Female</option>
+                        <option class="genderoption" value="Other" {% if form_data.LeaderGender|default:'' == 'Other' %}selected{% endif %}>Other</option>
+                    </select> -->
+                    <span class="detailbox2 age" style="font-family: 'Uncut-Sans';">{{ form_data.LeaderAge|default:'' }}</span>
+                </div>
+                <div class="div2">
+                    {% comment %} <div class="einput">
+                        <input type="email" class="vinput" name="LeaderEmail" autofocus required>
+                        <img src="{% static 'img/Vector.png' %}" alt="">
+                    </div> {% endcomment %}
+                    <span class="detailbox2 email em" style="display: inline-block; width: 25vw;font-family: 'Uncut-Sans';">{{ form_data.LeaderEmail|default:'' }}</span>
+                    {% comment %} <img src="{% static 'img/Vector.png' %}" alt=""> {% endcomment %}
+                    <span class="detailbox2 number" style="font-family: 'Uncut-Sans';">{{ form_data.LeaderContact_no|default:''}}</span>
+                </div>
+                <div class="div3">
+                    <!-- <select id="idtype-1" class="detailbox idtype" name="LeaderIDtype" required>
+                        <option class="idoption" value="" disabled {% if form_data.LeaderIDtype|default:'' == '' %}selected{% endif %}>Select your ID type</option>
+                        <option class="idoption" value="College ID" {% if form_data.LeaderIDtype|default:'' == 'College ID' %}selected{% endif %}>College ID</option>
+                        <option class="idoption" value="Adhaar ID" {% if form_data.LeaderIDtype|default:'' == 'Adhaar ID' %}selected{% endif %}>Adhaar ID</option>
+                        <option class="idoption" value="Driver's License" {% if form_data.LeaderIDtype|default:'' == "Driver's License" %}selected{% endif %}>Driver's License</option>
+                        <option class="idoption" value="Voter's ID" {% if form_data.LeaderIDtype|default:'' == "Voter's ID" %}selected{% endif %}>Voter's ID</option>
+                        <option class="idoption" value="Other" {% if form_data.LeaderIDtype|default:'' == 'Other' %}selected{% endif %}>Other</option>
+                        
+                    </select> -->
+                    <span class="detailbox2 idtype" style="display: inline-block; width: 25vw;font-family: 'Uncut-Sans';color: white;">{{ form_data.LeaderIDtype|default:''}}</span>
+                    <span class="detailbox2 idnum" style="font-family: 'Uncut-Sans';">{{ form_data.LeaderIDnumber|default:''}}</span>
+                    <!-- <input type="number" placeholder="ID Number" id="idnum-1" class="detailbox idnum" required minlength="1"
+                        name="LeaderIDnumber" value="{{ form_data.LeaderIDnumber|default:'' }}"> -->
+                </div>
+            </div>
+            <div id="add-container_2">
+                {% for member in members%}
+                    <div class="primary">
+                        <h3>ATTENDEE</h3>
+                        <!-- <select class="passtype" name="pass_type" id="passt-{{ forloop.counter|add:'1' }}" required>
+                            <option class="passoption" value="" disabled {% if member.pass_type|default:'' == '' %}selected{% endif %}>SELECT PASS TYPE</option>
+                            <option class="passoption" value="NORMAL" {% if member.pass_type|default:'' == 'NORMAL' %}selected{% endif %}>NORMAL</option>
+                            <option class="passoption" value="VIP" {% if member.pass_type|default:'' == 'VIP' %}selected{% endif %}>VIP</option>
+                            <option class="passoption" value="SUPER VIP"{% if member.pass_type|default:'' == 'SUPER VIP' %}selected{% endif %}>SUPER VIP</option>
+                        </select>
+                        <div class="info"> &#9432</div> -->
+                        <span class="passtype" name="Lpasstype" id="passt-1" style="background-color:  #2DA38F;display: inline-block; width: 10vw;">
+                            <span class="passoption" style="background-color:  #2DA38F">{{member.pass_type|default:''}}</span>
+                        </span>
+                    </div>
+            
+                        <div class="details">
+                            <div class="div1">
+                                    <!-- <input type="text" placeholder="Full Name" id="name-{{ forloop.counter|add:'1' }}" class="detailbox name" required minlength="2" name="name" value="{{ member.name|default:'' }}">
+            
+                                <select id="gender-{{ forloop.counter|add:'1' }}" class="detailbox gender" name="gender" required>
+                                    <option class="genderoption" value="" disabled {% if member.gender|default:'' == '' %}selected{% endif %}>Gender</option>
+                                    <option class="genderoption" value="Male" {% if member.gender|default:'' == 'Male' %}selected{% endif %}>Male</option>
+                                    <option class="genderoption" value="Female" {% if member.gender|default:'' == 'Female' %}selected{% endif %}>Female</option>
+                                    <option class="genderoption" value="Other" {% if member.gender|default:'' == 'Other' %}selected{% endif %}>Other</option>
+                                </select> -->
+                                <span class="detailbox2 name" style="display: inline-block; width: 25vw;font-family: 'Uncut-Sans';">{{ member.name|default:'' }}</span>
+                                <span class="detailbox2 gender" style="display: inline-block; width: 10vw;font-family: 'Uncut-Sans';color: white;">{{ member.gender|default:'' }}</span>
+                                <!-- <input type="number" placeholder="Age" id="age-{{ forloop.counter|add:'1' }}" class="detailbox age" required min="1" name="age" value="{{ member.age|default:'' }}"> -->
+                                <span class="detailbox2 age" style="font-family: 'Uncut-Sans';">{{ member.age|default:'' }}</span>
+                            </div>
+                            <div class="div2">
+                                    <!-- <input type="email" placeholder="Email-ID" id="email-{{ forloop.counter|add:'1' }}" class="detailbox vinput email em" required minlength="2" name="email" value="{{ member.email|default:'' }}"> -->
+                                <!-- <input type="tel" placeholder="Contact Number" class="detailbox number" id="number-{{ forloop.counter|add:'1' }}" required pattern="[0-9]{10}" minlength="2" name="contact_no" value="{{ member.contact|default:'' }}"> -->
+                                <span class="detailbox2 email em" style="display: inline-block; width: 25vw;font-family: 'Uncut-Sans';">{{ member.email|default:'' }}</span>
+                                <span class="detailbox2 number" style="font-family: 'Uncut-Sans';">{{  member.contact|default:''}}</span>
+                            </div>
+                            <div class="div3">
+                                <!-- <select id="idtype-{{ forloop.counter|add:'1' }}" class="detailbox idtype" name="IDtype" required>
+                                    <option class="idoption" value="" disabled {% if member.id_type|default:'' == '' %}selected{% endif %}>Select your ID type</option>
+                                    <option class="idoption" value="College ID" {% if member.id_type|default:'' == 'College ID' %}selected{% endif %}>College ID</option>
+                                    <option class="idoption" value="Adhaar ID" {% if member.id_type|default:'' == 'Adhaar ID' %}selected{% endif %}>Adhaar ID</option>
+                                    <option class="idoption" value="Driver's License" {% if member.id_type|default:'' == "Driver's ID" %}selected{% endif %}>Driver's License</option>
+                                    <option class="idoption" value="Voter's ID" {% if member.id_type|default:'' == "Voter's ID" %}selected{% endif %}>Voter's ID</option>
+                                    <option class="idoption" value="Other" {% if member.id_type|default:'' == 'Other' %}selected{% endif %}>Other</option>
+            
+                                </select>
+                                <input type="number" placeholder="ID Number" id="idnum-{{ forloop.counter|add:'1' }}" class="detailbox idnum" required minlength="1" name="IDnumber" value="{{ member.id_number|default:'' }}"> -->
+                                <span class="detailbox2 idtype" style="display: inline-block; width: 25vw;font-family: 'Uncut-Sans';color: white;">{{ member.id_type|default:''}}</span>
+                                <span class="detailbox2 idnum" style="font-family: 'Uncut-Sans';">{{ member.id_number|default:''}}</span>
+                            </div>
+                        </div>
+                    {% endfor%}
+                
+            </div>
+            <div>
+                <button type="submit" class="submitbtn bigf" style="margin-left: 45vw;">SUBMIT AND PAY</button>
+            </div>
+        </form>
+        <div class="welcometxt">
+            Team Alcheringa Welcomes you to the 28th edition of
+        </div>
+        <div class="footer">
+            <div class="ribbon-case">
+                <div class="footer-iit">IIT GUWAHATI'S</div>
+                <div class="footer-alcher">ALCHERINGA</div>
+            </div>
+            <div class="contact">
+                <div class="contact-info">
+                    <span class="namee">Siddant Singh</span>
+                    <span class="phone">+91 9310859978</span>
+                    <span class="emaile">siddant.s@alcheringa.in</span>
+                </div>
+                <div class="contact-info">
+                    <span class="namee">Siddant Singh</span>
+                    <span class="phone">+91 9310859978</span>
+                    <span class="emaile">siddant.s@alcheringa.in</span>
+                </div>
+                <div class="following">
+                    <span style="margin-bottom: 1.5vh;font-size:1.12vw;">Follow us on</span>
+                    <div id="footer-icons">
+                        <a href="/" target="_blank"><i class="bi bi-instagram"
+                                style=" color:white;font-size:1.5vw;"></i></a>
+                        <a href="" target="_blank"><i class="bi bi-facebook"
+                                style="margin-left: 1.5vw; color:white;font-size:1.5vw;"></i></a>
+                        <a href="https://twitter.com/alcheringaiitg" target="_blank"><i class="bi bi-twitter" style="margin-left: 1.5vw; color:white;font-size:1.5vw;"></i></a>
+                        <a href="https://www.youtube.com/c/AlcheringaIITG" target="_blank">
+                            <i class="bi bi-youtube" style="margin-left: 1.5vw; color:white;font-size:1.5vw;"></i>
+                        </a>
+                    </div>
+
+
+                </div>
+
+            </div>
+            <div class="creator-info">
+                <div style="display: inline;">Designed and Developed by <p
+                        style="display: inline;border-bottom:1px solid white;">Alcher Creatives</p> & <p
+                        style="display: inline;;border-bottom:1px solid white"> Alcher Web Operations</p>
+                </div>
+                <div class="business-contact">
+                    <p style="margin-bottom:0.5vh;">For Business Enquiries</p>
+                    <p style="margin-top:0.5vh;margin-bottom:0vh;">publicrelations24@alcheringa.in</p>
+                </div>
+            </div>
+        </div>
+        <div class="mobile-footer">
+            <div class="ribbon-case">
+                <div class="footer-iit">IIT GUWAHATI'S</div>
+                <div class="footer-alcher">ALCHERINGA</div>
+            </div>
+
+            <div class="contact-footer">
+                <div class="people-contact">
+                    <div style="margin-bottom:4vh" class="contact-info">
+                        <span class="name">Siddant Singh</span>
+                        <span class="phone">+91 9310859978</span>
+                        <span class="emaile">siddant.s@alcheringa.in</span>
+                    </div>
+                    <div class="contact-info">
+                        <span class="name">Siddant Singh</span>
+                        <span class="phone">+91 9310859978</span>
+                        <span class="emaile">siddant.s@alcheringa.in</span>
+                    </div>
+                </div>
+                <div class="following-footer">
+                    <p style="margin-bottom:0px;margin-top:0px;font-size:2.2vw">Follow us</p>
+                    <p style="margin-top:0px;font-size:2.2vw">on</p>
+                    <a href="/" target="_blank"><i class="bi bi-instagram" style=" color:white;font-size:3vw;"></i></a>
+                    <a href="" target="_blank"><i class="bi bi-facebook" style=" color:white;font-size:3vw;"></i></a>
+                    <a href="https://twitter.com/alcheringaiitg" target="_blank"><i class="bi bi-twitter"
+                            style=" color:white;font-size:3vw;"></i></a>
+                    <a href="https://www.youtube.com/c/AlcheringaIITG" target="_blank"><i class="bi bi-youtube"
+                            style=" color:white;font-size:3vw;"></i></a>
+                </div>
+            </div>
+            <div style="display: inline;font-size:2.2vw;width:100%;margin-left:10%;margin-bottom:2vh">Designed and
+                Developed by <p style="display: inline;border-bottom:1px solid white;">Alcher Creatives</p> & <p
+                    style="display: inline;;border-bottom:1px solid white"> Alcher Web Operations</p>
+            </div>
+
+        </div>
 </body>
 </html>
