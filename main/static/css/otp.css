@@ -20,8 +20,12 @@ body{
     padding: 5vw;
 }
 
+h3{
+    margin: 0;
+}
+
 .heading{
-    margin: 5vh 0;
+    margin: 0 0 5vh 0;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -30,20 +34,23 @@ body{
 
 .heading h1{
     font-family: 'fsp-demo-freigeist-con-black-5', sans-serif;
-    font-size: 9vh;
+    font-size: 5.5vw;
 }
 .heading h3{
     font-family: 'Uncut-Sans';
-    font-size: 2.5vh;
+    margin: 0;
+    font-size: 1.5vw;
+    text-align: center;
 }
 
 #pass h2{
     font-family: 'fsp-demo-freigeist-con-black-5', sans-serif;
-    font-size: 6vh;
+    font-size: 3vw;
+    
 }
 #pass h4{
     font-family: 'Uncut-Sans';
-    font-size: 2.5vh;
+    font-size: 1.4vw;
     margin-bottom: 3vh;
 }
 
@@ -95,7 +102,7 @@ body{
 #emailInput input{
     outline: none;
     border: none;
-    width: 30vw;
+    width: 400px;
     font-size: 20px;
     padding-bottom: 6px;
     background: transparent;
@@ -107,13 +114,16 @@ body{
     outline: none;
     border: none;
     font-family: 'fsp-demo-freigeist-con-black-5', sans-serif;
-    padding: 5px 25px;
-    font-size: 2.5vh;
+    padding: 3px 20px;
+    font-size: 1.6vw;
     background-color: #F6D317;
     border-radius: 3px;
     color: #181818;
     margin-bottom: 4vh;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    
 }
 
 .button:disabled{
@@ -122,12 +132,12 @@ body{
 
 #otpInput h2{
     font-family: 'Uncut-Sans';
-    font-size: 3vh;
+    font-size: 2vw;
     margin-bottom: 1vh;
 }
 
 #otpVerify{
-    width: 20vw;
+    width: 300px;
     display: flex;
     flex-wrap: wrap;
     margin-top: 2.5vh;
@@ -138,7 +148,7 @@ body{
 .dash{
     outline: none;
     border: none;
-    width: 3vw;
+    width: 40px;
     font-size: 20px;
     padding-bottom: 8px;
     background: transparent;
@@ -167,4 +177,94 @@ body{
     font-family: 'Uncut-Sans';
     font-weight: bold;
     font-size: 2vh;
+}
+
+@media(max-width: 1000px){
+   
+    #emailInput input{
+        width: 350px;
+        font-size: 15px;
+        padding-bottom: 4px;
+    }
+    #otpVerify{
+        width: 250px;
+    }
+    .dash{
+        width: 35px;
+        font-size: 15px;
+        padding-bottom: 6px;
+    }
+}
+
+@media(max-width: 800px){
+    #emailInput input{
+        width: 350px;
+        font-size: 20px;
+        padding-bottom: 6px;
+    }
+    .dash{
+        width: 35px;
+        font-size: 20px;
+        padding-bottom: 9px;
+    }
+    .heading h1{
+        font-size: 3em;
+    }
+    .heading h3{
+        font-size: 1em;
+    }
+    
+    #pass h2{
+        font-size: 1.8em;
+    }
+    #pass h4{
+        font-size: 1em;
+    }
+    #otpInput h2{
+        font-family: 'Uncut-Sans';
+        font-size: 1em;
+        margin-bottom: 1vh;
+    }
+    .button{
+        font-size: 1em;
+        
+    }
+}
+
+@media(max-width:500px){
+    #emailInput input{
+        width: 85vw;
+        font-size: 15px;
+        padding-bottom: 6px;
+    }
+    #otpVerify{
+        width: 250px;
+    }
+    .dash{
+        width: 30px;
+        font-size: 15px;
+        padding-bottom: 9px;
+    }
+    .heading h1{
+        font-size: 2.5em;
+    }
+    .heading h3{
+        font-size: 0.7em;
+    }
+    
+    #pass h2{
+        font-size: 1.4em;
+    }
+    #pass h4{
+        font-size: 0.7em;
+    }
+    #otpInput h2{
+        font-family: 'Uncut-Sans';
+        font-size: 1em;
+        margin-bottom: 1vh;
+    }
+    .button{
+        font-size: 1em;
+        
+    }
 }
