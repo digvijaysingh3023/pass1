@@ -8,77 +8,87 @@
     <link rel="stylesheet" href="{% static 'css/home.css' %}"
   </head>
   <body>
-    <div class="topdiv">
-
-    <h1>ALCHERINGA</h1>
-    <p>Alcheringa is the annual cultural festival of the Indian Institute of Technology (IIT), Guwahati. Started in 1996 by a group of students, Alcheringa, IIT Guwahati has become one of Asia’s most significant college-level cultural fests. Spread over three days and four nights, Alcheringa attracts people from all over the world with its spectacular events and competitions.</p>
-    </div>
+    <div class="navbar">
+      <div class="left">
+      <img id="alcherlogo1" src="{% static "images/alcherlogo1.svg" %}" alt="alcherlogo">
+      <h1>ALCHERINGA</h1>
+      </div>
+      <button id="buypasses"> BUY YOUR PASSES HERE </button>
+  </div>
+  <div class="body">
+    <img class="topimg" src="{% static "images/BG-min.png" %}">
 
     <div class="passdiv">
-      <h1>ALCHERINGA PASSES</h1>
+      <h1 class="headtxt">ALCHERINGA PASSES</h1>
       
       <div>
-      <h2>ALL SEASON PASSES</h2>
-      <p>These passes includes everyday passes within it.</p>
+        <div style="display: flex;justify-content: space-between">
+          <div >
+      <h2 class="headtxt">ALL SEASON PASSES</h2>
+      <p class="alchertxt">These passes includes everyday passes within it.</p>
+      </div>
+      <img class="hand" src="{% static "images/UpHand.png" %}">
+      </div>
+
     <div class="seasonpass">
-      <div class="earlybird">
-        <div>
-    <h2>EARLY BIRD SEASON PASS</h2>
-    <p>Date: {{ context.EarlyBird.date }}</p>
-    <p>Price: {{ context.EarlyBird.price }}</p>
-    <img src="{{ context.EarlyBird.img }}" alt="Early Bird Image"/>
+      <div >
+        <div class="earlybird" style="background: url('{% static "images/EarlyBird.png" %}') center/cover no-repeat;">
+    <h2 class="headtxt">EARLY BIRD SEASON PASS</h2>
+    <p class="alchertxt">{{ context.EarlyBird.date }}</p>
+    <p class="alchertxt" >{{ context.EarlyBird.price }}</p>
     </div>
-    <div class="btndiv"><button class="btn"><a href="#" style="text-decoration: none;">Register &rarr;</a></button></div>
+    <div class="btndiv"><button class="btn"><a href="#" style="text-decoration: none;
+    color:black;">REGISTER &rarr;</a></button></div>
     </div>
 
-    <div class="normal">
-      <div>
-    <h2>NORMAL SEASON PASS</h2>
-    <p>Date: {{ context.Normal.date }}</p>
-    <p>Price: {{ context.Normal.price }}</p>
-    <img src="{{ context.Normal.img }}" alt="Normal pass Image"/>
+    <div >
+      <div class="earlybird" style="background: url('{% static "images/Normal.png" %}') center/cover no-repeat;">
+    <h2 class="headtxt">NORMAL SEASON PASS</h2>
+    <p class="alchertxt" >Date: {{ context.Normal.date }}</p>
+    <p class="alchertxt" >Price: {{ context.Normal.price }}</p>
     </div>
-    <div class="btndiv"><button class="btn"><a href="#" style="text-decoration: none;">Register &rarr;</a></button></div>
+    <div class="btndiv"><button class="btn"><a href="#" style="text-decoration: none;
+    color:black;">REGISTER &rarr;</a></button></div>
     </div>
     </div>
     </div>
 
     <div  >
-    <h2>DAY WISE PASSES</h2>
-    <p>These passes includes single-day pass as mentioned on it.</p>
+    <h2 class="headtxt">DAY WISE PASSES</h2>
+    <p class="alchertxt">These passes includes single-day pass as mentioned on it.</p>
     <div class="seasonpass">
-      <div class="day1">
-        <div>
-    <h2>Day 1</h2>
-    <p>Date: {{ context.Day1.date }}</p>
-    <p>Price: {{ context.Day1.price }}</p>
-    <img src="{{ context.Day1.img }}" alt="Day 1 pass Image"/>
+      <div >
+        <div class="day1" style="background: url('{% static "images/Day1.png" %}') center/cover no-repeat;">    
+    <h2 class="headtxt">Day 1</h2>
+    <p class="alchertxt">Date: {{ context.Day1.date }}</p>
+    <p class="alchertxt">Price: {{ context.Day1.price }}</p>
     </div>
-    <div class="btndiv"><button class="btn"><a href="#" style="text-decoration: none;">Register &rarr;</a></button></div>
+    <div class="btndiv"><button class="btn"><a href="#" style="text-decoration: none;
+    color:black;">REGISTER &rarr;</a></button></div>
     </div>
 
-    <div class="day2">
-      <div>
-    <h2>Day 2</h2>
-    <p>Date: {{ context.Day2.date }}</p>
-    <p>Price: {{ context.Day2.price }}</p>
-    <img src="{{ context.Day2.img }}" alt="Day 2 pass Image"/>
+    <div >
+      <div class="day1" style="background: url('{% static "images/Day2.png" %}') center/cover no-repeat;"> 
+    <h2 class="headtxt">Day 2</h2>
+    <p class="alchertxt">Date: {{ context.Day2.date }}</p>
+    <p class="alchertxt">Price: {{ context.Day2.price }}</p>
     </div>
-    <div class="btndiv"><button class="btn"><a href="#" style="text-decoration: none;">Register &rarr;</a></button></div>
+    <div class="btndiv"><button class="btn"><a href="#" style="text-decoration: none;
+    color:black;">REGISTER &rarr;</a></button></div>
 </div>
 
-<div class="day3">
-  <div>
-    <h2>Day 3</h2>
-    <p>Date: {{ context.Day3.date }}</p>
-    <p>Price: {{ context.Day3.price }}</p>
-    <img src="{{ context.Day3.img }}" alt="Day 3 pass Image"/>
+<div >
+  <div class="day1" style="background: url('{% static "images/Day3.png" %}') center/cover no-repeat;">
+    <h2 class="headtxt">Day 3</h2>
+    <p class="alchertxt">Date: {{ context.Day3.date }}</p>
+    <p class="alchertxt">Price: {{ context.Day3.price }}</p>
     </div>
-    <div class="btndiv"><button class="btn"><a href="#" style="text-decoration: none;">Register &rarr;</a></button></div>
-    </div>
-    </div>
+    <div class="btndiv"><button class="btn"><a href="#" style="text-decoration: none;
+    color:black;">REGISTER &rarr;</a></button></div>
     </div>
     </div>
-    
+    </div>
+    </div>
+    </div>
   </body>
 </html>
