@@ -184,7 +184,9 @@ def register(request):
 
 def Order_Summary(request):
     Todata = request.session.get('Todata', {})
-    return render(request, 'main/Order_Summary.html',Todata)
+    members = request.session.get('members', {})
+    form_data = request.session.get('form_data', {})
+    return render(request, 'main/Order_Summary.html',{'form_data': form_data,'members':members,"tdata":Todata})
 
 def unique_id(length):
     while True:
