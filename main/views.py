@@ -1,14 +1,16 @@
 from django.shortcuts import render,redirect
 from django.http import JsonResponse
-from .models import Pass
+# from .models import Pass
 from django.core.mail import EmailMessage
 from django.core.mail import send_mail
 from django.views.decorators.csrf import csrf_exempt
 from django.conf import settings
+from .encrypt_decrypt import encrypt
 from django.utils import timezone
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from rest_framework import status
 import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import firestore
@@ -16,55 +18,45 @@ import random
 import string
 import random
 import json
+# import status
 import pyrebase 
 from Crypto.Cipher import AES
 from Crypto.Random import get_random_bytes
+from Crypto.Protocol.KDF import PBKDF2
 
 @api_view(['GET'])
 def user_data(request):
     try:
-        email = request.GET.get('email')
+        email = request.query_params.get('Email', None)
+        print
         if not email:
             return Response({'error': 'Email is required'}, status=status.HTTP_400_BAD_REQUEST)
-
-        user_ref = db.collection('transaction').where('email', '==', email).stream()
-        users = []
+        print(213124)
+        users=[]
+        user_ref = db.collection('transaction').where('Email','==',email).stream()
+        print(email)
         for user in user_ref:
-            user_dict = user_ref.to_dict()
-            # user_dict['id'] = user.id
-            users.append(user_dict)
-
+            user_dic = user.to_dict()
+            print(user_dic['Email'])
+            users.append(user_dic)
         if not users:
             return Response({'error': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
-
         user = users[0]
-        has_passes = bool(user.get('passes', []))
-
+        has_passes=user['err_des']['pass']
+        print(has_passes+100)
         if has_passes:
             # Encrypt user data as needed
-            encrypted_data = encrypt_user_data(user)
-            return Response({'data': encrypted_data})
-        else:
-            return Response({'error': 'User has no passes'}, status=status.HTTP_404_NOT_FOUND)
+            salt=b'\xb9{>\n)O&;\xc0\\\xd7C\xd9\xe6\x8e\x004\xd6\x8c\x0c\xb8\x83\xb2\x8f\xd7\x0f\x1a\xd7M\x12\xb4a'
+            key = PBKDF2("password",salt,dkLen=32)
+            encrypted_data = encrypt(key,user)
+        return Response(encrypted_data)
+        # else:
+        #     return Response({'error': 'User has no passes'}, status=status.HTTP_404_NOT_FOUND)
 
     except Exception as e:
         print(e)
         return Response({'error': 'An error occurred'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-def encrypt_user_data(user):
-    # Implement your encryption logic here
-    # For example, using the PyCryptoDome library
- 
-
-    key = get_random_bytes(32)
-    cipher = AES.new(key, AES.MODE_EAX)
-    ciphertext, tag = cipher.encrypt_and_digest(json.dumps(user).encode())
-    nonce = cipher.nonce
-
-    # Combine nonce, tag, and ciphertext into a single string
-    encrypted_data = nonce + tag + ciphertext
-
-    return encrypted_data
 config = {
    'apiKey': "AIzaSyCYBAFlRDVF_niUuOzk-dc4lo8v5XOg2cs",
   'authDomain': "passportal-68a8a.firebaseapp.com",
@@ -128,6 +120,7 @@ def sendOtp(request):
         email = json.loads(request.body)['email']
         request.session['LeaderEmail'] = email
         otp = random.randint(100000, 999999)
+        print("OTP : ", otp)
         subject = 'Your email verification'
         message = 'Your otp for verifiction of your email is ' + str(otp)
         from_email = settings.EMAIL_HOST_USER
@@ -181,7 +174,13 @@ def register(request):
 
 
 
-
+price=db.collection('price').stream()
+prices = []
+for doc in price:
+    x = doc.to_dict()
+    prices.append(x)
+for pr in x:
+    print((x[pr]))
 
 def Order_Summary(request):
     Todata = request.session.get('Todata', {})
@@ -190,32 +189,39 @@ def Order_Summary(request):
     return render(request, 'main/Order_Summary.html',{'form_data': form_data,'members':members,"tdata":Todata})
 
 def unique_id(length):
+    iv = (db.collection('transaction').stream())
+    document_ids = [doc.id for doc in iv]
     while True:
         random_string = ''.join(random.choices(string.ascii_letters + string.digits, k=length))
-        if random_string not in used_strings:
-            used_strings.add(random_string)
+        if random_string not in document_ids:
+            print(random_string)
             return random_string
-used_strings = set()
+price=db.collection('price').stream()
+prices = []
+for doc in price:
+    x = doc.to_dict()
+    prices.append(x)
+for k in x:
+    print(k)
 def savedata(request):
-    price={
-        'NORMAL': 500,
-        'VIP': 750,
-        'SUPER_VIP': 850,
-    }
+    price=db.collection('price').stream()
+    prices = []
+    for doc in price:
+        x = doc.to_dict()
+        prices.append(x)
+    passt = db.collection('pass_type').stream()
+    pass_types =[]
+    for doc in passt:
+        y=doc.to_dict()
+        pass_types.append(y)
+    
     if request.method == 'POST':
         id = unique_id(5)
-        amount = 750
+        # amount = 750
         status="Pending"
         err_des={
             'error':0,
             'pass':1,
-        }
-        # fee_id = "M1006"
-        paases_type = {
-            'NORMAL': 0,
-            'VIP': 0,
-            'SUPER VIP': 0,
-            'amount': 0,
         }
         time=timezone.now()
         LeaderName = request.POST.get('LeaderName')
@@ -233,12 +239,11 @@ def savedata(request):
         member_idnumber = request.POST.getlist('IDnumber')
         member_age = request.POST.getlist('age')
         member_gender = request.POST.getlist('gender')
-        if (Lpasstype == 'NORMAL'):
-            paases_type['NORMAL'] = paases_type['NORMAL']+1
-        elif (Lpasstype == 'VIP'):
-            paases_type['VIP'] = paases_type['VIP']+1
-        elif (Lpasstype == 'SUPER VIP'):
-            paases_type['SUPER VIP'] = paases_type['SUPER VIP']+1
+        amount=0
+        pas=pass_types[0]
+        for i in range(1,len(y)+1):
+            if(Lpasstype == pas[str(i)]):
+                amount+=x[pas[str(i)]]
         member_email = request.POST.getlist('email')
         Tdata = {
             "Email": LeaderEmail,
@@ -249,7 +254,6 @@ def savedata(request):
             
         }
         Ldata={
-            "Email": LeaderEmail,
             "LName": LeaderName,
             "LContact": LeaderContact_no,
             "LIDType": LeaderIDType,
@@ -261,7 +265,6 @@ def savedata(request):
         doc_ref = db.collection('transaction').document(id)
         doc_ref.set(Tdata)
         doc_ref.collection('users').document().set(Ldata)
-        length = {len(membernames)}
         members=[]
         for i in range(len(membernames)):
             member = {
@@ -274,15 +277,11 @@ def savedata(request):
                 "age": member_age[i],
                 'email': member_email[i],
             }
-            if (member_passtype[i] == 'NORMAL'):
-                paases_type['NORMAL'] = paases_type['NORMAL']+1
-            elif (member_passtype[i] == 'VIP'):
-                paases_type['VIP'] = paases_type['VIP']+1
-            elif (member_passtype[i] == 'SUPER VIP'):
-                paases_type['SUPER VIP'] = paases_type['SUPER VIP']+1
+            for j in range(1,len(y)+1):
+                if(member_passtype[i] == pas[str(j)]):
+                    amount+=x[pas[str(j)]]
             doc_ref.collection('users').document().set(member)
             members.append(member)
-        amount = paases_type['NORMAL']*500 + (paases_type['VIP']*750)+(paases_type['SUPER VIP'])*850
         Todata = {
             "Email": LeaderEmail,
             # "time":time,
@@ -296,7 +295,8 @@ def savedata(request):
         request.session['Todata'] = Todata
         request.session['form_data'] = request.POST
         return redirect(Order_Summary)
+    email = request.session.get('LeaderEmail',{})
     form_data = request.session.get('form_data', {})
     members = request.session.get('members', {})
     Todata = request.session.get('Todata', {})
-    return render(request, 'main/register.html', {'form_data': form_data,'members':members,"tdata":Todata,"price":price})
+    return render(request, 'main/register.html', {'form_data': form_data,'members':members,"tdata":Todata,"prices":prices[0] , "passtype" : pass_types[0], "leadermail" : email})

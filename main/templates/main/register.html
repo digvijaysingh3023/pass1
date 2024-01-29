@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="{% static 'register/register.css' %}">
+    <link rel="stylesheet"  href="https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/css/intlTelInput.css">
 </head>
 <body>
     <div class="navbar">
@@ -14,7 +15,6 @@
         <img id="alcherlogo1" src="{% static 'images/alcherlogo1.svg' %}" alt="alcherlogo">
         <h1>ALCHERINGA</h1>
         </div>
-        <button id="buypasses"> BUY YOUR PASSES HERE </button>
     </div>
     <div class="intro">
         <h1 id="heading2">ALCHERINGA</h1>
@@ -29,9 +29,11 @@
                 <h3>PRIMARY ATTENDEE</h3>
                 <select class="passtype" name="Lpasstype" id="passt-1" required>
                     <option class="passoption" value="" disabled {% if form_data.Lpasstype|default:'' == '' %}selected{% endif %}>SELECT PASS TYPE</option>
-                    <option class="passoption" value="NORMAL" {% if form_data.Lpasstype|default:'' == 'NORMAL' %}selected{% endif %}>NORMAL</option>
-                    <option class="passoption" value="VIP" {% if form_data.Lpasstype|default:'' == 'VIP' %}selected{% endif %}>VIP</option>
-                    <option class="passoption" value="SUPER VIP" {% if form_data.Lpasstype|default:'' == 'SUPER VIP' %}selected{% endif %}>SUPER VIP</option>
+                    {%for  pt in prices %}
+                    <option class="passoption" value="{{ pt }}" {% if form_data.Lpasstype|default:'' == pt %}selected{% endif %}>{{ pt }}</option>
+                    {% endfor %}
+                    {% comment %} <option class="passoption" value="VIP" {% if form_data.Lpasstype|default:'' == 'VIP' %}selected{% endif %}>VIP</option>
+                    <option class="passoption" value="SUPER VIP" {% if form_data.Lpasstype|default:'' == 'SUPER VIP' %}selected{% endif %}>SUPER VIP</option> {% endcomment %}
                 </select>
                 <div class="info"> ⓘ</div>
             </div>
@@ -55,9 +57,9 @@
                         <img src="{% static 'img/Vector.png' %}" alt="">
                     </div> {% endcomment %}
                     <input type="email" placeholder="Email-ID" id="email-1" class="detailbox email em" required
-                        minlength="2" name="LeaderEmail" value="{{ form_data.LeaderEmail|default:'' }}">
+                        minlength="2" name="LeaderEmail" value="{{ form_data.LeaderEmail|default:leadermail}}" readonly>
                     {% comment %} <img src="{% static 'img/Vector.png' %}" alt=""> {% endcomment %}
-                    <input type="tel" placeholder="Contact Number" id="number-1" class="detailbox number" required pattern="[0-9]{10}" name="LeaderContact_no" value="{{ form_data.LeaderContact_no|default:'' }}">
+                    <input type="tel" placeholder="Contact Number" id="number-1" class="detailbox number cnumber" required pattern="[0-9]{10}" name="LeaderContact_no" value="{{ form_data.LeaderContact_no|default:'' }}">
                 </div>
                 <div class="div3">
                     <select id="idtype-1" class="detailbox idtype" name="LeaderIDtype" required>
@@ -100,7 +102,7 @@
                             </div>
                             <div class="div2">
                                     <input type="email" placeholder="Email-ID" id="email-{{ forloop.counter|add:'1' }}" class="detailbox vinput email em" required minlength="2" name="email" value="{{ member.email|default:'' }}">
-                                <input type="tel" placeholder="Contact Number" class="detailbox number" id="number-{{ forloop.counter|add:'1' }}" required pattern="[0-9]{10}" minlength="2" name="contact_no" value="{{ member.contact|default:'' }}">
+                                <input type="tel" placeholder="Contact Number" class="detailbox number cnumber" id="number-{{ forloop.counter|add:'1' }}" required pattern="[0-9]{10}" minlength="2" name="contact_no" value="{{ member.contact|default:'' }}">
                             </div>
                             <div class="div3">
                                 <select id="idtype-{{ forloop.counter|add:'1' }}" class="detailbox idtype" name="IDtype" required>
@@ -217,7 +219,7 @@
                     {%endif%}</p>
             </div>
         </div>
-
+        <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/js/intlTelInput.min.js"></script>
         <script>
             const form = document.querySelector('form[name="reg"]');
             const container = document.querySelector('#add-container_2');
@@ -231,7 +233,15 @@
             form.addEventListener('submit', handleFormSubmit);
             document.querySelector('#press-1').addEventListener('click', addPage);
             removeBtn.addEventListener('click', deletePage);
-            
+            for(let i=1;i<=count;i++){
+                const input = document.querySelector(`#number-${i}`);
+                window.intlTelInput(input, {
+                    // utilsScript: "https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/js/utils.js",
+                    initialCountry: "in",          
+                    showFlags:false,          
+                    separateDialCode: true,
+                });
+            }
             function addPage() {
                 count++;
                 console.log(count)
@@ -260,7 +270,7 @@
                 </div>
                 <div class="div2">
                         <input type="email" placeholder="Email-ID" id="email-${count}" class="detailbox vinput email em" required minlength="2" name="email">
-                    <input type="tel" placeholder="Contact Number" class="detailbox number" id="number-${count}" required pattern="[0-9]{10}" minlength="2" name="contact_no">
+                    <input type="tel" placeholder="Contact Number" class="detailbox number cnumber" id="number-${count}" required pattern="[0-9]{10}" minlength="2" name="contact_no">
                 </div>
                 <div class="div3">
                     <select id="idtype-${count}" class="detailbox idtype" name="IDtype" required>
@@ -280,19 +290,30 @@
                 if (count == 2) {
                     removeBtn.style.display = "inline-block";
                 }
+                const input = document.querySelector(`#number-${count}`);
+                window.intlTelInput(input, {
+                    // utilsScript: "https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/js/utils.js",
+                    initialCountry: "in",          
+                    showFlags:false,          
+                    separateDialCode: true,
+                });
             }
-              document.addEventListener('input',function(){
+            const aprove=()=>{
                 const emaili=document.getElementsByClassName('em');
                 const emailReg = /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,4})$/;
                 for (const email of emaili) {
                 if((email.value).match(emailReg)){
                     email.classList.add('valid')
+                    email.classList.add('tgreen')
                 }
                 else{
                     email.classList.remove('valid')
+                    email.classList.remove('tgreen')
                 }
             }
-              })
+        }
+        aprove()
+              document.addEventListener('input',aprove)
               const peeps=[];
               document.addEventListener('change', function() {
                 const passes = document.getElementsByClassName('passtype');
@@ -301,21 +322,17 @@
                 for (const pass of passes) {
                   coun++;
                   if (peeps.length < coun) {
-                    if (pass.value === "NORMAL") {
-                        peeps.push({{price.NORMAL}});
-                      } else if (pass.value === "VIP") {
-                        peeps.push({{price.VIP}});
-                      } else if (pass.value === "SUPER VIP") {
-                        peeps.push({{price.SUPER_VIP}});
-                      }
+                    {% for i,pp in prices.items%}
+                    if (pass.value === "{{i}}") {
+                        peeps.push({{pp }});
+                    } 
+                    {% endfor %}
                   } else {
-                    if (pass.value === "NORMAL") {
-                        peeps[coun - 1] = {{price.NORMAL}};
-                      } else if (pass.value === "VIP") {
-                        peeps[coun - 1] = {{price.VIP}};
-                      } else if (pass.value === "SUPER VIP") {
-                        peeps[coun - 1] = {{price.SUPER_VIP}};
-                      }
+                    {% for i,pp in prices.items%}
+                    if (pass.value === "{{i}}") {
+                        peeps[coun - 1] = {{pp}};
+                    }
+                    {% endfor %}
                   }
                   if (pass.value) {
                     pass.classList.add('passselected');
@@ -328,28 +345,55 @@
                 }
                 document.getElementById("total").innerHTML = "Total Amount : &#8377 " + Amount;
               });
-            function changeamount(){
+              function un() {
                 const passes = document.getElementsByClassName('passtype');
                 const peeps = [];
                 let coun = 0;
                 for (const pass of passes) {
                   coun++;
                   if (peeps.length < coun) {
-                    if (pass.value === "NORMAL") {
-                      peeps.push({{price.NORMAL}});
-                    } else if (pass.value === "VIP") {
-                      peeps.push({{price.VIP}});
-                    } else if (pass.value === "SUPER VIP") {
-                      peeps.push({{price.SUPER_VIP}});
-                    }
+                    {% for i,pp in prices.items%}
+                    if (pass.value === "{{i}}") {
+                        peeps.push({{pp }});
+                    } 
+                    {% endfor %}
                   } else {
-                    if (pass.value === "NORMAL") {
-                      peeps[coun - 1] = {{price.NORMAL}};
-                    } else if (pass.value === "VIP") {
-                      peeps[coun - 1] = {{price.VIP}};
-                    } else if (pass.value === "SUPER VIP") {
-                      peeps[coun - 1] = {{price.SUPER_VIP}};
+                    {% for i,pp in prices.items%}
+                    if (pass.value === "{{i}}") {
+                        peeps[coun - 1] = {{pp}};
                     }
+                    {% endfor %}
+                  }
+                  if (pass.value) {
+                    pass.classList.add('passselected');
+                    pass.classList.remove('red');
+                  }
+                }
+                let Amount = 0;
+                for (const i of peeps) {
+                  Amount += i;
+                }
+                document.getElementById("total").innerHTML = "Total Amount : &#8377 " + Amount;
+              }
+              un()
+              function changeamount(){
+                const passes = document.getElementsByClassName('passtype');
+                const peeps = [];
+                let coun = 0;
+                for (const pass of passes) {
+                  coun++;
+                  if (peeps.length < coun) {
+                    {% for i,pp in prices.items%}
+                        if (pass.value === "{{i}}") {
+                            peeps.push({{pp }});
+                        }
+                    {% endfor %}
+                  } else {
+                    {% for i,pp in prices.items%}
+                    if (pass.value === "{{i}}"){
+                        peeps[coun - 1] = {{ pp}};
+                    }
+                    {% endfor %}
                   }
                 }
                 let Amount = 0;
@@ -358,6 +402,7 @@
                 }
                 document.getElementById("total").innerHTML = "Total Amount : &#8377 " + Amount;
             }
+            changeamount()
             function deletePage() {
                 count--;
                 let elm = container.lastElementChild;
@@ -384,6 +429,7 @@
                 }
                 fields.forEach(fieldName => {
                   const field = document.querySelector(`#${fieldName}`);
+                  
                   if (!field.checkValidity()) {
                     valid = false;
                     field.classList.add('err');
@@ -392,6 +438,14 @@
                     field.classList.remove('err');
                     field.classList.add('valid');
                   }
+                  if(field.type == "email"){
+                    const emailReg = /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,4})$/;
+                if(!((field.value).match(emailReg))){
+                    valid = false;
+                    field.classList.add('err');
+                    field.classList.remove('valid');
+                }
+                }
                 });
                 const passt=[];
                 for (let i = 1; i <= count; i++) {

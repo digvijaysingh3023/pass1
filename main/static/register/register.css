@@ -34,6 +34,18 @@ body{
     align-items: center;
     font-size: 0.9vw;
 }
+.iti{
+    font-family: 'Uncut-Sans';
+    margin-left: 1vw;
+    font-size: 0.87rem;
+}
+input , select{
+    font-family: 'Uncut-Sans';
+}
+.iti *{
+    margin-bottom: 1px;
+    color: white;
+}
 .left{
     display:flex;
     align-items:center;
@@ -84,12 +96,12 @@ h1{
 }
 #attendee{
    
-    font-size: 2.1vw;
+    font-size: 2.8vw;
     margin-left: 5vw;
 
 }
 h3{
-    font-size: 1.6vw;
+    font-size: 2vw;
     margin-left: 5vw;
    
 }
@@ -110,7 +122,7 @@ h3{
 .passtype{
     color: #1e1e1e;
     background-color: #677de0;
-    
+    font-size: 1.4vw;
     padding: 0.3vw 2.2vw 0.3vw 0.6vw;
     border-radius: .2rem;
     margin-left: 2vw;
@@ -121,12 +133,15 @@ h3{
 .info{
     margin-left: 1vw;
 }
+
 .details{
     margin-top: 2vh;
 }
 .detailbox{
     background-color: #1e1e1e;
+    outline: none;
     border: none;
+    font-size: 1.6vw;
     border-bottom: .3vh  solid #f4f4f4;
     color: #f4f4f4;
     padding: 3px 0px;
@@ -140,47 +155,50 @@ h3{
 }
 .name{
     margin-left: 5vw;
-width:23.5vw;
+width:32vw;
 }
 .gender{
-    width:10vw;
+    width:14vw;
     color: rgba(244,244,244,.5);
     margin-left: 1vw;
 }
 .age{
-    width:5vw;
+    width:7vw;
     margin-left: 1vw;
 }
 .email{
     margin-left: 5vw;
-    width:23.6vw;
+    width:32vw;
 }
 .number{
     margin-left: 1vw;
-    width: 18vw;
+    width: 24vw;
 }
 .idtype{
     color: rgba(244,244,244,.5);
     margin-left:5vw;
-    width: 24vw;
+    width: 32vw;
 }
 button{
     cursor: pointer;
 }
 .idnum{
     margin-left: 1vw;
-    width: 19vw;
+    width: 24vw;
 }
 .submitbtn{
     margin-left: 5vw;
     background-color: #2DA38F;
-    font-size: 1.2rem;
+    font-size: 2.4vw;
     padding: 0.2vw 1.2vw;
     color: #1e1e1e;
     border: none;
     border-radius: .2rem;
     margin-top: 2vw;
     
+}
+.tgreen{
+    color: #39A279;
 }
 .green{
     border: 3px solid #181818;
@@ -192,14 +210,14 @@ button{
     margin-left: 5vw;
 }
 .add{
-    font-size: 1rem;
+    font-size: 1.8vw;
     background-color: #F6D317;
     padding: 0.2vw 1.2vw;
     border: none;
     border-radius:.2rem ;
 }
 .remove{
-    font-size: 1rem;
+    font-size: 1.8vw;
     border: none;
     padding: 0.2vw 1.2vw;
     border-radius:.2rem ;
@@ -253,7 +271,16 @@ button{
     text-align: center;
 
 }
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
 
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
 .footer-alcher{
  font-family: 'fsp-demo-freigeist-con-black-5';
     font-size: 12vh;
@@ -337,14 +364,21 @@ font-family: 'Uncut-Sans';
 .price p{
     padding: 1vw;
     margin: 0;
+    font-size: 1.6vw;
 }
 
 .bottombar{
     background:rgba(0, 0, 0, 0.9);
     position: sticky;
-    position: sticky;
+    z-index: 10;
     width: 100%;
     bottom: 0;
+}
+.iti__country-list{
+    background-color: black !important;
+}
+.iti__country.iti__highlight {
+    background-color: rgb(86 86 86 / 85%) !important;
 }
 .price{
     color: #f4f4f4;
@@ -360,9 +394,9 @@ background-position: right;}
 .valid{
     border-bottom: 1px solid #39A279;
     background-color: #1e1e1e;
-    background-image: url("../images/Vector.svg");
+    background-image: url("../images/Vector.svg") !important;
 background-repeat: no-repeat;
-background-size: 1.2rem; 
+background-size: 1.8vw; 
 background-position: right;}
 .passselected{
     background: #2DA38F;
@@ -386,6 +420,13 @@ background-position: right;}
 
 }
 @media( max-width:850px){
+    .iti{
+        margin-left: 1.5rem;
+        font-size: 1.7vw;
+    }
+    .iti *{
+        margin-bottom: 0;
+    }
    h3{
     font-size: medium;
    }
@@ -397,24 +438,24 @@ background-position: right;}
    }
    .gender{
     margin-left: 1.5rem;
-    width: 12vw;
+    width: 15vw;
    }
    .age {
-    width: 6vw;
+    width: 8vw;
     margin-left: 1rem;
 }
 .name{
-    width: 26.5vw;
+    width: 31.5vw;
 }
 .email{
-    width: 26.5vw;
+    width: 31.5vw;
 }
 .number {
     margin-left: 1.5rem;
-    width: 20vw;
+    width: 27vw;
 }
 .idtype {
-    width: 26.5vw;
+    width: 31.5vw;
 }
 .unt{
     font-size: 0.8rem;
@@ -430,7 +471,7 @@ background-position: right;}
 }
 .idnum {
     margin-left: 1.5rem;
-    width: 20vw;
+    width: 27vw;
 }
    #introtext{
     font-size: 1rem;
@@ -469,6 +510,10 @@ background-position: right;}
     .navbar{
         padding: 0.5rem 1rem;
     }
+    .iti{
+        font-size: 2.3vw;
+        margin-left: 3vw;
+    }
     .info {
         font-size: 2.5vw;
     }
@@ -476,7 +521,7 @@ background-position: right;}
     .detailbox {
         font-size: 2.3vw;
         margin-left: 2vw;
-        margin-bottom: 2vw;
+        margin-bottom: 1vw;
     }
     .submitbtn {
         margin-top: 3vw;
@@ -508,6 +553,10 @@ background-position: right;}
     }
     .number {
         width: 30vw;
+        padding-left: 11vw !important;
+    }
+    .iti__selected-flag{
+        padding: 0;
     }
     .passtype {
         font-size: 2vw;
@@ -591,8 +640,14 @@ h1{
 }
 }
 @media (max-width:450px){ 
+    .iti__arrow{
+        margin-left: 3px;
+    }
     .detailbox{
         margin-bottom: 0vw;
+    }
+    .number{
+        width: 32vw;
     }
 }
 
