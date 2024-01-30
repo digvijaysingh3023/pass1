@@ -1,94 +1,102 @@
+{% extends "main/base.html" %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Passportal</title>
-    <link rel="stylesheet" href="{% static 'css/home.css' %}"
-  </head>
-  <body>
-    <div class="navbar">
-      <div class="left">
-      <img id="alcherlogo1" src="{% static "images/alcherlogo1.svg" %}" alt="alcherlogo">
-      <h1>ALCHERINGA</h1>
-      </div>
-      <button id="buypasses"> BUY YOUR PASSES HERE </button>
-  </div>
+
+{% block title %}
+  <title>Passportal</title>
+  <link rel="stylesheet" href="{% static 'css/home.css' %}">
+{% endblock title %}
+{% block page %}
   <div class="body">
-    <img class="topimg" src="{% static "images/BG-min.png" %}">
-
+    <div class="heroSection">
+      <svg class="waves" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#00000" fill-opacity="1" d="M0,32L48,48C96,64,192,96,288,122.7C384,149,480,171,576,149.3C672,128,768,64,864,64C960,64,1056,128,1152,138.7C1248,149,1344,107,1392,85.3L1440,64L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>
+    </div>
     <div class="passdiv">
-      <h1 class="headtxt">ALCHERINGA PASSES</h1>
-      
-      <div>
-        <div style="display: flex;justify-content: space-between">
+      <h1 id="passesHead">ALCHERINGA PASSES</h1>
+      <div class="passContainer">
+        <div class="allSeason">
+            <b>ALL SEASON PASSES</b>
+            <h3 class="alchertxt">These passes includes everyday passes within it.</h3>
+            <img class="hand" src="{% static 'images/UpHand.png' %}">
+        </div>
+
+        <div class="seasonpass">
+          <div>
+            <div class="earlybird">
+              <h2 class="headtxt">EARLY BIRD SEASON PASS</h2>
+              <p class="alchertxt">{{ context.EarlyBird.date }}</p>
+              <p class="alchertxt" >{{ context.EarlyBird.price }}</p>
+            </div>
+            <div class="btndiv">
+              <button class="btn"><a href="{% url 'otp' %}" style ="text-decoration: 'none'; color: 'black'; ">REGISTER &rarr;</a></button>
+            </div>
+          </div>
+          <div>
+            <div class="normalPass">
+              <h2 class="headtxt">NORMAL SEASON PASS</h2>
+              <p class="alchertxt">{{ context.Normal.date }}</p>
+              <p class="alchertxt" >{{ context.Normal.price }}</p>
+            </div>
+            <div class="btndiv">
+              <button class="btn"><a href="{% url 'otp' %}" style ="text-decoration: 'none'; color: 'black'; ">REGISTER &rarr;</a></button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="DayWisePasses">
+        <div class="allSeason">
+          <b>DAY WISE PASSES</b>
+          <h3 class="alchertxt">These passes includes single-day pass as mentioned on it.</h3>
+        </div>
+        
+        <div class="dayPassContainer">
           <div >
-      <h2 class="headtxt">ALL SEASON PASSES</h2>
-      <p class="alchertxt">These passes includes everyday passes within it.</p>
-      </div>
-      <img class="hand" src="{% static "images/UpHand.png" %}">
-      </div>
+            <div class="day1">    
+              <h2 class="headtxt">Day 1</h2>
+              <p class="alchertxt">Date: {{ context.Day1.date }}</p>
+              <p class="alchertxt">Price: {{ context.Day1.price }}</p>
+            </div>
+            <div class="btndiv">
+              <button class="btn"><a href="{% url 'otp' %}" style="text-decoration: none; color:black;">REGISTER &rarr;</a></button>
+            </div>
+          </div>
+  
+          <div >
+            <div class="day1 day2">    
+              <h2 class="headtxt">Day 1</h2>
+              <p class="alchertxt">Date: {{ context.Day1.date }}</p>
+              <p class="alchertxt">Price: {{ context.Day1.price }}</p>
+            </div>
+            <div class="btndiv">
+              <button class="btn"><a href="{% url 'otp' %}" style="text-decoration: none; color:black;">REGISTER &rarr;</a></button>
+            </div>
+          </div>
+          
+          <div >
+            <div class="day1 day3">    
+              <h2 class="headtxt">Day 1</h2>
+              <p class="alchertxt">Date: {{ context.Day1.date }}</p>
+              <p class="alchertxt">Price: {{ context.Day1.price }}</p>
+            </div>
+            <div class="btndiv">
+              <button class="btn"><a href="{% url 'otp' %}" style="text-decoration: none; color:black;">REGISTER &rarr;</a></button>
+            </div>
+          </div>
+        </div>
 
-    <div class="seasonpass">
-      <div >
-        <div class="earlybird" style="background: url('{% static "images/EarlyBird.png" %}') center/cover no-repeat;">
-    <h2 class="headtxt">EARLY BIRD SEASON PASS</h2>
-    <p class="alchertxt">{{ context.EarlyBird.date }}</p>
-    <p class="alchertxt" >{{ context.EarlyBird.price }}</p>
-    </div>
-    <div class="btndiv"><button class="btn"><a href="#" style="text-decoration: none;
-    color:black;">REGISTER &rarr;</a></button></div>
-    </div>
-
-    <div >
-      <div class="earlybird" style="background: url('{% static "images/Normal.png" %}') center/cover no-repeat;">
-    <h2 class="headtxt">NORMAL SEASON PASS</h2>
-    <p class="alchertxt" >Date: {{ context.Normal.date }}</p>
-    <p class="alchertxt" >Price: {{ context.Normal.price }}</p>
-    </div>
-    <div class="btndiv"><button class="btn"><a href="#" style="text-decoration: none;
-    color:black;">REGISTER &rarr;</a></button></div>
-    </div>
-    </div>
-    </div>
-
-    <div  >
-    <h2 class="headtxt">DAY WISE PASSES</h2>
-    <p class="alchertxt">These passes includes single-day pass as mentioned on it.</p>
-    <div class="seasonpass">
-      <div >
-        <div class="day1" style="background: url('{% static "images/Day1.png" %}') center/cover no-repeat;">    
-    <h2 class="headtxt">Day 1</h2>
-    <p class="alchertxt">Date: {{ context.Day1.date }}</p>
-    <p class="alchertxt">Price: {{ context.Day1.price }}</p>
-    </div>
-    <div class="btndiv"><button class="btn"><a href="#" style="text-decoration: none;
-    color:black;">REGISTER &rarr;</a></button></div>
     </div>
 
-    <div >
-      <div class="day1" style="background: url('{% static "images/Day2.png" %}') center/cover no-repeat;"> 
-    <h2 class="headtxt">Day 2</h2>
-    <p class="alchertxt">Date: {{ context.Day2.date }}</p>
-    <p class="alchertxt">Price: {{ context.Day2.price }}</p>
-    </div>
-    <div class="btndiv"><button class="btn"><a href="#" style="text-decoration: none;
-    color:black;">REGISTER &rarr;</a></button></div>
-</div>
+  </div>
+  </div>
 
-<div >
-  <div class="day1" style="background: url('{% static "images/Day3.png" %}') center/cover no-repeat;">
-    <h2 class="headtxt">Day 3</h2>
-    <p class="alchertxt">Date: {{ context.Day3.date }}</p>
-    <p class="alchertxt">Price: {{ context.Day3.price }}</p>
-    </div>
-    <div class="btndiv"><button class="btn"><a href="#" style="text-decoration: none;
-    color:black;">REGISTER &rarr;</a></button></div>
-    </div>
-    </div>
-    </div>
-    </div>
-    </div>
-  </body>
-</html>
+
+{% endblock page %}
+
+{% block script %}
+
+<script>
+
+</script>
+
+{% endblock script %}

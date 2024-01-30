@@ -13,7 +13,9 @@
     src: url(../Uncut-Sans-Regular.otf);
   }
 body{
-    background-color: #181818;
+    height: 100%;
+    width: 100%;
+    background-color: rgb(24, 24, 24);
 }
 
 #passPortalContent{
@@ -123,7 +125,6 @@ h3{
     cursor: pointer;
     display: flex;
     align-items: center;
-    
 }
 
 .button:disabled{
@@ -178,6 +179,98 @@ h3{
     font-weight: bold;
     font-size: 2vh;
 }
+
+.popUp {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    padding: 2vh;
+    padding-top: 2vh;
+    transform: translate(-50%, -50%) scale(1);
+    transition: all 300ms ease-in-out;
+    background-color: #ffffff;
+    border-radius: 7px;
+    z-index: 10;
+    width:  800px;
+    max-width: 60%;
+    scale: 0;
+  }
+  .popUp.active{
+    scale: 1;
+  }
+  
+  .popUpHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .popUp hr {
+    width: 400px;
+    max-width: 80%;
+    border: 0.5px solid #0a2628;
+    margin-bottom: 10px;
+  }
+  .popUpHeader .popUptitle {
+    font-family: 'Uncut-Sans';
+    font-weight: 800;
+    font-size: 1.9em;
+    color: #d90404;
+  }
+  .popUpHeader .closeBtn {
+    cursor: pointer;
+    border: none;
+    outline: none;
+    background: none;
+    font-weight: 600;
+    font-size: 1.5em;
+    color: #0a2628;
+    position: relative;
+    transition: all ease 0.4s;
+  }
+  .circle{
+    display: none;
+    transition: all ease 0.4s;
+  }
+  .closeBtn:hover .circle{
+    position: absolute;
+    display: block;
+    padding-bottom: 10px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #e62b1e;
+    height: 30px;
+    width: 30px;
+    color: #fff;
+    border-radius: 50%;
+    transition: 1s;
+  }
+  .popUpBody p{
+    color: #181818;
+    font-family: 'Uncut-Sans';
+  }
+  .popUpBodyimg{
+    height: 250px;
+    width: 250px;
+  }
+  .description p{
+    font-weight: 400;
+    font-size: 1.1em;
+    line-height: 1.2;
+  }
+  #overlay {
+    position: fixed;
+    opacity: 0;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    pointer-events: none;
+    background-color: rgba(0, 0, 0, 0.731);
+  }
+  #overlay.active{
+    opacity: 1;
+  }
 
 @media(max-width: 1000px){
    
