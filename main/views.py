@@ -78,33 +78,28 @@ db = firestore.client()
 
 # Create your views here.
 
+def get_data(request):
+    data = {
+        'Day1': db.collection('Data').document('Day-1').get().to_dict(),
+        'Day2': db.collection('Data').document('Day-2').get().to_dict(),
+        'Day3': db.collection('Data').document('Day-3').get().to_dict(),
+        'EarlyBird': db.collection('Data').document('Early-Bird').get().to_dict(),
+        'Normal': db.collection('Data').document('Normal-Pass').get().to_dict(),
+    }
+    return JsonResponse(data)
+
 def home(request):
+    # data_day_1 = db.collection('Data').document('Day-1').get().to_dict()
+    # data_day_2 = db.collection('Data').document('Day-2').get().to_dict()
+    # data_day_3 = db.collection('Data').document('Day-3').get().to_dict()
+    # EarlyBird = db.collection('Data').document('Early-Bird').get().to_dict()
+    # Normal = db.collection('Data').document('Normal-Pass').get().to_dict()
     # context = {
-    #     'Day1': {
-    #         'date': db.collection('Data').document('Day-1').get().get('Date'),
-    #         'price': db.collection('Data').document('Day-1').get().get('Price'),
-    #         'img': db.collection('Data').document('Day-1').get().get('Image'),
-    #     },
-    #     'Day2': {
-    #         'date': db.collection('Data').document('Day-2').get().get('Date'),
-    #         'price': db.collection('Data').document('Day-2').get().get('Price'),
-    #         'img': db.collection('Data').document('Day-2').get().get('Image'),
-    #     },
-    #     'Day3': {
-    #         'date': db.collection('Data').document('Day-3').get().get('Date'),
-    #         'price': db.collection('Data').document('Day-3').get().get('Price'),
-    #         'img': db.collection('Data').document('Day-3').get().get('Image'),
-    #     },
-    #     'EarlyBird': {
-    #         'date': db.collection('Data').document('Early-Bird').get().get('Date'),
-    #         'price': db.collection('Data').document('Early-Bird').get().get('Price'),
-    #         'img': db.collection('Data').document('Early-Bird').get().get('Image'),
-    #     },
-    #     'Normal': {
-    #         'date': db.collection('Data').document('Normal-Pass').get().get('Date'),
-    #         'price': db.collection('Data').document('Normal-Pass').get().get('Price'),
-    #         'img': db.collection('Data').document('Normal-Pass').get().get('Image'),
-    #     },
+    #     'Day1': data_day_1,
+    #     'Day2': data_day_2,
+    #     'Day3': data_day_3,
+    #     'EarlyBird': EarlyBird,
+    #     'Normal': Normal
     # }
     return render(request, "main/home.html")
     
