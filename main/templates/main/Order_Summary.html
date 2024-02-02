@@ -70,7 +70,7 @@
                     </div> {% endcomment %}
                     <span class="detailbox2 email em" style="display: inline-block; width: 25vw;font-family: 'Uncut-Sans';">{{ form_data.LeaderEmail|default:'' }}</span>
                     {% comment %} <img src="{% static 'img/Vector.png' %}" alt=""> {% endcomment %}
-                    <span class="detailbox2 number" style="font-family: 'Uncut-Sans';">{{ form_data.LeaderContact_no|default:''}}</span>
+                    <span class="detailbox2 number" style="font-family: 'Uncut-Sans';">{{cod}}{{ form_data.LeaderContact_no|default:''}}</span>
                 </div>
                 <div class="div3">
                     <!-- <select id="idtype-1" class="detailbox idtype" name="LeaderIDtype" required>

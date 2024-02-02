@@ -29,10 +29,8 @@ from Crypto.Protocol.KDF import PBKDF2
 def user_data(request):
     try:
         email = request.query_params.get('Email', None)
-        print
         if not email:
             return Response({'error': 'Email is required'}, status=status.HTTP_400_BAD_REQUEST)
-        print(213124)
         users=[]
         user_ref = db.collection('transaction').where('Email','==',email).stream()
         print(email)
@@ -161,20 +159,12 @@ def register(request):
     return render(request, 'main/register.html', {'email': email})
 
 
-
-price=db.collection('price').stream()
-prices = []
-for doc in price:
-    x = doc.to_dict()
-    prices.append(x)
-for pr in x:
-    print((x[pr]))
-
 def Order_Summary(request):
     Todata = request.session.get('Todata', {})
+    cod = request.session.get('cod', {})
     members = request.session.get('members', {})
     form_data = request.session.get('form_data', {})
-    return render(request, 'main/Order_Summary.html',{'form_data': form_data,'members':members,"tdata":Todata})
+    return render(request, 'main/Order_Summary.html',{'form_data': form_data,'members':members,"tdata":Todata,"cod":cod})
 
 def unique_id(length):
     iv = (db.collection('transaction').stream())
@@ -184,9 +174,8 @@ def unique_id(length):
         if random_string not in document_ids:
             print(random_string)
             return random_string
-used_strings = set()
 
-# @login_required
+# @login_required(login_url="otp")
 def savedata(request):
     price=db.collection('price').stream()
     prices = []
@@ -211,6 +200,7 @@ def savedata(request):
         LeaderName = request.POST.get('LeaderName')
         Lpasstype = request.POST.get('Lpasstype')
         LeaderContact_no = request.POST.get('LeaderContact_no')
+        print(LeaderContact_no)
         LeaderEmail = request.POST.get('LeaderEmail')
         LeaderIDType = request.POST.get('LeaderIDtype')
         LeaderIDNumber = request.POST.get('LeaderIDnumber')
@@ -223,6 +213,8 @@ def savedata(request):
         member_idnumber = request.POST.getlist('IDnumber')
         member_age = request.POST.getlist('age')
         member_gender = request.POST.getlist('gender')
+        cod = request.POST.getlist('code')
+        print(cod)
         amount=0
         pas=pass_types[0]
         for i in range(1,len(y)+1):
@@ -239,7 +231,7 @@ def savedata(request):
         }
         Ldata={
             "LName": LeaderName,
-            "LContact": LeaderContact_no,
+            "LContact": cod[0]+LeaderContact_no,
             "LIDType": LeaderIDType,
             "LIDNumber": LeaderIDNumber,
             'Lpasstype':Lpasstype,
@@ -253,7 +245,7 @@ def savedata(request):
         for i in range(len(membernames)):
             member = {
                 "name": membernames[i],
-                "contact": member_contacts[i],
+                "contact": cod[i+1]+member_contacts[i],
                 "gender": member_gender[i],
                 "pass_type": member_passtype[i],
                 "id_type": member_idtype[i],
@@ -261,6 +253,7 @@ def savedata(request):
                 "age": member_age[i],
                 'email': member_email[i],
             }
+            print(member['contact'])
             for j in range(1,len(y)+1):
                 if(member_passtype[i] == pas[str(j)]):
                     amount+=x[pas[str(j)]]
@@ -277,6 +270,7 @@ def savedata(request):
         request.session.flush()
         request.session['members']=members
         request.session['Todata'] = Todata
+        request.session['cod'] = cod[0]
         request.session['form_data'] = request.POST
         return redirect(Order_Summary)
     email = request.session.get('LeaderEmail',{})

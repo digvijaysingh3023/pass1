@@ -8,6 +8,8 @@
     <title>Document</title>
     <link rel="stylesheet" href="{% static 'register/register.css' %}">
     <link rel="stylesheet"  href="https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/css/intlTelInput.css">
+    <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/js/intlTelInput.min.js"></script>
+    <script src="https://kit.fontawesome.com/142d47f396.js" crossorigin="anonymous"></script>
 </head>
 <body>
     <div class="navbar">
@@ -57,8 +59,11 @@
                         <img src="{% static 'img/Vector.png' %}" alt="">
                     </div> {% endcomment %}
                     <input type="email" placeholder="Email-ID" id="email-1" class="detailbox email em" required
-                        minlength="2" name="LeaderEmail" value="{{ form_data.LeaderEmail|default:leadermail}}" readonly>
+                        minlength="2" name="LeaderEmail" value="{%if leadermail %}
+                        {{leadermail}}
+                        {%else%}{{form_data.LeaderEmail}}{%endif%}" readonly>
                     {% comment %} <img src="{% static 'img/Vector.png' %}" alt=""> {% endcomment %}
+                    <input style="display:none;" id="code-1" value="+91" name="code">
                     <input type="tel" placeholder="Contact Number" id="number-1" class="detailbox number cnumber" required pattern="[0-9]{10}" name="LeaderContact_no" value="{{ form_data.LeaderContact_no|default:'' }}">
                 </div>
                 <div class="div3">
@@ -71,7 +76,7 @@
                         <option class="idoption" value="Other" {% if form_data.LeaderIDtype|default:'' == 'Other' %}selected{% endif %}>Other</option>
                         
                     </select>
-                    <input type="number" placeholder="ID Number" id="idnum-1" class="detailbox idnum" required minlength="1"
+                    <input  placeholder="ID Number" id="idnum-1" class="detailbox idnum" required minlength="1"
                         name="LeaderIDnumber" value="{{ form_data.LeaderIDnumber|default:'' }}">
                 </div>
             </div>
@@ -98,10 +103,12 @@
                                     <option class="genderoption" value="Female" {% if member.gender|default:'' == 'Female' %}selected{% endif %}>Female</option>
                                     <option class="genderoption" value="Other" {% if member.gender|default:'' == 'Other' %}selected{% endif %}>Other</option>
                                 </select>
+
                                 <input type="number" placeholder="Age" id="age-{{ forloop.counter|add:'1' }}" class="detailbox age" required min="1" name="age" value="{{ member.age|default:'' }}">
                             </div>
                             <div class="div2">
                                     <input type="email" placeholder="Email-ID" id="email-{{ forloop.counter|add:'1' }}" class="detailbox vinput email em" required minlength="2" name="email" value="{{ member.email|default:'' }}">
+                                <input style="display:none;" id="code-{{ forloop.counter|add:'1' }}" name="code" value="{{ co|default:'' }}">
                                 <input type="tel" placeholder="Contact Number" class="detailbox number cnumber" id="number-{{ forloop.counter|add:'1' }}" required pattern="[0-9]{10}" minlength="2" name="contact_no" value="{{ member.contact|default:'' }}">
                             </div>
                             <div class="div3">
@@ -114,15 +121,15 @@
                                     <option class="idoption" value="Other" {% if member.id_type|default:'' == 'Other' %}selected{% endif %}>Other</option>
             
                                 </select>
-                                <input type="number" placeholder="ID Number" id="idnum-{{ forloop.counter|add:'1' }}" class="detailbox idnum" required minlength="1" name="IDnumber" value="{{ member.id_number|default:'' }}">
+                                <input  placeholder="ID Number" id="idnum-{{ forloop.counter|add:'1' }}" class="detailbox idnum" required minlength="1" name="IDnumber" value="{{ member.id_number|default:'' }}">
                             </div>
                         </div>
                     {% endfor%}
                 
             </div>
             <div class="addandremove">
-                <button type="button" class="add bigf unt " id="press-1"> &#43; ADD ATTENDEE</button>
-                <button type="button" class="remove bigf unt" id="press-2" {%if members %} style="display: block;"{%else%} style="display: none;" {%endif%} > &#45; REMOVE</button>
+                <button type="button" class="add bigf unt " id="press-1"> <i class="fa-solid fa-plus"></i> ADD ATTENDEE</button>
+                <button type="button" class="remove bigf unt" id="press-2" {%if members %} style="display: block;"{%else%} style="display: none;" {%endif%} > <i class="fa-solid fa-minus"></i> REMOVE</button>
             </div>
             <div>
                 <button type="submit" class="submitbtn bigf">SUBMIT AND PAY</button>
@@ -150,11 +157,10 @@
                 <div class="following">
                     <span style="margin-bottom: 1.5vh;font-size:1.12vw;">Follow us on</span>
                     <div id="footer-icons">
-                        <a href="/" target="_blank"><i class="bi bi-instagram"
-                                style=" color:white;font-size:1.5vw;"></i></a>
+                        <a href="/" target="_blank"><i class="fa-brands fa-instagram" style="color: #ffffff;"></i></i></a>
                         <a href="" target="_blank"><i class="bi bi-facebook"
                                 style="margin-left: 1.5vw; color:white;font-size:1.5vw;"></i></a>
-                        <a href="https://twitter.com/alcheringaiitg" target="_blank"><i class="bi bi-twitter" style="margin-left: 1.5vw; color:white;font-size:1.5vw;"></i></a>
+                        <a href="https://twitter.com/alcheringaiitg" target="_blank"><i class="fa-brands fa-x-twitter" style="color: #ffffff;"></i></i></a>
                         <a href="https://www.youtube.com/c/AlcheringaIITG" target="_blank">
                             <i class="bi bi-youtube" style="margin-left: 1.5vw; color:white;font-size:1.5vw;"></i>
                         </a>
@@ -218,8 +224,15 @@
                         0
                     {%endif%}</p>
             </div>
+            <div class="passes">
+                {% for val,passes in passtype.items %}
+               <div class="pa"> <div class="pas">{{passes}}</div><div class="n">:{{val}}</div></div>
+               {% endfor %}
+               {% comment %} <div class="pa"> <div class="pas">Day1 yahi</div><div class="n">:2</div></div>
+               <div class="pa"> <div class="pas">Day1 yahi</div><div class="n">:3</div></div> {% endcomment %}
+            </div>
         </div>
-        <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/js/intlTelInput.min.js"></script>
+        
         <script>
             const form = document.querySelector('form[name="reg"]');
             const container = document.querySelector('#add-container_2');
@@ -234,7 +247,7 @@
             document.querySelector('#press-1').addEventListener('click', addPage);
             removeBtn.addEventListener('click', deletePage);
             for(let i=1;i<=count;i++){
-                const input = document.querySelector(`#number-${i}`);
+                var input = document.querySelector(`#number-${i}`);
                 window.intlTelInput(input, {
                     // utilsScript: "https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/js/utils.js",
                     initialCountry: "in",          
@@ -242,6 +255,8 @@
                     separateDialCode: true,
                 });
             }
+            //+91
+
             function addPage() {
                 count++;
                 console.log(count)
@@ -269,7 +284,8 @@
                     <input type="number" placeholder="Age" id="age-${count}" class="detailbox age" required min="1" name="age">
                 </div>
                 <div class="div2">
-                        <input type="email" placeholder="Email-ID" id="email-${count}" class="detailbox vinput email em" required minlength="2" name="email">
+                    <input type="email" placeholder="Email-ID" id="email-${count}" class="detailbox vinput email em" required minlength="2" name="email">
+                    <input style="display:none;" id="code-${count}" name="code">    
                     <input type="tel" placeholder="Contact Number" class="detailbox number cnumber" id="number-${count}" required pattern="[0-9]{10}" minlength="2" name="contact_no">
                 </div>
                 <div class="div3">
@@ -282,7 +298,7 @@
                         <option class="idoption" value="Other">Other</option>
 
                     </select>
-                    <input type="number" placeholder="ID Number" id="idnum-${count}" class="detailbox idnum" required minlength="1" name="IDnumber">
+                    <input placeholder="ID Number" id="idnum-${count}" class="detailbox idnum" required minlength="1" name="IDnumber">
                 </div>
             </div>`;
                 container.insertAdjacentHTML("beforeend", code);
@@ -312,6 +328,7 @@
                 }
             }
         }
+        
         aprove()
               document.addEventListener('input',aprove)
               const peeps=[];
@@ -415,6 +432,14 @@
                 }
             }
             function handleFormSubmit(event) {
+                const cc = document.getElementsByClassName("iti__selected-dial-code")
+                for (let i = 1; i <= count; i++) {
+                    let cod = document.querySelector(`#code-${i}`);
+                    let num = document.querySelector(`#number-${i}`);
+                    let c = cc[i-1]
+                    let nextSibling = num.previousElementSibling;
+                    cod.value = c.innerHTML;
+                }
                 event.preventDefault();
                 let valid = true;
                 const fields = [];
@@ -434,8 +459,26 @@
                     valid = false;
                     field.classList.add('err');
                     field.classList.remove('valid');
-                  } else {
+                    if(field.getAttribute("name") == 'gender' || field.getAttribute("name") == 'LeaderGender'){
+                        field.classList.remove('ageval')
+                        field.classList.add('ageerr')
+                    }
+                    if(field.getAttribute("name") == 'LeaderIDtype' || field.getAttribute("name") == 'IDtype'){
+                        field.classList.add('idnumerr')
+                        field.classList.remove('idnumval')
+                    }
+                    
+                    
+                } else {
                     field.classList.remove('err');
+                    if(field.getAttribute("name") == 'gender' || field.getAttribute("name") == 'LeaderGender'){
+                        field.classList.add('ageval')
+                        field.classList.remove('ageerr')
+                    }
+                    if(field.getAttribute("name") == 'LeaderIDtype' || field.getAttribute("name") == 'IDtype'){
+                        field.classList.remove('idnumerr')
+                        field.classList.add('idnumval')
+                    }
                     field.classList.add('valid');
                   }
                   if(field.type == "email"){
