@@ -102,6 +102,9 @@ def home(request):
 def otp(request):
     return render(request, "main/otp.html")
 
+def Success(request):
+    return render(request, "main/success.html")
+
 @csrf_exempt
 def sendOtp(request):
     try:
