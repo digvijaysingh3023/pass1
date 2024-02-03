@@ -9,59 +9,6 @@
 
 
 /* HTML: <div class="loader"></div> */
-.dots {
-    display: inline-block;
-    width: 60px;
-    aspect-ratio: 4;
-    background: radial-gradient(circle closest-side,#fff 90%,#0000) 0/calc(100%/3) 100% space;
-    clip-path: inset(0 100% 0 0);
-    animation: l1 1s steps(4) infinite;
-  }
-  @keyframes l1 {to{clip-path: inset(0 -34% 0 0)}}
-
-#preLoader{
-    position: fixed;
-    height: 100%;
-    width: 100%;
-    background: #181818;
-    z-index: 100 ;
-    display: flex;
-    align-items: center;
-}
-#preLoader img[alt='loader'] {
-    height: 13vw;
-    position: relative;
-    left: 28.5%;
-    animation: loader 5s infinite linear;
-    transform: translate(-50%, 0%) rotate(45deg);
-}
-
-#preLoader img[alt= 'logo']{
-    height: 3vw;
-    z-index: 9;
-    position: absolute;
-    top: 50%;
-    left: 35%;
-    transform: translate(-50%, -50%);
-}
-.cont{
-    position: absolute;
-    top: 50%;
-    left: 60%;
-    transform: translate(-50%, -50%);
-}
-#preLoader h2{
-    font-family: 'Uncut-Sans';
-    color: #ffff;
-    font-size: 1.5vw;
-}
-#preLoader h1{
-    font-family: 'fsp-demo-freigeist-con-black-5';
-    color: #ffff;
-    font-size: 5vw;
-    margin: 0;
-}
-
 body{
     position: relative;
     background-color: black;
@@ -149,9 +96,9 @@ body{
 }
 
 .hand {
-    right: -10vw;
-    top: -5vh;
-    height: 20vh;
+    right: -12vw;
+    top: -2vw;
+    height: 11vw;
     position: absolute;
     overflow: hidden;
     -webkit-animation: mover 1s infinite  alternate;
@@ -162,13 +109,58 @@ body{
     position: relative;
 }
 .downhand{
-    left: -10vw;
-    bottom: -15vh;
-    height: 20vh;
+    left: -12vw;
+    bottom: -8vw;
+    height: 11vw;
     position: absolute;
     overflow: hidden;
     -webkit-animation: mover 1s infinite  alternate;
     animation: mover 1s infinite  alternate;
+}
+#star1{
+    position: absolute;
+    top: 2vw;
+    right: -2vw;
+    height: 7vw;
+    overflow: hidden;
+    animation: blink 2s infinite alternate;
+    animation-timing-function: ease-in-out;
+}
+#star2{
+    position: absolute;
+    top: 8vw;
+    left: -3vw;
+    height: 4vw;
+    overflow: hidden;
+    animation: blink 2s infinite alternate-reverse;
+    animation-timing-function: ease-in-out;
+}
+#star3{
+    position: absolute;
+    top: 5.1vw;
+    right: -2vw;
+    height: 3.5vw;
+    overflow: hidden;
+    animation: blink 2s infinite alternate;
+    animation-timing-function: ease-in-out;
+}
+#star4{
+    position: absolute;
+    bottom: 1vw;
+    right: 40vw;
+    height: 2.5vw;
+    overflow: hidden;
+    animation: blink 2s infinite alternate-reverse;
+    animation-timing-function: ease-in-out;
+}
+#star5{
+    position: absolute;
+    bottom: 1vw;
+    left: -1vw;
+    height: 3.5vw;
+    overflow: hidden;
+    animation: blink 2s infinite alternate;
+    animation-timing-function: ease-in-out;
 }
 #passesHead{
     font-size: 4vw;
@@ -323,10 +315,6 @@ body{
     0% { transform: translateY(0); }
     100% { transform: translateY(-15px); }
 }
-@keyframes loader {
-    0% { transform: rotate(0); }
-    100%{transform: rotate(1turn); }
-}
 @keyframes float {
     0% { transform: rotate(-10deg); }
     100%{transform: rotate(20deg); }
@@ -334,5 +322,9 @@ body{
 @keyframes float2 {
     0% { transform: rotate(-20deg); }
     100%{transform: rotate(10deg); }
+}
+@keyframes blink {
+    0% {transform: scale(1); }
+    100% {transform: scale(1.2); }
 }
 

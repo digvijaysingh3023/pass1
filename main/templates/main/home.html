@@ -5,16 +5,8 @@
   <title>Passportal</title>
   <link rel="stylesheet" href="{% static 'css/home.css' %}">
 {% endblock title %}
+
 {% block page %}
-<div id="preLoader">
-  <img src="{% static 'images/loader.png'  %}" alt="loader">
-  <img src="{% static 'images/alcher.png'  %}" alt="logo">
-  <div class="cont">
-    <h1>LOADING <div class="dots"></div></h1>
-    <h2>Welcome to Alcheringa!! We are loading up. <br> please wait...</h2>
-  </div>
-  
-</div>
   <div class="body">
     <div class="heroSection">
       <h1>Grab your <br> passes here<span>!!</span></h1>
@@ -48,7 +40,9 @@
           </div>
           {% endfor %}
         </div>
-
+        <img id="star2" src="{% static 'images/Star.png' %}" alt="star">
+        <img id="star3" src="{% static 'images/Star.png' %}" alt="star">
+        <img id="star4" src="{% static 'images/Star.png' %}" alt="star">
       </div>
 
       <div class="DayWisePasses">
@@ -69,6 +63,8 @@
               </div>
             </div>
           {% endfor %}
+          <img id="star1" src="{% static 'images/Star.png' %}" alt="star">
+          <img id="star5" src="{% static 'images/Star.png' %}" alt="star">
           <img class="downhand" src="{% static 'images/DownHand.png' %}">
         </div>
 
@@ -87,8 +83,9 @@
   async function loadData() {
           try {
               const response = await fetch('{% url "get_data" %}');  // Replace with the actual URL of your Django API endpoint
-              const data = await response.json();
-              console.log(data);
+              // const data = await response.json();
+              // console.log(data);
+              document.body.style.overflow = 'auto';
               let loader = document.querySelector('#preLoader');
               loader.style.display = 'none';
             } catch (error) {
@@ -110,6 +107,7 @@
 
   window.addEventListener('DOMContentLoaded', ()=>{
     loadData();
+    document.body.style.overflow = 'hidden';
   })
 
 </script>

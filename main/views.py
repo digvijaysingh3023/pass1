@@ -90,7 +90,7 @@ def get_data(request):
     }
     request.session['dayWisePasses'] = data1
     request.session['seasonPasses'] = data2
-    return JsonResponse(data1)
+    return JsonResponse(data2)
 
 def home(request):
     dayWisePasses = request.session.get('dayWisePasses', {})
@@ -127,7 +127,7 @@ def sendOtp(request):
         
     except Exception as e:
         print(e)
-    return JsonResponse({"otp": "otp"})
+    return JsonResponse({"otp": otp})
 
 
 def verify_otp(request):
