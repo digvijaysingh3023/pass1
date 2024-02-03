@@ -24,6 +24,9 @@ from Crypto.Cipher import AES
 from Crypto.Random import get_random_bytes
 from django.contrib.auth.decorators import login_required
 from Crypto.Protocol.KDF import PBKDF2
+from fpdf import FPDF
+import qrcode
+from io import BytesIO
 
 @api_view(['GET'])
 def user_data(request):
@@ -289,3 +292,50 @@ def savedata(request):
     members = request.session.get('members', {})
     Todata = request.session.get('Todata', {})
     return render(request, 'main/register.html', {'form_data': form_data,'members':members,"tdata":Todata,"prices":prices[0] , "passtype" : pass_types[0], "leadermail" : email})
+
+
+def passes(request):
+    try:
+        user_email = request.user.email
+        user_ref = db.collection('transaction').where('Email', '==', user_email).stream()
+        passes_info = []
+        for transaction in user_ref:
+            transaction_data = transaction.to_dict()
+            pass_data = transaction_data.get('err_des', {}).get('pass')
+            if pass_data:
+                passes_info.append(pass_data)
+        pdf = generate_pdf(passes_info)
+        response = HttpResponse(pdf, content_type='application/pdf')
+        response['Content-Disposition'] = 'attachment; filename="passes.pdf"'
+        return response
+
+    except ObjectDoesNotExist:
+        return HttpResponse("User or passes not found.")
+    except Exception as e:
+        print(e)
+        return HttpResponse("An error occurred.")  
+
+
+
+def generate_pdf(passes_info):
+    pdf = FPDF('L', 'mm', (270, 870))
+
+    for pass_data in passes_info:
+        pdf.add_page()
+        pdf.image("BoardPassFront7.png", 0, 0, pdf.w, pdf.h)
+        qr_code_data = 'https://www.example.com/' + pass_data['pass_id']
+        aztec = qrcode.QRCode(version=1, box_size=10, border=4)
+        aztec.add_data(qr_code_data)
+        aztec.make(fit=True)
+        aztec_img = aztec.make_image(fill_color="white", back_color="#F28E15")
+        qr_code_path = f'aztec_code_{pass_data["pass_id"]}.png'
+        aztec_img.save(qr_code_path)
+        aztec_img = aztec_img.resize((85, 85))
+        pdf.image(qr_code_path, pdf.w - 190, pdf.h - 210, 120, 120)
+
+        pdf.add_page()
+        pdf.image("BoardPassBack2.png", 0, 0, pdf.w, pdf.h)
+
+    output = BytesIO()
+    pdf.output(output)
+    return output.getvalue()
