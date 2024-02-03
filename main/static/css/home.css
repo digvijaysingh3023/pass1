@@ -327,4 +327,59 @@ body{
     0% {transform: scale(1); }
     100% {transform: scale(1.2); }
 }
-
+@media(max-width:600px){
+    #passesHead{
+        font-size: 7vw;
+    }
+    .allSeason b{
+        font-size: 6vw;
+    }
+    .allSeason h3{
+        font-size: 3vw;
+    }
+    .seasonpass{
+        flex-direction: column;
+    }
+    .earlybird{
+        width:80vw;
+        height:40vw;
+    }
+    .headtxt{
+        font-size: 5vw;
+        margin-bottom:8vw;
+    }
+    #seasonDate{
+      font-size: 3vw;
+      width:60%;
+    }
+    #seasonPrice{
+        font-size: 3vw;
+    }
+    .btndiv a{
+        font-size: 3vw;
+    }
+    .dayPassContainer{
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap:5vw;
+    }
+    .day1{
+        height:70vw;
+        width:60vw;
+    }
+    .headtxt2{
+        font-size: 8vw;
+        margin-bottom: 30vw;
+    }
+    #dayDate{
+        font-size: 4vw;
+        height:15%;
+        width:60%;
+    }
+    #dayPrice{
+        font-size: 4vw;
+        height:10%;
+        width:45%;
+    }
+}
