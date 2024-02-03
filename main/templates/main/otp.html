@@ -7,7 +7,7 @@
 
 {% block page %}
 
-<div id="preLoader"></div>
+
 
 <div id="passPortalContent">
     <div class="heading">
@@ -25,7 +25,7 @@
                 <div id="bc">
                     <div class="einput">
                         <div id="email" style="display: none;">{{email}}</div>
-                        <input type="email" class="vinput" name="email">
+                        <input type="email" class="vinput" name="email" autofocus required>
                         <img src="{% static 'img/Vector.png' %}" alt="">
                     </div>
                     <div class="timer">
@@ -81,9 +81,11 @@
 
 {% block script %}
 <script>
-
    
-
+    window.addEventListener('DOMContentLoaded', ()=>{
+        let loader = document.querySelector('#preLoader');
+        loader.style.display = 'none';
+    })
     function timer(n){
         document.getElementById("resend").disabled = true;
         const interval = setInterval(()=>{
@@ -198,6 +200,30 @@
     }
     else{
         codes[0].focus()
+    }
+
+    // document.querySelector('#submitOtp').addEventListener('click', submitOtp)
+
+    function submitOtp(e) {
+        e.preventDefault();
+        // Get the OTP input values
+        var otpValues = document.getElementsByName("otp");
+        var otp = "";
+        for (var i = 0; i < otpValues.length; i++) {
+            otp += otpValues[i].value;
+        }
+
+        // Perform client-side validation
+        var otp1 = parseInt('{{ otp1 }}');  // Pass the correct OTP value from the server
+        var OTP = parseInt(otp);
+
+        if (OTP === otp1) {
+            // Correct OTP, proceed with the form submission
+            document.getElementById("otpForm").submit();
+        } else {
+            // Incorrect OTP, show an alert
+            document.getElementById("alt_wrongOtp").innerHTML = '<img src="{% static "svg/icon.svg" %}">&nbsp; Incorrect OTP. Please try again.';
+        }
     }
  </script>  
 {% endblock script %}

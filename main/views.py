@@ -82,33 +82,31 @@ db = firestore.client()
 # Create your views here.
 
 def get_data(request):
-    data = {
-        'Day1': db.collection('Data').document('Day-1').get().to_dict(),
-        'Day2': db.collection('Data').document('Day-2').get().to_dict(),
-        'Day3': db.collection('Data').document('Day-3').get().to_dict(),
-        'EarlyBird': db.collection('Data').document('Early-Bird').get().to_dict(),
-        'Normal': db.collection('Data').document('Normal-Pass').get().to_dict(),
+    data1 = {
+        'DAY 1': db.collection('Data').document('Day-1').get().to_dict(),
+        'DAY 2': db.collection('Data').document('Day-2').get().to_dict(),
+        'DAY 3': db.collection('Data').document('Day-3').get().to_dict(),
     }
-    return JsonResponse(data)
+    data2 = {
+        'EARLY BIRD SEASON PASS': db.collection('Data').document('EARLY BIRD SEASON PASS').get().to_dict(),
+        'NORMAL SEASON PASS': db.collection('Data').document('NORMAL SEASON PASS').get().to_dict(),
+    }
+    request.session['dayWisePasses'] = data1
+    request.session['seasonPasses'] = data2
+    return JsonResponse(data2)
 
 def home(request):
-    # data_day_1 = db.collection('Data').document('Day-1').get().to_dict()
-    # data_day_2 = db.collection('Data').document('Day-2').get().to_dict()
-    # data_day_3 = db.collection('Data').document('Day-3').get().to_dict()
-    # EarlyBird = db.collection('Data').document('Early-Bird').get().to_dict()
-    # Normal = db.collection('Data').document('Normal-Pass').get().to_dict()
-    # context = {
-    #     'Day1': data_day_1,
-    #     'Day2': data_day_2,
-    #     'Day3': data_day_3,
-    #     'EarlyBird': EarlyBird,
-    #     'Normal': Normal
-    # }
-    return render(request, "main/home.html")
+    dayWisePasses = request.session.get('dayWisePasses', {})
+    print(dayWisePasses)
+    seasonPasses = request.session.get('seasonPasses', {})
+    return render(request, "main/home.html",{'dayWisePasses': dayWisePasses,'seasonPasses':seasonPasses})
     
 
 def otp(request):
     return render(request, "main/otp.html")
+
+def Success(request):
+    return render(request, "main/success.html")
 
 @csrf_exempt
 def sendOtp(request):
@@ -132,7 +130,7 @@ def sendOtp(request):
         
     except Exception as e:
         print(e)
-    return JsonResponse({"otp": "otp"})
+    return JsonResponse({"otp": otp})
 
 
 def verify_otp(request):
