@@ -1,23 +1,14 @@
+{% extends "main/base.html" %}
 {% load static %}
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% block title %}
     <title>Document</title>
     <link rel="stylesheet" href="{% static 'register/register.css' %}">
     <link rel="stylesheet"  href="https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/css/intlTelInput.css">
     <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/js/intlTelInput.min.js"></script>
     <script src="https://kit.fontawesome.com/142d47f396.js" crossorigin="anonymous"></script>
-</head>
-<body>
-    <div class="navbar">
-        <div class="left">
-        <img id="alcherlogo1" src="{% static 'images/alcherlogo1.svg' %}" alt="alcherlogo">
-        <h1>ALCHERINGA</h1>
-        </div>
-    </div>
+{% endblock title %}
+{% block page %}
     <div class="intro">
         <h1 id="heading2">ALCHERINGA</h1>
         <p id="introtext">Welcome to Alcheringa!! Please enter each of your attendee's names <br>and select the kind of
@@ -135,63 +126,7 @@
                 <button type="submit" class="submitbtn bigf">SUBMIT AND PAY</button>
             </div>
         </form>
-        <div class="big">
-        <div class="footer">
-            <div class="welcometxt">
-                Team Alcheringa Welcomes you to the 28th edition of
-                <img class="star" src="{% static "images/Star.svg" %}" alt="">
-            </div>
-            <div class="ribbon-case">
-                <div class="footer-iit">IIT GUWAHATI'S</div>
-                <img class="star-2" src="{% static "images/Star.svg" %}" alt="">
-                <div class="footer-alcher">ALCHERINGA</div>
-                <img class="star-3" src="{% static "images/Star.svg" %}" alt="">
-            </div>
-            <div class="contact">
-                <div class="left-detail">
-                    <div class="contact-info">
-                        <span class="namee">Siddant Singh</span>
-                        <span class="phone">+91 9310859978</span>
-                        <span class="emaile">siddant.s@alcheringa.in</span>
-                    </div>
-                    <div class="contact-info">
-                        <span class="namee">Siddant Singh</span>
-                        <span class="phone">+91 9310859978</span>
-                        <span class="emaile">siddant.s@alcheringa.in</span>
-                    </div>
-                </div>
-                <div class="following">
-                    <span class="follow-us" >Follow us on</span>
-                    <div id="footer-icons">
-                        <a class="icon" href="/" target="_blank">
-                            <i class="fa-brands fa-instagram insta"  style="color: #E8EDD9;"></i>
-                        </a>
-                        <a class="icon" href="" target="_blank">
-                            <img src="{% static "images/facebook.svg" %}" class="facebook"  alt='' />
-                        </a>
-                        <a class="icon" href="https://twitter.com/alcheringaiitg" target="_blank"><i class="fa-brands fa-x-twitter X" style="color: #E8EDD9;"></i></i></a>
-                        <a class="icon"  href="https://www.youtube.com/c/AlcheringaIITG" target="_blank">
-                            <img src="{% static "images/youtube.svg" %}" class="youtube" alt='' />
-                        </a>
-                    </div>
-                </div>
-
-
-
-            </div>
-            <div class="creator-info">
-                <div style="display: inline;" class="credit">Designed and Developed by <p
-                        style="display: inline;border-bottom:1px solid white;">Alcher Creatives</p> & <p
-                        style="display: inline;;border-bottom:1px solid white"> Alcher Web Operations</p>
-                </div>
-                <div class="business-contact">
-                    <p style="margin-bottom:0.5vh;">For Business Enquiries</p>
-                    <p class="pub" style="margin-top:0.5vh;margin-bottom:0vh;">publicrelations24@alcheringa.in</p>
-                </div>
-            </div>
-        </div>
-        </div>
-    </div>
+        
         <div class="bottombar">
             <div class="price">
                 <p id="total">Total Amount : &#8377 {% if tdata.amount %} {{tdata.amount}}
@@ -207,8 +142,13 @@
                <div class="pa"> <div class="pas">Day1 yahi</div><div class="n">:3</div></div> {% endcomment %}
             </div>
         </div>
-        
+{% endblock page %}
+{% block script %}
         <script>
+             window.addEventListener('DOMContentLoaded', ()=>{
+        let loader = document.querySelector('#preLoader');
+        loader.style.display = 'none';
+    })
             const form = document.querySelector('form[name="reg"]');
             const container = document.querySelector('#add-container_2');
             const removeBtn = document.querySelector('#press-2');
@@ -482,6 +422,4 @@
               }
 
         </script>
-</body>
-
-</html>
+        {% endblock script %}
