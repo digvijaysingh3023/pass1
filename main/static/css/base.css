@@ -1,0 +1,56 @@
+.dots {
+    display: inline-block;
+    width: 60px;
+    aspect-ratio: 4;
+    background: radial-gradient(circle closest-side,#fff 90%,#0000) 0/calc(100%/3) 100% space;
+    clip-path: inset(0 100% 0 0);
+    animation: l1 1s steps(4) infinite;
+  }
+  @keyframes l1 {to{clip-path: inset(0 -34% 0 0)}}
+
+#preLoader{
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    background: #181818;
+    z-index: 100 ;
+    display: flex;
+    align-items: center;
+}
+#preLoader img[alt='loader'] {
+    height: 13vw;
+    position: relative;
+    left: 28.5%;
+    animation: loader 5s infinite linear;
+    transform: translate(-50%, 0%) rotate(45deg);
+}
+
+#preLoader img[alt= 'logo']{
+    height: 3vw;
+    z-index: 9;
+    position: absolute;
+    top: 50%;
+    left: 35%;
+    transform: translate(-50%, -50%);
+}
+.cont{
+    position: absolute;
+    top: 50%;
+    left: 60%;
+    transform: translate(-50%, -50%);
+}
+#preLoader h2{
+    font-family: 'Uncut-Sans';
+    color: #ffff;
+    font-size: 1.5vw;
+}
+#preLoader h1{
+    font-family: 'fsp-demo-freigeist-con-black-5';
+    color: #ffff;
+    font-size: 5vw;
+    margin: 0;
+}
+@keyframes loader {
+    0% { transform: rotate(0); }
+    100%{transform: rotate(1turn); }
+}

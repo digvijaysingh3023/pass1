@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'register/register.css' %}">
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
     {% block title %}
     
     {% endblock title %}
@@ -22,6 +23,15 @@
         </div>
     </div>
     <!-- NavBar Ends  -->
+
+    <div id="preLoader">
+        <img src="{% static 'images/loader.png'  %}" alt="loader">
+        <img src="{% static 'images/alcher.png'  %}" alt="logo">
+        <div class="cont">
+          <h1>LOADING <div class="dots"></div></h1>
+          <h2>Welcome to Alcheringa!! We are loading up. <br> please wait...</h2>
+        </div>
+    </div>    
 
     {% block page %}
     {% endblock page %}

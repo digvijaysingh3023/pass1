@@ -1,0 +1,54 @@
+{% extends "main/base.html" %}
+{% load static %}
+{% block title %}
+<title>Passes</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha256-w22dPn66I5zpF9+jp4jxhnRqKzn3+CezC3RyKi9v0AA=" crossorigin="anonymous" />
+<link rel="stylesheet" href="{% static 'css/passes.css' %}">
+{% endblock title %}
+
+{% block page %}
+
+
+
+<div id="passPortalContent">
+    <div class="headtxt" >
+        <img src="{% static 'images/Vector2.png' %}">
+        <h2 class="head">YOU HAVE SUCCESSFULLY BOOKED YOUR ALCHER PASSES</h2>
+    </div>
+    <p class="belowtxt">Your summary here for the Alcheringa 2024 passes</p>
+</div>
+<div class="pass">
+    <div class="passtxt">
+        <div>
+    <h2 class="passhead">ATTENDEES</h2>
+    <p class="belowtxt">Pass-holders and their type of passes</p>
+    </div>
+    <button class="download">
+        <a style="text-decoration: none;color:#1E1E1E;" href="{% static 'path/to/pdf_1.pdf' %}" download="Alcher_Passes.pdf"><h2>DOWNLOAD ALL <img src="{% static 'images/download.png' %}" style="height:1.5vw;width:1.5vw;"></h2></a>
+    </button>
+    </div>
+    {% for pass in passes_info %}
+    <div class="pass-info">
+        <button class="download">
+            <a style="text-decoration: none;color:#1E1E1E;" href="{% url 'download_single_pass' pass.pass_id %}" download="{{ pass.pass_id }}.pdf"><h2>DOWNLOAD <img src="{% static 'images/download.png' %}" style="height:1.5vw;width:1.5vw;"></h2></a>
+        </button>
+    </div>
+{% endfor %}
+</div>  
+</div> 
+<div class="reg"><button class="btn"><a style="text-decoration: none;color:black;">BUY MORE PASSES HERE &rarr;</a></button></div>
+
+
+
+
+{% endblock page %}
+
+
+<!-- footer code starts -->
+
+<!-- footer code ends -->
+
+{% block script %}
+ 
+{% endblock script %}
+ 
