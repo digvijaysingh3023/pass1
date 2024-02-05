@@ -21,6 +21,17 @@
     /* Adjust to the appropriate weight */
     src: url(../Uncut-Sans-Medium.otf);
 }
+*{
+    margin: 0;
+    padding: 0;
+}
+body{
+    position: relative;
+    background: url('../images/texture.png');
+    background-blend-mode: color-burn ;
+    z-index: 200;
+    box-sizing: border-box;
+}
 .dots {
     display: inline-block;
     width: 60px;
@@ -66,6 +77,7 @@
     font-family: 'Uncut-Sans';
     color: #ffff;
     font-size: 1.5vw;
+    font-weight: 500;
 }
 #preLoader h1{
     font-family: 'fsp-demo-freigeist-con-black-5';
@@ -166,7 +178,8 @@ h1 {
 }
 
 .big {
-    background-image: url("../images/footer-background.svg") !important;
+    background-image: url("../images/footer-background.svg"), url('../images/texture.png') !important;
+    background-blend-mode: color-burn;
     background-size: cover;
     background-color: #181818;
     background-repeat: no-repeat;

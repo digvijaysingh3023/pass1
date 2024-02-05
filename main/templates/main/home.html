@@ -85,7 +85,7 @@
               const response = await fetch('{% url "get_data" %}');  // Replace with the actual URL of your Django API endpoint
               // const data = await response.json();
               // console.log(data);
-              document.body.style.overflow = 'auto';
+              document.body.style.overflow = 'hidden auto';
               let loader = document.querySelector('#preLoader');
               loader.style.display = 'none';
             } catch (error) {

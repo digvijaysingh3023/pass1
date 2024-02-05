@@ -10,10 +10,13 @@
 
 /* HTML: <div class="loader"></div> */
 body{
+    height: 100%;
+    width: 100%;
+    background-color: #181818;
     position: relative;
-    background-color: black;
     color:white;
     box-sizing: border-box;
+    overflow-x: hidden;
 }
 .navbar{
     background-color: #1E1E1EB2;
@@ -26,7 +29,7 @@ body{
 }
 .heroSection{
     background-color: #F4F4F4;
-    background-image: url("../images/BG-min.png");
+    background-image:url("../images/BG-min.png");
     background-size: 100vw 60vw;
     background-position-x: center;
     background-position-y: -20px;
@@ -37,6 +40,7 @@ body{
     position: relative;
 }
 .heroSection h1{
+    font-family: 'fsp-demo-freigeist-con-black-5';
     position: absolute;
     top: 10vh;
     left: 5vw;
@@ -177,9 +181,10 @@ body{
     font-family: 'fsp-demo-freigeist-con-black-5';
 }
 .allSeason h3{
+    font-weight: 500;
     font-size: 1.4vw;
     font-family: 'Uncut-Sans';
-    margin: 0 0 4vh 0;
+    margin: 0 0 2vw 0;
 }
 .topdiv{
     display: flex;
@@ -202,11 +207,13 @@ body{
     gap: 20px;
 }
 .headtxt{
+    font-family: 'fsp-demo-freigeist-con-black-5';
     font-size: 3.5vw;
     margin: 2.5vw 9vw 1.5vw 2.5vw;
 }
 .headtxt2{
     font-size: 3.5vw;
+    font-family: 'fsp-demo-freigeist-con-black-5';
     margin: 2.5vw 9vw 15vw 2.5vw;
 }
 #seasonDate, #seasonPrice{
@@ -239,7 +246,7 @@ body{
 .earlybird{
     width: 44vw;
     height: 22vw;
-    border-radius: 30px;
+    border-radius: 3vw;
     overflow: hidden;
     position: relative;
     color: white;
@@ -291,11 +298,12 @@ body{
     justify-content: flex-end;
 }
 .btn{
-    
     border: none;
     outline: none;
+    background: url('../images/texture.png');
     background-color: #F6D317;
-    
+    background-size: auto;
+    background-blend-mode: color-burn ;
     margin-top: 1vw;
     border-radius: 8px;
     padding: 3px 20px;
