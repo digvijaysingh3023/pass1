@@ -1,6 +1,9 @@
 from django.shortcuts import render,redirect
 from django.http import JsonResponse
 # from .models import Pass
+from django.core.exceptions import ObjectDoesNotExist
+from django.contrib.auth.decorators import login_required
+from django.http import HttpResponse
 from django.core.mail import EmailMessage
 from django.core.mail import send_mail
 from django.views.decorators.csrf import csrf_exempt
@@ -286,48 +289,60 @@ def savedata(request):
     return render(request, 'main/register.html', {'form_data': form_data,'members':members,"tdata":Todata,"prices":prices[0] , "passtype" : pass_types[0], "leadermail" : email})
 
 
+
+
 def passes(request):
     try:
-        user_email = request.user.email
-        user_ref = db.collection('transaction').where('Email', '==', user_email).stream()
-        passes_info = []
-        for transaction in user_ref:
-            transaction_data = transaction.to_dict()
-            pass_data = transaction_data.get('err_des', {}).get('pass')
-            if pass_data:
-                passes_info.append(pass_data)
-        pdf = generate_pdf(passes_info)
-        response = HttpResponse(pdf, content_type='application/pdf')
-        response['Content-Disposition'] = 'attachment; filename="passes.pdf"'
-        return response
+        if request.user.is_authenticated:
+            user_email = request.session.get('LeaderEmail', {})
+            passes_info = []
+            user_ref = db.collection('transaction').where('Email', '==', user_email).stream()
+            for transaction in user_ref:
+                transaction_data = transaction.to_dict()
+                users = transaction_data.get('users', {})
+                for user_id, user_info in users.items():
+                    pass_type = user_info.get('pass_type', '')
 
-    except ObjectDoesNotExist:
-        return HttpResponse("User or passes not found.")
+                    if pass_type:
+                        passes_info.append({
+                            'user_id': user_id,
+                            'pass_type': pass_type,
+                        })
+            pdf = generate_pdf(passes_info)
+            response = HttpResponse(pdf, content_type='application/pdf')
+            response['Content-Disposition'] = 'attachment; filename="passes.pdf"'
+            return response
+        else:
+            return HttpResponse("User is not authenticated.")
+
     except Exception as e:
         print(e)
-        return HttpResponse("An error occurred.")  
+        return HttpResponse("An error occurred.")
 
 
 
-def generate_pdf(passes_info):
+def generate_pdf(pass_type):
     pdf = FPDF('L', 'mm', (270, 870))
-
-    for pass_data in passes_info:
-        pdf.add_page()
-        pdf.image("BoardPassFront7.png", 0, 0, pdf.w, pdf.h)
+    pdf.add_page()
+    if pass_type == 'ebsp':
+        pdf.image("images/EBSP.png", 0, 0, pdf.w, pdf.h)
+    elif pass_type == 'nsp':
+        pdf.image("images/NSP.png", 0, 0, pdf.w, pdf.h)
         qr_code_data = 'https://www.example.com/' + pass_data['pass_id']
         aztec = qrcode.QRCode(version=1, box_size=10, border=4)
         aztec.add_data(qr_code_data)
         aztec.make(fit=True)
-        aztec_img = aztec.make_image(fill_color="white", back_color="#F28E15")
+        if pass_type == 'ebsp':
+           aztec_img = aztec.make_image(fill_color="white", back_color="#677DE0")
+        elif pass_type == 'nsp':
+           aztec_img = aztec.make_image(fill_color="white", back_color="#F28E15")
         qr_code_path = f'aztec_code_{pass_data["pass_id"]}.png'
         aztec_img.save(qr_code_path)
         aztec_img = aztec_img.resize((85, 85))
-        pdf.image(qr_code_path, pdf.w - 190, pdf.h - 210, 120, 120)
-
+        pdf.image('aztec_code.png', pdf.w - 365, pdf.h - 230, 150, 150)
         pdf.add_page()
-        pdf.image("BoardPassBack2.png", 0, 0, pdf.w, pdf.h)
+        pdf.image("images/BoardPassBack2.png", 0, 0, pdf.w, pdf.h)
 
     output = BytesIO()
     pdf.output(output)
-    return output.getvalue()
+    return qr_code_image_path
