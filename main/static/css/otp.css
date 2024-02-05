@@ -15,7 +15,7 @@
 body{
     height: 100%;
     width: 100%;
-    background-color: rgb(24, 24, 24);
+    background-color: #181818;
 }
 
 #passPortalContent{
@@ -74,12 +74,13 @@ h3{
 }
 #bc{
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
+    gap: 30px;
     align-items: center;
-    width: 50vw;
+    min-width: 50vw;
 }
 .timer{
-    margin-bottom: 1.6vh;
+    margin-bottom: 15px;
     display: none;
 }
 .timer span{
@@ -273,7 +274,16 @@ h3{
   }
 
 @media(max-width: 1000px){
-   
+
+   #id{
+    gap: 40px;
+   }
+   #resend{
+    font-size: 15px;
+   }
+   .timer span{
+    font-size: 15px;
+   }
     #emailInput input{
         width: 350px;
         font-size: 15px;
@@ -290,6 +300,13 @@ h3{
 }
 
 @media(max-width: 800px){
+    #bc{
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+    .timer{
+        margin-bottom: 8px;
+    }
     #emailInput input{
         width: 350px;
         font-size: 20px;
@@ -321,6 +338,17 @@ h3{
     .button{
         font-size: 1em;
         
+    }
+}
+@media(max-width: 650px){
+    #emailInput input{
+        width: 350px;
+        font-size: 20px;
+        padding-bottom: 6px;
+        margin-bottom: 5px;
+    }
+    .timer{
+        margin-bottom: 15px;
     }
 }
 
