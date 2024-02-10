@@ -26,7 +26,6 @@
     padding: 0;
 }
 body{
-    position: relative;
     background: url('../images/texture.png');
     background-blend-mode: color-burn ;
     z-index: 200;
