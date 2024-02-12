@@ -23,7 +23,7 @@
 }
 
 body {
-    position: block;
+   display: flow-root;
     background-color: #181818;
     padding: 0;
     margin: 0;
@@ -31,7 +31,6 @@ body {
 }
 
 .navContainer {
-    position: absolute;
     width: 100%;
     z-index: 9;
 }
@@ -50,7 +49,7 @@ body {
 .iti {
     font-family: 'Uncut-Sans';
     margin-left: 1vw;
-    font-size: 0.87rem;
+    font-size: 0.8rem;
 }
 
 input,
@@ -97,7 +96,7 @@ select {
 }
 
 h1 {
-    margin: 0 1vw;
+    margin: 1vw 1vw;
     font-size: x-large;
 }
 
@@ -113,9 +112,9 @@ h1 {
 }
 
 #heading2 {
-    font-size: 4.5vw;
+    font-size: 4rem;
     padding-bottom: 0;
-    margin-top: 5vw;
+    margin-top: 3vw;
     margin-bottom: 0.8vw;
 }
 
@@ -147,20 +146,21 @@ h3 {
 .primary {
     display: flex;
     align-items: center;
+    margin-top: 1vw;
 }
 
 .bigf {
     font-family: 'fsp-demo-freigeist-con-black-5', sans-serif;
 }
-
-.div2 {
-    margin-top: 1.4vw;
-}
-
 .div3 {
     margin-top: 1.4vw;
 }
-
+.div2 {
+    margin-top: 1.4vw;
+}
+.div1 {
+    margin-top: 1.4vw;
+}
 .passtype {
     color: #181818;
     background-color: #677de0;
@@ -220,7 +220,7 @@ h3 {
 }
 
 .detailbox {
-    background-color: #181818;
+    background-color: #1818180d;
     outline: none;
     border: none;
     font-size: 1.4vw;
@@ -230,7 +230,7 @@ h3 {
 }
 
 .detailbox2 {
-    background-color: #181818;
+    background-color: #1818180d;
     border: none;
     color: #f4f4f4;
     padding: 3px 0px;
@@ -388,7 +388,7 @@ button {
 .big {
     background-image: url("../images/footer-background.svg") !important;
     background-size: cover;
-    background-color: #181818;
+    background-color: #1818180d;
     background-repeat: no-repeat;
     background-position-y: 7vw;
 }
@@ -574,7 +574,7 @@ input[type=number] {
 
 .err {
     border-bottom: 1px solid #b1395f;
-    background-color: #181818;
+    background-color: #1818180d;
     background-image: url("../images/Vector2.svg");
     background-repeat: no-repeat;
     background-size: 2vw;
@@ -583,7 +583,7 @@ input[type=number] {
 
 .valid {
     border-bottom: 1px solid #39A279;
-    background-color: #181818;
+    background-color: #1818180d;
     background-image: url("../images/Vector.svg") !important;
     background-repeat: no-repeat;
     background-size: 1.8vw;
@@ -621,7 +621,7 @@ input[type=number] {
 }
 
 .red {
-    background: red;
+    background-color: red;
 }
 
 .mobile-footer {
@@ -667,43 +667,48 @@ input[type=number] {
     }*/
 @media(max-width:950px) {
     h3 {
-        font-size: medium;
+        font-size: 1.4rem;
     }
 
     #attendee {
-        font-size: 3vw;
+        font-size: 1.8rem;
     }
 
     .passtype {
+        font-size: 0.9rem;
+        width: 9rem;
+        background-position: 7.5rem;
         padding: 0.3vw 0vw 0.3vw 0.6vw;
     }
 
     .gender {
         margin-left: 1.5rem;
-        width: 12vw;
+        width: 6rem;
     }
-
+    .detailbox{
+        font-size: 0.9rem;
+    }
     .age {
-        width: 6vw;
+        width: 4.5rem;
         margin-left: 1rem;
     }
 
     .name {
-        width: 26.5vw;
+        width: 15rem;
     }
 
     .email {
-        width: 26.5vw;
+        width: 15rem;
         margin-right: 1.2rem;
     }
 
     .number {
         margin-left: 1.5rem;
-        width: 20vw;
+        width: 11.6rem;
     }
 
     .idtype {
-        width: 26.5vw;
+        width: 15rem;
     }
 
     .unt {
@@ -724,7 +729,7 @@ input[type=number] {
 
     .idnum {
         margin-left: 1.5rem;
-        width: 20vw;
+        width: 11.9rem;
     }
 
     #introtext {
@@ -732,7 +737,7 @@ input[type=number] {
     }
 
     #heading2 {
-        font-size: 6.5vw;
+        font-size: 3.7rem;
     }
 
     /* .ribbon-case {} */
@@ -775,6 +780,9 @@ input[type=number] {
     .star-2 {
         width: 4vw;
     }
+    .div2{
+        margin-top:0;
+    }
 
     .ageval {
         background-position: 19vw;
@@ -802,7 +810,9 @@ input[type=number] {
     .valid {
         background-size: 2.8vw;
     }
-
+    .div1{
+        margin-top: 0;
+    }
     .details {
         margin-left: 3vw;
         display: block;
@@ -824,7 +834,7 @@ input[type=number] {
 
     .detailbox {
         font-size: 2.8vw;
-        width: 78% !important;
+        width: 90% !important;
         margin-bottom: 2.5vw !important;
     }
 
@@ -1004,12 +1014,14 @@ input[type=number] {
     .iti {
         display: flex !important;
         border-bottom: 1px solid #f4f4f4 !important;
-        width: 76vw !important;
-
+        width: 87vw !important;
+        margin-bottom: 2vw;
+        margin-top: 1vw;
     }
 
     .cnumber {
         border: none;
+        margin-bottom: 0.1rem !important;
         padding: 0 3vw !important;
     }
 

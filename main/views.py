@@ -30,7 +30,7 @@ from Crypto.Protocol.KDF import PBKDF2
 from fpdf import FPDF
 import qrcode
 from io import BytesIO
-
+import pandas as pd
 @api_view(['GET'])
 def user_data(request):
     try:
@@ -346,3 +346,67 @@ def generate_pdf(pass_type):
     output = BytesIO()
     pdf.output(output)
     return qr_code_image_path
+
+def automation(request):
+    index=db.collection('index').document('rcT6Wb8kyh07erua4VaM').get().to_dict()['index']
+    data=pd.read_excel(r'/Users/shivamg/Downloads/Book1.xlsx')
+    pendinguser=db.collection('pending_user').stream()
+    pend=[]
+    for puser in pendinguser:
+        user=puser.to_dict()
+        ind = user['index']
+        if data['PAYMENT_STATUS'][ind]== 'SUCCESS':
+            verified = db.collection('verified_user').document()
+            email=data['EMAIL'][ind]
+            verify={
+                "name": data['FIRST_NAME'][ind] + " " + data['LAST_NAME'][ind],
+                "gender": data['GENDER'][ind],
+                "contact no.":data['PHONE_NUMBER'][ind],
+                "email":data['EMAIL'][ind],
+                "Booking id":data['BOOKING_ID'][ind],
+                "payment_status":data['PAYMENT_STATUS'][ind],
+                "Amount":data['AMOUNT_PAID'][ind],
+            }
+            verified.set(verify)
+            subject = 'just for testing'
+            message='you have been verified'
+            from_email = settings.EMAIL_HOST_USER
+            send_mail(subject, message, from_email, [email])
+        pend.append(user)
+        
+    for i in range(index,len(data)):
+        if data['PAYMENT_STATUS'][i]== 'SUCCESS':
+            verified = db.collection('verified_user').document()
+            email=data['EMAIL'][i]
+            verify={
+                "name": data['FIRST_NAME'][i] + " " + data['LAST_NAME'][i],
+                "gender": data['GENDER'][i],
+                "contact no.":data['PHONE_NUMBER'][i],
+                "email":data['EMAIL'][i],
+                "Booking id":data['BOOKING_ID'][i],
+                "payment_status":data['PAYMENT_STATUS'][i],
+                "Amount":data['AMOUNT_PAID'][i],
+            }
+            verified.set(verify)
+            subject = 'just for testing'
+            message='you have been verified'
+            from_email = settings.EMAIL_HOST_USER
+            send_mail(subject, message, from_email, [email])
+            index+=1
+        if data['PAYMENT_STATUS'][i]== 'PENDING':
+            pendings = db.collection('pending_user').document()
+            pending={
+                "name": data['FIRST_NAME'][i] + " " + data['LAST_NAME'][i],
+                "gender": data['GENDER'][i],
+                "contact no.":data['PHONE_NUMBER'][i],
+                "email":data['EMAIL'][i],
+                "Booking id":data['BOOKING_ID'][i],
+                "payment_status":data['PAYMENT_STATUS'][i],
+                "Amount":data['AMOUNT_PAID'][i],
+                "index":i,
+            }
+            pendings.set(pending)
+    db.collection('index').document('rcT6Wb8kyh07erua4VaM').update({'index':index})
+
+    return index
+print(automation(1))

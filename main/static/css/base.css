@@ -94,7 +94,6 @@ h1 {
     font-family: 'fsp-demo-freigeist-con-black-5';
 }
 .navContainer {
-    position: absolute;
     width: 100%;
     z-index: 9;
 }

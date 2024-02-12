@@ -17,7 +17,7 @@
     <div class="Attendeedetails">
         <form method="POST" name="reg" novalidate>
             {% csrf_token %}
-            <h id="attendee">ATTENDEE DETAILS</h>
+            <h1 id="attendee">ATTENDEE DETAILS</h1>
             <div class="primary">
                 <h3>PRIMARY ATTENDEE</h3>
                 <select class="passtype" name="Lpasstype" id="passt-1" required>
@@ -135,8 +135,8 @@
                     {%endif%}</p>
             </div>
             <div class="passes">
-                {% for val,passes in passtype.items %}
-               <div class="pa"> <div class="pas">{{passes}}</div><div class="n">:{{val}}</div></div>
+                {% for item,passes in passtype.items %}
+               <div class="pa"> <div class="pas">{{passes}}</div><div class="card-{{item}} n">:0</div></div>
                {% endfor %}
                {% comment %} <div class="pa"> <div class="pas">Day1 yahi</div><div class="n">:2</div></div>
                <div class="pa"> <div class="pas">Day1 yahi</div><div class="n">:3</div></div> {% endcomment %}
@@ -245,144 +245,161 @@
         }
         
         aprove()
-              document.addEventListener('input',aprove)
-              const peeps=[];
-              document.addEventListener('change', function() {
-                const passes = document.getElementsByClassName('passtype');
-                const peeps = [];
-                let coun = 0;
-                for (const pass of passes) {
-                  coun++;
-                  if (peeps.length < coun) {
-                    {% for i,pp in prices.items%}
+        document.addEventListener('input',aprove)
+        const peeps=[];
+        document.addEventListener('change', function() {
+            const passes = document.getElementsByClassName('passtype');
+            const passcount={}
+            {% for item,passes in passtype.items%}
+                passcount["{{passes}}"]=0;
+            {% endfor %}
+            const peeps = [];
+            let coun = 0;
+            for (const pass of passes) {
+                coun++;
+                if (peeps.length < coun) {
+                {% for i,pp in prices.items%}
                     if (pass.value === "{{i}}") {
-                        peeps.push({{pp }});
-                    } 
-                    {% endfor %}
-                  } else {
-                    {% for i,pp in prices.items%}
-                    if (pass.value === "{{i}}") {
-                        peeps[coun - 1] = {{pp}};
+                        peeps.push({{pp}});
+                        passcount["{{i}}"]++;
                     }
-                    {% endfor %}
-                  }
-                  if (pass.value) {
-                    pass.classList.add('passselected');
-                    pass.classList.remove('red');
-                  }
+                {% endfor %}
+                } else {
+                {% for i,pp in prices.items%}
+                if (pass.value === "{{i}}"){
+                    peeps[coun - 1] = {{ pp}};
                 }
-                let Amount = 0;
-                for (const i of peeps) {
-                  Amount += i;
-                }
-                document.getElementById("total").innerHTML = "Total Amount : &#8377 " + Amount;
-              });
-              function un() {
-                const passes = document.getElementsByClassName('passtype');
-                const peeps = [];
-                let coun = 0;
-                for (const pass of passes) {
-                  coun++;
-                  if (peeps.length < coun) {
-                    {% for i,pp in prices.items%}
-                    if (pass.value === "{{i}}") {
-                        peeps.push({{pp }});
-                    } 
-                    {% endfor %}
-                  } else {
-                    {% for i,pp in prices.items%}
-                    if (pass.value === "{{i}}") {
-                        peeps[coun - 1] = {{pp}};
-                    }
-                    {% endfor %}
-                  }
-                  if (pass.value) {
-                    pass.classList.add('passselected');
-                    pass.classList.remove('red');
-                  }
-                }
-                let Amount = 0;
-                for (const i of peeps) {
-                  Amount += i;
-                }
-                document.getElementById("total").innerHTML = "Total Amount : &#8377 " + Amount;
-              }
-              un()
-              function changeamount(){
-                const passes = document.getElementsByClassName('passtype');
-                const peeps = [];
-                let coun = 0;
-                for (const pass of passes) {
-                  coun++;
-                  if (peeps.length < coun) {
-                    {% for i,pp in prices.items%}
-                        if (pass.value === "{{i}}") {
-                            peeps.push({{pp }});
-                        }
-                    {% endfor %}
-                  } else {
-                    {% for i,pp in prices.items%}
-                    if (pass.value === "{{i}}"){
-                        peeps[coun - 1] = {{ pp}};
-                    }
-                    {% endfor %}
-                  }
-                }
-                let Amount = 0;
-                for (const i of peeps) {
-                  Amount += i;
-                }
-                document.getElementById("total").innerHTML = "Total Amount : &#8377 " + Amount;
+                {% endfor %}
             }
-            changeamount()
-            function deletePage() {
-                count--;
-                let elm = container.lastElementChild;
-                let elm2 = container.lastElementChild.previousElementSibling;
-                container.removeChild(elm);
-                container.removeChild(elm2);
-                changeamount()
-                if (count == 1) {
-                    removeBtn.style.display = "none";
-                }
+            if (pass.value) {
+            pass.classList.add('passselected');
+            pass.classList.remove('red');
             }
-            function handleFormSubmit(event) {
-                const cc = document.getElementsByClassName("iti__selected-dial-code")
-                for (let i = 1; i <= count; i++) {
-                    let cod = document.querySelector(`#code-${i}`);
-                    let num = document.querySelector(`#number-${i}`);
-                    let c = cc[i-1]
-                    let nextSibling = num.previousElementSibling;
-                    cod.value = c.innerHTML;
+        }
+        let Amount = 0;
+        for (const i of peeps) {
+            Amount += i;
+        }
+        {% for item,passes in passtype.items%}
+            document.querySelector(`.card-{{item}}`).innerHTML = `:${passcount["{{passes}}"]}`;
+        {% endfor %}
+        document.getElementById("total").innerHTML = "Total Amount : &#8377 " + Amount;
+        });
+        function un() {
+        const passes = document.getElementsByClassName('passtype');
+        const passcount=[]
+        const peeps = [];
+        let coun = 0;
+        for (const pass of passes) {
+            coun++;
+            if (peeps.length < coun) {
+            {% for i,pp in prices.items%}
+            if (pass.value === "{{i}}") {
+                peeps.push({{pp }});
+            } 
+            {% endfor %}
+            } else {
+            {% for i,pp in prices.items%}
+            if (pass.value === "{{i}}") {
+                peeps[coun - 1] = {{pp}};
+            }
+            {% endfor %}
+            }
+            if (pass.value) {
+            pass.classList.add('passselected');
+            pass.classList.remove('red');
+            }
+        }
+        let Amount = 0;
+        for (const i of peeps) {
+            Amount += i;
+        }
+        document.getElementById("total").innerHTML = "Total Amount : &#8377 " + Amount;
+        }
+        un()
+        function changeamount(){
+        const passes = document.getElementsByClassName('passtype');
+        const passcount={}
+            {% for item,passes in passtype.items%}
+                passcount["{{passes}}"]=0;
+            {% endfor %}
+        const peeps = [];
+        let coun = 0;
+        for (const pass of passes) {
+            coun++;
+            if (peeps.length < coun) {
+            {% for i,pp in prices.items%}
+                if (pass.value === "{{i}}") {
+                    peeps.push({{pp}});
+                    passcount["{{i}}"]++;
                 }
-                event.preventDefault();
-                let valid = true;
-                const fields = [];
-                for (let i = 1; i <= count; i++) {
-                  fields.push(`name-${i}`);
-                  fields.push(`number-${i}`);
-                  fields.push(`gender-${i}`);
-                  fields.push(`age-${i}`);
-                  fields.push(`email-${i}`);
-                  fields.push(`idtype-${i}`);
-                  fields.push(`idnum-${i}`);
-                }
-                fields.forEach(fieldName => {
-                  const field = document.querySelector(`#${fieldName}`);
-                  
-                  if (!field.checkValidity()) {
-                    valid = false;
-                    field.classList.add('err');
-                    field.classList.remove('valid');
-                    if(field.getAttribute("name") == 'gender' || field.getAttribute("name") == 'LeaderGender'){
-                        field.classList.remove('ageval')
-                        field.classList.add('ageerr')
-                    }
-                    if(field.getAttribute("name") == 'LeaderIDtype' || field.getAttribute("name") == 'IDtype'){
-                        field.classList.add('idnumerr')
-                        field.classList.remove('idnumval')
-                    }
-                    
+            {% endfor %}
+            } else {
+            {% for i,pp in prices.items%}
+            if (pass.value === "{{i}}"){
+                peeps[coun - 1] = {{ pp}};
+            }
+            {% endfor %}
+            }
+        }
+        let Amount = 0;
+        for (const i of peeps) {
+            Amount += i;
+        }
+        {% for item,passes in passtype.items%}
+            document.querySelector(`.card-{{item}}`).innerHTML = `:${passcount["{{passes}}"]}`;
+        {% endfor %}
+        document.getElementById("total").innerHTML = "Total Amount : &#8377 " + Amount;
+    }
+    changeamount()
+    function deletePage() {
+        count--;
+        let elm = container.lastElementChild;
+        let elm2 = container.lastElementChild.previousElementSibling;
+        container.removeChild(elm);
+        container.removeChild(elm2);
+        changeamount()
+        if (count == 1) {
+            removeBtn.style.display = "none";
+        }
+    }
+    function handleFormSubmit(event) {
+        const cc = document.getElementsByClassName("iti__selected-dial-code")
+        for (let i = 1; i <= count; i++) {
+            let cod = document.querySelector(`#code-${i}`);
+            let num = document.querySelector(`#number-${i}`);
+            let c = cc[i-1]
+            let nextSibling = num.previousElementSibling;
+            cod.value = c.innerHTML;
+        }
+        event.preventDefault();
+        let valid = true;
+        const fields = [];
+        for (let i = 1; i <= count; i++) {
+            fields.push(`name-${i}`);
+            fields.push(`number-${i}`);
+            fields.push(`gender-${i}`);
+            fields.push(`age-${i}`);
+            fields.push(`email-${i}`);
+            fields.push(`idtype-${i}`);
+            fields.push(`idnum-${i}`);
+        }
+        fields.forEach(fieldName => {
+            const field = document.querySelector(`#${fieldName}`);
+            
+            if (!field.checkValidity()) {
+            valid = false;
+            field.classList.add('err');
+            field.classList.remove('valid');
+            if(field.getAttribute("name") == 'gender' || field.getAttribute("name") == 'LeaderGender'){
+                field.classList.remove('ageval')
+                field.classList.add('ageerr')
+            }
+            if(field.getAttribute("name") == 'LeaderIDtype' || field.getAttribute("name") == 'IDtype'){
+                field.classList.add('idnumerr')
+                field.classList.remove('idnumval')
+            }
+            
                     
                 } else {
                     field.classList.remove('err');
