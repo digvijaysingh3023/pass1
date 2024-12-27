@@ -75,10 +75,11 @@ config = {
 # firebase=pyrebase.initialize_app(config)
 # authe = firebase.auth()
 # database=firebase.database()
-cred = credentials.Certificate('main/serviceAccountCredentials.json')
-firebase_admin.initialize_app(cred)
-db = firestore.client()
+if not firebase_admin._apps:
+    cred = credentials.Certificate('main/serviceAccountCredentials.json')
+    firebase_admin.initialize_app(cred)
 
+db = firestore.client()
 
 # Create your views here.
 
@@ -139,11 +140,10 @@ def verify_otp(request):
     otp_values = request.POST.getlist('otp')
     # Combine the OTP values into a single string
     otp = ''.join(otp_values)
-
     otpID = request.session.get('OTPId')
     snapshots = db.collection('all_otps').where('id', '==', otpID).stream() #
     users = []
-    otp1 = 0
+    otp1 = 100000
     for user in snapshots:
         formattedData = user.to_dict()
         print(formattedData)
@@ -347,7 +347,7 @@ def generate_pdf(pass_type):
     pdf.output(output)
     return qr_code_image_path
 
-def automation(request):
+# def automation(request):
     index=db.collection('index').document('rcT6Wb8kyh07erua4VaM').get().to_dict()['index']
     data=pd.read_excel(r'/Users/shivamg/Downloads/Book1.xlsx')
     pendinguser=db.collection('pending_user').stream()
@@ -409,4 +409,4 @@ def automation(request):
     db.collection('index').document('rcT6Wb8kyh07erua4VaM').update({'index':index})
 
     return index
-print(automation(1))
+# print(automation(1))
