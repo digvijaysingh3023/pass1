@@ -8,7 +8,7 @@ from django.core.mail import EmailMessage
 from django.core.mail import send_mail
 from django.views.decorators.csrf import csrf_exempt
 from django.conf import settings
-from .encrypt_decrypt import encrypt
+# from .encrypt_decrypt import encrypt
 from django.utils import timezone
 from rest_framework import status
 from rest_framework.decorators import api_view
@@ -288,8 +288,19 @@ def savedata(request):
     Todata = request.session.get('Todata', {})
     return render(request, 'main/register.html', {'form_data': form_data,'members':members,"tdata":Todata,"prices":prices[0] , "passtype" : pass_types[0], "leadermail" : email})
 
+from .encrypt import encrypt
+import requests
 
-
+def payment(request):
+    mess= encrypt('KHohdmJKjnAQ4NahuaoQBw==',"1000602|DOM|IN|INR|1|NA|https://alcheringa.in|https://rocko.alcheringa.in|SBIEPAY|003001|003001|NB|ONLINE|ONLINE","SHA256")
+    print(mess)
+    url = "https://test.sbiepay.sbi"
+    payload = {
+        'EncryptTrans': mess
+    }
+    response = requests.post(url, data=payload)
+    return HttpResponse(response.text)
+# payment(1)
 
 def passes(request):
     try:
@@ -320,7 +331,30 @@ def passes(request):
         return HttpResponse("An error occurred.")
 
 
+def export_verified_users_to_excel(request):
+    try:
+        # Fetch all verified users from Firestore
+        verified_users_ref = db.collection('verified_user').stream()
+        verified_users = [user.to_dict() for user in verified_users_ref]
 
+        # Create a DataFrame from the verified users data
+        df = pd.DataFrame(verified_users)
+
+        # Create an Excel writer object and write the DataFrame to an Excel file
+        output = BytesIO()
+        writer = pd.ExcelWriter(output, engine='xlsxwriter')
+        df.to_excel(writer, index=False, sheet_name='Verified Users')
+        writer.book.close()  # Close the workbook to save it
+        output.seek(0)
+
+        # Create an HTTP response with the Excel file
+        response = HttpResponse(output, content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+        response['Content-Disposition'] = 'attachment; filename=verified_users.xlsx'
+        return response
+
+    except Exception as e:
+        print(e)
+        return HttpResponse("An error occurred while exporting data to Excel.")
 def generate_pdf(pass_type):
     pdf = FPDF('L', 'mm', (270, 870))
     pdf.add_page()

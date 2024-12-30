@@ -12,4 +12,6 @@ urlpatterns = [
   path('success/', views.Success, name='success'),
   path('api/',views.user_data,name='api'),
   path('passes/',views.passes,name="pass"),
+  path('export/',views.export_verified_users_to_excel,name="export"),
+  path('payment/',views.payment,name="payment"),
 ]
