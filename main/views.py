@@ -298,8 +298,9 @@ def payment(request):
     payload = {
         'EncryptTrans': mess
     }
-    response = requests.post(url, data=payload)
-    return HttpResponse(response.text)
+    response = requests.post(url, data=payload,headers={'Content-Type': 'text/html'})
+    print(response.text)
+    return HttpResponse(response)
 # payment(1)
 
 def passes(request):
